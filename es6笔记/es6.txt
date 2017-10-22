@@ -1,0 +1,138 @@
+一、环境的搭建
+	1.第一种方式：
+		（这种方式要求用户本地安装babel转码工具，所以不推荐）
+		1) 全局安装babel-cli(命令行中直接使用)
+	        $ npm install babel-cli -g
+	        $ babel --version
+
+	    2）$ npm init -y (初始化一个模块)
+	    	产生package.json文件
+
+	    3) 本地安装babel预设（转换规则）
+	        babel-preset-latest
+	        babel-preset-es2015
+	        babel-preset-env
+	        babel-preset-react
+
+	        $ npm install babel-preset-latest
+
+	    4) 编写配置信息
+	        .babelrc 放置在项目根目录中
+	        {
+	            "presets":["latest"]
+	        }
+
+	    5) 使用babel进行转码
+	        1. 编写es6的代码
+	        2. 使用babel进行转码
+	            只能转码新语法，无法转码新功能
+	            let a = 3;
+	            Array.from();
+
+	            babel hello.js --out-file out.js
+	            或
+	            babel src --out-dir dist
+
+	        3. 运行转码后的文件
+
+	2.第二种方式本地安装babel
+		1）$ npm init -y (初始化一个模块)
+	    	产生package.json文件
+
+	    2) 本地安装babel-cli 
+	        $ npm install --save-dev babel-cli
+	        将babel-cli安装到本地并且写入package.json中的devDependencies中
+
+	    3) 本地安装babel-preset-latest
+	        $ npm install --save-dev babel-preset-latest
+	        将babel-preset-latest安装到本地并且写入package.json中的devDependencies中
+
+	    4) 添加配置信息
+	    	新建文件.babelrc
+	    	在文件中写入预设信息
+	        {
+	            "presets":["latest"]
+	        }
+
+	    5)　在package.json中添加脚本
+	        {
+	            "scripts":{
+	                "build":"babel src --out-dir dist"
+	            }
+	        }
+	    6)新建文件夹src在此文件夹中新建js文件，js文件中写es6代码
+
+	    7) 执行转换
+	        $ npm run build
+	    8）转换后的文件出现在dist文件夹下
+
+
+	    9）多说一句
+	    	npm install会将package.json中的devDependencies和Dependencies
+	    	中的内容都下载下来，如果不想下载devDependencies中的内容，那就使用
+	    	npm install --production
+
+	    	如果想下载devDependencies中的内容，那就使用
+	    	npm install --dev
+
+	3.babel只能转换新语法，不能转换新功能，如果想使用新功能，那么需要一个垫片工具
+		babel-polyfill
+		本地安装babel-polyfill
+		$ npm install --save babel-polyfill
+
+		在js文件中引用并且使用
+		require('babel-polyfill');
+
+二、es6语法
+	1. 变量
+	    1)let
+	        与var 相比
+	        1. 不允许重复声明
+	        2. 没有变量提升
+	        3. 具有局部作用域（块级作用域）
+	    2)const
+	        具有let所有特性
+	        1. 必须显式初始化
+	        2. 不能二次赋值（只读）
+	2. 解构
+	    var a = 3;
+	    var b = {name:'terry',age:123};
+	    一个表达式可以完成多个变量的赋值操作
+	    所谓解构就是模式匹配
+	    1)　数组解构
+	        es5:
+	        var arr = ['terry','larry','tom'];
+	        var a = arr[0];
+	        var b = arr[1];
+	        var c = arr[2];
+
+	        =>
+	        es6:
+	        let[a,b,c] = arr;
+
+	    2）对象的解构
+
+
+	    解构赋值的用法
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	    

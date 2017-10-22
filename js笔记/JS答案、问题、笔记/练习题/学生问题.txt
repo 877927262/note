@@ -1,0 +1,151 @@
+1.值的传递和引用传递
+2.函数的内部属性arguments
+3.对象的序列化和反序列化
+4.函数作为返回值
+5.this在构造函数模型的作用:代表当前调用的该构造函数的对象。
+6.什么是工厂模式？构造函数模式？原型模式？构造函数与原型组合模式？各自的特点？
+	1)工厂模式   
+		(1)创建不同对象的时候sayName占用不同的内存空间
+			function createStudent(no,name,age){
+				var student = {
+					no:no,
+					name:name,
+					age:age,
+					sayName:function(){
+						alert(this.name);
+					}
+				}
+				return student;
+			}
+			var stu1 = createStudent(1001,"terry",22);
+			var stu2 = createStudent(1002,"larry",21);
+
+			【注意】
+				1.console.log(stu1.sayName == stu2.sayName );
+					返回false,他们分别属于不同实例中的方法，指向不同的内存地址。
+		(2)创建不同对象的时候sayName占用相同的内存空间
+			function createStudent(id,name,age){
+				var student = {
+					id:no,
+					name:name,
+					age:age,
+					sayName:sayName
+				}
+				return student;
+			}
+			var stu1 = createStudent(1001,"terry",22);
+			var stu2 = createStudent(1002,"larry",21);
+			function sayName(){
+				console.log(this.name);
+			}
+			【注意】
+				1.console.log(stu1.sayName == stu2.sayName );
+					返回true,他们同样指向了sayName方法，内存地址相同。
+		缺点：
+			不能识别对象
+
+	2)构造函数模式
+		function Student(name,age,sex){
+		 	this.name=name;
+			this.age=age;
+			this.sex=sex;
+			this.sayName = function(){
+				console.log(this.name);
+			}
+		}
+		var p1 =new Student("larry",21,"male");
+		var p2 =new Student("larry",21,"male");
+
+		【注意】
+			1.在对象中写方法的时候与工厂模式的相同
+
+		缺点:
+			每个方法都要在每个对象上创建一遍
+			如果使用全局方法，那么在方法特别多的时候，要定义多个全局函数，不能体现封装性
+
+	3)原型模式
+		(1)原型语法
+			function Student(){ ...  } 
+			Student.prototype.name = "larry"; 
+			Student.prototype.age = 29;  
+			Student.prototype.sayName = function(){ 
+			    alert(this.name); 
+			}; 
+			var student1 = new Student(); 
+			var student2 = new Student(); 
+
+			1.分别在实例中和原型中都添加属性的时候，查看调用情况
+				student1.name = "terry";
+				console.log(student1.name);
+				console.log(student2.name);
+			2.创建了自定义的构造函数之后，其原型对象默认只会取得consturctor属性，至于其他方法，都是从Object继承来的
+			3.调用构造函数创建一个新实例后，该实例的内部将包含一个指针，指向构造函数的原型对象
+
+		(2)简便的原型语法
+			function Student(){ ... } 
+			Student.prototype = { 
+			    constructor: Student, 
+			    name : "larry", 
+			    age : 21,  
+			    sayName : function () { 
+			        alert(this.name); 
+			    } 
+			}
+
+		优点:
+			可以进行方法共享，简化了写方法的过程
+		缺点:
+			当原型中写有属性和方法的时候，所有的实例化对象在一开始的时候都会有相同的属性和方法
+	4)构造函数与原型结合使用
+		function Student(name, age, id){ 
+		    this.name = name; 
+		    this.age = age; 
+		    this.id = id; 
+		    this.friends = ["Shelby", "Court"]; 
+		} 
+		Student.prototype = { 
+		    constructor : Student, 
+		    sayName : function(){ 
+		        console.log(this.name); 
+		    } 
+		} 
+		var student1 = new Student("Nicholas", 29, 1314); 
+		var student2 = new Student("Greg", 27, 1315);
+		console.log(student1.friends);   
+		console.log(student2.friends);   
+		console.log(student1.friends === student2.friends);    
+		console.log(student1.sayName === student2.sayName);   
+
+		优点：
+			认同度最高，解决了对象识别的问题，也解决了封装性问题。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

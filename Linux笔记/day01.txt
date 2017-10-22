@@ -1,0 +1,101 @@
+1. 简单命令
+    ls  
+        列出当前目录下所有可见文件以及目录
+    pwd
+        打印当前所在目录
+    cd [目录]
+        切换目录
+            目录：
+                .   当前目录
+                ..  上一级目录 
+                ~   家目录
+                /   根目录
+        例如：
+            /home/briup
+            ls
+                ...
+                Desktop
+                Documents
+                Downloads
+            cd ./aaa
+            cd aaa
+                进入当前目录的aaa目录下
+            cd
+                默认进入用户家目录
+    clear
+        清除当前屏幕内容  
+
+    more    
+        预览文本文件
+        more /etc/passwd
+    tail
+        预览文本文件，默认预览后10行
+
+2. 查看命令如何使用
+    命令 --help
+    man 命令
+
+    一般命令的使用
+        命令 [options] [文件]
+
+        ls -a ./
+        cd ~
+        pwd
+3. 重要目录
+    /---
+        /bin    系统执行文件
+        /lib    函数库
+        /home   所有用户家目录
+        /etc    所有系统的核心配置文件
+            /etc/passwd
+            /etc/shadow
+            /etc/group
+            /etc/gshadow
+
+            ...
+        /opt    第三方软件安装目录 
+            eclipse,jdk,mysql...
+        /usr    默认软件
+            apt-get install
+            apache2 mysql
+        /var   
+             缓存或其他用户操作产生的文件
+             apach2的部署目录www
+             
+4. 账号管理
+    普通用户
+        在安装ubuntu时，设置的用户briup/briup
+    超级管理员用户
+        系内内置，需要在第一次使用ubuntu的时候，重置root密码
+        sudo passwd
+        root/root
+
+    使用普通用户访问shadow权限不足
+        briup@ubuntu:~$ more /etc/shadow
+    改为使用超级管理员身份运行
+        briup@ubuntu:~$ sudo more /etc/shadow
+        //或
+        briup@ubuntu:~$ sudo !!
+
+    用户添加
+        sudo adduser 用户名
+        sudo useradd 用户名
+            默认创建用户，修改
+                /etc/passwd
+                /etc/shadow 
+                /etc/group
+                /etc/gshadow
+            默认没有创建家目录，没有指定shell
+    用户删除
+        sudo userdel -r 用户名
+    重置/设定用户密码
+        sudo passwd 用户名
+
+    sudo useradd -m -s /bin/bash -p larry larry         //
+    sudo passwd 修改密码
+    这句最重要
+
+    
+
+
+

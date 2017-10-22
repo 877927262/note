@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//阶乘
+		function test(n){
+			if(n<=1){
+				return 1;
+			}else{
+				return n*arguments.callee(n-1);
+			}
+		}
+		var n = test(10);
+		console.log(n);
+	</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+touch
+    touch a.txt
+mkdir
+    mkdir dir1
+    mkdir dir2 dir3
+    mkdir -p dir4/dir5
+重定向
+    cat /etc/passwd > a.txt
+    cat /etc/passwd >> a.txt
+rm
+    rm a.txt
+    rm -r dir1
+rmdir
+    空目录
+mv
+    mv a.txt b.txt
+    mv ~/vscode /opt
+cp
+    cp a.txt b.txt
+    备份
+    cp ~/.bashrc ~/.bashrc.bak
+    vim ~/.bashrc
+压缩
+    gzip /gunzip   
+        gzip a.txt
+        //a.txt.gz
+    bzip2/bunzip2
+        bzip2 a.txt
+        //a.txt.bz2
+    zip abc.zip a.txt b.txt c.txt
+    unzip abc.zip
+归档
+    tar cvf abc.tar *.txt
+    tar xvf abc.tar -C ~/dir1
+归档压缩
+    tar cvfz abc.tar.gz *.txt
+    tar cvfj abc.tar.bz2 *.txt
+    tar xvfz abc.tar.gz 
+    tar xvfj abc.tar.bz2
+权限
+    chmod [options] files
+    chomd
+        u/g/o/a +/-/= r/w/x
+        chmod u-w a.txt
+    chmod   
+        1   --x
+        2   -w-
+        3   -wx
+        4   r--
+        5   r-x
+        6   rw-
+        7   rwx
+        chmod 777 a.txt
+    ls -l
+    drwxr-xr-x 2 briup webui 
+链接
+    硬链接
+        ln sf df
+        ls a.txt a.h
+
+    a.txt
+
+    1001 a.txt.data 房子
+    1002 b.txt.data
+
+    101 a.txt 1001  钥匙
+    102 b.txt 1002
+    103 a.h   1001  硬链接
+    104 a.s   101   软连接
+
+    rm a.txt
+
+    软链接
+    
+环境变量
+    /etc/profile   配置系统变量
+    ~/.bashrc      配置用户变量
+
+    变量名=变量值
+    export JAVA_HOME=/opt/jdk
+
+    强制生效
+    source 配置文件
+    source .bashrc
+
+find ~ -name "*.js" -atime +365
+查找家目录下文件名以.js结尾，并且时间超过365天的文件
+
+find ~ -size 2048 "*.js" -mtime +10
+查找家目录下文件打小时2048字节，并且大于10天没有访问过的文件
+
+
+
+
+vi编辑器的使用
+    1、三种模式的切换
+        命令模式esc
+        插入模式 i   光标之前插入
+                a   光标之后插入
+                o   行首插入
+        底行模式 ：
+    2、上下左右移动
+        kjhl
+    3、移动光标
+        0 行首
+        $ 行尾
+        G 文尾
+        1G 文首
+        跳转到第几行 ：行号
+    4、操作
+        x 删除一个字符
+        dd 删除一行
+        r 替换一个字符
+
+        yw 拷贝一个单词（先将光标定位在单词的首字符）
+        yy 拷贝一行
+        p 粘贴
+
+        :w 存盘
+        :w newfile：另存为
+        :wq：存盘并退出vi
+
+        u 撤销
+
+
+
+
+

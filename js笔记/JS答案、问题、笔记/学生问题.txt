@@ -1,0 +1,419 @@
+1.值的传递和引用传递
+	function foo(num,object){
+		console.log(num);
+		console.log(object);
+	}
+	var num1 = 10;
+	var obj = {
+		value:"hello"
+	}
+	foo(num1,obj);
+
+2.函数的内部属性arguments,this
+	1)打印
+		function test(num,obj,sayName){
+			console.log(arguments);
+			console.log(arguments[0]);
+			console.log(arguments[1]);
+			arguments[2]();
+			console.log(arguments.callee)
+			console.log(arguments.length);
+		}
+		num = 10;
+		obj={
+			value:"hello"
+		}
+		function sayName(){
+			console.log("sayName");
+		}
+		test(num,obj,sayName);
+
+	2)利用arguments.callee中的属性
+		function digui(n){
+			if(n<=1){
+				return 1;
+			}else{
+				return n*arguments.callee(n-1);
+			}
+		}
+		var value = digui(5);
+		console.log(value);
+	3)this的指向问题:在调用的过程中，指向最终调用它的那个对象，如果没有新创建对象，那么默认是window对象调用
+		1)在构造函数中的时候
+		2)在调用对象的时候
+
+		【例子】
+		(1)
+		function a(){
+		    var user = "larry";
+		    console.log(this.user); 
+		    console.log(this); 
+		}
+		a();
+
+		(2)
+		var o = {
+		    user:"larry",
+		    fn:function(){
+		        console.log(this.user); 
+		    }
+		}
+		o.fn();
+		(3)
+		var o = {
+		    user:"larry",
+		    fn:function(){
+		        console.log(this.user); 
+		    }
+		}
+		window.o.fn();
+		(4)
+		var o = {
+		    a:10,
+		    b:{
+		        a:12,
+		        fn:function(){
+		            console.log(this.a); 
+		        }
+		    }
+		}
+		o.b.fn();
+		(5)
+		var o = {
+		    a:10,
+		    b:{
+		        fn:function(){
+		            console.log(this.a);
+		        }
+		    }
+		}
+		o.b.fn();
+		(6)
+		var o = {
+		    a:10,
+		    b:{
+		        a:12,
+		        fn:function(){
+		            console.log(this.a); 
+		            console.log(this); 
+		        }
+		    }
+		}
+		var j = o.b.fn;
+		j();
+
+5.this在构造函数模型的作用:指向创建的新的对象
+	function Person(name,age){
+		//先打印this
+		this.name = name;
+		this.age = age;
+		this.sayName = function(){
+			console.log("sayName");
+		}
+		//后打印this
+		console.log(this);
+	}
+	var p1 = new Person("larry",40);
+	p1.sayName();	
+---------------------------------------------------------------
+1.对象的序列化和反序列化：
+	var obj = {
+		name:"larry",
+		age:21,
+		sayName:function(){
+			console.log(this.name);
+		}
+	}
+	var str = JSON.stringify(obj);
+	console.log(str);
+	var obj = JSON.parse(str);
+	console.log(obj);
+
+2.函数作为返回值
+	查看arguments解决递归的函数
+	查看递归的第2、3个例子
+3.回调函数:把一个函数作为另外一个函数的参数，当调用另一个函数的时候，这个函数就叫做回调函数。
+	(1)
+		function a(callback){      
+		   	console.log("我是parent函数a！");   
+		    console.log("调用回调函数");   
+		    callback();   
+		}   
+		function b(){   
+			console.log("我是回调函数b");  	  
+		}   
+		function c(){   
+			console.log("我是回调函数c");     
+		}   
+		function test(){   
+		   a(b);   
+		   a(c);   
+		} 
+		test();
+	(2)
+		var value = fn(10,5,test1)  
+        function fn(num1,num2,demo){  
+            return demo(num1,num2);  
+        }   
+        function test1(a,b){  
+            return a+b;  
+        }  
+        console.log(value);
+    (3)
+    	var value = fn(10,5,function(){
+    		return a+b; 
+    	})  
+        function fn(num1,num2,demo){  
+            return demo(num1,num2);  
+        } 
+        console.log(value);
+4.递归的实质
+	递归是一种思想，是指函数自己调用自己的情况，使用递归必须要有结束循环的条件，否则会死循环。
+5.什么是工厂模式？构造函数模式？原型模式？构造函数与原型组合模式？各自的特点？
+	1)工厂模式   
+		(1)创建不同对象的时候sayName占用不同的内存空间
+			function createStudent(no,name,age){
+				var student = {
+					no:no,
+					name:name,
+					age:age,
+					sayName:function(){
+						alert(this.name);
+					}
+				}
+				return student;
+			}
+			var stu1 = createStudent(1001,"terry",22);
+			var stu2 = createStudent(1002,"larry",21);
+
+			【注意】
+				1.console.log(stu1.sayName == stu2.sayName );
+					返回false,他们分别属于不同实例中的方法，指向不同的内存地址。
+		(2)创建不同对象的时候sayName占用相同的内存空间
+			function createStudent(id,name,age){
+				var student = {
+					id:no,
+					name:name,
+					age:age,
+					sayName:sayName
+				}
+				return student;
+			}
+			var stu1 = createStudent(1001,"terry",22);
+			var stu2 = createStudent(1002,"larry",21);
+			function sayName(){
+				console.log(this.name);
+			}
+			【注意】
+				1.console.log(stu1.sayName == stu2.sayName );
+					返回true,他们同样指向了sayName方法，内存地址相同。
+		缺点：
+			不能识别对象,即每个对象都只有相同的属性和方法,除非手动添加
+
+	2)构造函数模式
+		function Student(name,age,sex){
+		 	this.name=name;
+			this.age=age;
+			this.sex=sex;
+			this.sayName = function(){
+				console.log(this.name);
+			}
+		}
+		var p1 =new Student("larry",21,"male");
+		var p2 =new Student("larry",21,"male");
+
+		【注意】
+			1.在对象中写方法的时候与工厂模式的相同
+
+		缺点:
+			每个方法都要在每个对象上创建一遍
+			如果使用全局方法，那么在方法特别多的时候，要定义多个全局函数，不能体现封装性
+
+	3)原型模式
+		(1)原型语法
+			function Student(){ ...  } 
+			Student.prototype.name = "larry"; 
+			Student.prototype.age = 29;  
+			Student.prototype.sayName = function(){ 
+			    alert(this.name); 
+			}; 
+			var student1 = new Student(); 
+			var student2 = new Student(); 
+
+			1.分别在实例中和原型中都添加属性的时候，查看调用情况
+				student1.name = "terry";
+				console.log(student1.name);
+				console.log(student2.name);
+			2.创建了自定义的构造函数之后，其原型对象默认只会取得consturctor属性，至于其他方法，都是从Object继承来的
+			3.调用构造函数创建一个新实例后，该实例的内部将包含一个指针，指向构造函数的原型对象
+
+		(2)简便的原型语法
+			function Student(){ ... } 
+			Student.prototype = { 
+			    constructor: Student, 
+			    name : "larry", 
+			    age : 21,  
+			    sayName : function () { 
+			        alert(this.name); 
+			    } 
+			}
+
+		优点:
+			可以进行方法共享，简化了写方法的过程
+		缺点:
+			当原型中写有属性和方法的时候，所有的实例化对象在一开始的时候都会有相同的属性和方法
+	4)构造函数与原型结合使用
+		function Student(name, age, id){ 
+		    this.name = name; 
+		    this.age = age; 
+		    this.id = id; 
+		    this.friends = ["Shelby", "Court"]; 
+		} 
+		Student.prototype = { 
+		    constructor : Student, 
+		    sayName : function(){ 
+		        console.log(this.name); 
+		    } 
+		} 
+		var student1 = new Student("Nicholas", 29, 1314); 
+		var student2 = new Student("Greg", 27, 1315);
+		console.log(student1.friends);   
+		console.log(student2.friends);   
+		console.log(student1.friends === student2.friends);    
+		console.log(student1.sayName === student2.sayName); 
+
+		优点：
+			认同度最高，解决了对象识别的问题，也解决了封装性问题。
+==============================================================================
+1.继承
+	1.原型链继承
+		子构造函数的原型指向父构造函数的对象
+		 function Person(name,age){
+			this.name = name;
+			this.age = age;
+		}
+		Person.prototype.sayName = function(){
+			console.log(this.name);
+		}
+		function Man(name,age,gender){
+			this.name = name;
+			this.age = age;
+			this.gender = gender;
+		}
+		Man.prototype = new Person();
+		Man.prototype.constructor = Man;
+		Man.prototype.sayGender = function(){
+			console.log(this.gender);
+		}
+		console.log(Person.prototype);
+		var m1 = new Man("李四",30,"男");
+	2.借用构造函数：父类.call(this,参数列表)
+		function Person(name,age){
+			this.name = name;
+			this.age = age;
+		}
+		Person.prototype.sayName = function(){
+			console.log(this.name);
+		}
+		function Man(name,age,gender){
+			Person.call(this,name,age);
+			this.gender = gender;
+		}
+		Man.prototype = new Person();
+		Man.prototype.constructor = Man;
+		Man.prototype.sayGender = function(){
+			console.log(this.gender);
+		}
+		console.log(Person.prototype);
+		var m1 = new Man("李四",30,"男");
+2.with语句的使用(高级程序设计78页或者http://tjuking.iteye.com/blog/1419964)
+	var value ="hello" ;
+	var obj = {value:"world"};
+	with(obj){
+	    console.log(value); 
+	}
+
+	var value ="hello" ;
+	var obj = {};
+	with(obj){
+	    console.log(value); 
+	}
+3.贪婪模式和非贪婪模式的区别:	
+	贪婪模式——在匹配成功的前提下，尽可能多的去匹配
+	惰性模式——在匹配成功的前提下，尽可能少的去匹配
+	var b="abeeee:eeeee:eeeeeab";
+    console.log(b.match(/e+\:e+/g));
+    console.log(b.match(/e+?\:e+?/g));
+4.闭包:
+	(1)能够读取其他函数内部变量的函数
+	(2)内部函数 在定义它的作用域 的外部 被引用时,就创建了该内部函数的闭包 ,如果内部函数引用了位于外部函数的变量,当外部函数调用完毕后,这些变量在内存不会被 释放,因为闭包需要它们.
+	(1)
+		var name = "The Window";   
+	　　var object = {   
+	　　　　name : "My Object",   
+	　　　　getNameFunc : function(){   
+	　　　　　　return function(){   
+	　　　　　　　　return this.name;   
+	　　　　　};   
+	　　　　}   
+		};   
+		console.log(object.getNameFunc()()); 
+	(2)
+		function outerFun(){
+		 	var a=0;
+		 	function innerFun(){
+			  	a++;
+			  	console.log(a);
+		 	}
+		 	return innerFun;  
+		}
+		var obj=outerFun();
+		obj();  //结果为1
+		obj();  //结果为2
+		var obj2=outerFun();
+		obj2();  //结果为1
+		obj2();  //结果为2
+	(3)
+		function a() { 
+			var i = 0; 
+			function b() { console.log(++i);  } 
+			return b;
+		}
+		var c = a();
+		c();
+11.内置对象和深入理解对象不懂
+	内置对象:js本身就有的，浏览器可以直接进行解析的，可以直接创建实例，并调用其原型中的方法的对象
+	js的内置对象
+		Object 
+		RegExp
+		Array
+		String
+		Number
+		Math
+		Date
+	深入理解对象
+		修改对对象属性默认的设置，例如：是否可以修改属性，是否可以枚举(for..in&&序列化)
+
+	
+    	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

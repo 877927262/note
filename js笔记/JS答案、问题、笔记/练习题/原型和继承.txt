@@ -1,0 +1,25 @@
+1.采用多种方式创建一个Person对象
+2. 创建一个构造函数Student(id,name,age)
+	number能够记录创建学生对象的个数
+	var s1 = new Student();
+	var s2 = new Student();
+	var s3 = new Student();
+	var s4 = new Student();
+	s4.number = 4;
+
+3.创建一个Animal构造函数，Dog构造函数，Bird构造函数
+	要求：
+		1)每个构造函数应该具有以下属性
+			 Animal(name,age)
+			 Dog(name,age,weight);
+			 Bird(name,age,color);
+		2)每个构造函数应该具有以下方法
+			 Animal(sayName(),sayAge());
+			 Dog(lookDoor());
+			 Bird(fly());
+		3) Dog,Bird都继承Animal
+			也就是说，Bird实例应该具有fly方法和sayName,sayAge方法
+			Dog实例应该具有lookDoor方法和sayName,sayAge方法
+
+
+

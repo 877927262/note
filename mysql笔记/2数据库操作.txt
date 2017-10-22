@@ -1,0 +1,44 @@
+1、创建数据库
+	CREATE DATABASE db_name;
+	//或
+	CREATE SCHEMA db_name;
+2、查看当前服务器下所有数据库(注意别忘了末尾有s)
+	SHOW DATABASES;
+	//或
+	SHOW SCHEMAS;
+3、查看上一步的警告（注意末尾的s）
+	SHOW WARNINGS;
+4、检测数据库是否存在，如果不存在，则创建
+	CREATE DATABASE IF NOT EXISTS db_name;
+
+5、在创建数据库的同时指定编码方式
+	CREATE DATABASE db_name DEFAULT CHARACTER SET 'UTF8';
+
+6、同时检测是否存在和设置编码方式
+	CREATE DATABASE IF NOT EXISTS db_name DEFAULT CHARACTER SET ='UTF8';
+
+7、查看指定数据库的详细信息(主要是编码方式)
+	SHOW CREATE DATABASE db_name;
+
+8、修改指定数据库的编码方式
+	ALTER DATABASE db_name CHARACTER SET ='UTF8';
+
+9、打开指定数据库
+	USE db_name;
+
+10、得到当前打开的数据库(别忘了加括号)
+	SELECT DATABASE();
+
+11、删除指定的数据库
+	DROP DATABASE db_name;
+
+
+
+
+
+
+
+
+
+
+

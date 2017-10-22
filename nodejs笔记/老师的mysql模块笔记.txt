@@ -1,0 +1,118 @@
+在mysql数据库中存取数据
+0. 准备工作
+	安装mysql数据库
+1. 安装
+	cnpm install mysql
+2. 建立连接与关闭连接
+	1) 导入mysql模块
+	var mysql = require("mysql");
+	2) 创建连接对象
+	var connection = mysql.createConnection(options);
+		options为一个对象，用于指定该连接所用的各种选项
+			host	字符串，指定数据库服务器地址
+			port	整数，指定数据库服务器使用的端口号，默认3306
+			socketPath 	字符串，指定一个数据库使用的unix端口路径（host,port使用后，该属性可以省略）
+			user 	字符串，用户名
+			password字符串，密码
+			database字符串，数据库名
+			charset 字符串，指定该连接使用的字符集，默认为UTF8_GENERAL_CI，属性值需要全部使用大写字母
+			stringifyObjects 布尔类型，指定在存储对象时将对象转换为字符串，默认为false
+			typeCast 布尔类型，指定是否将字段值转换为本地JavaScript类型，默认为true
+			queryFormat 	函数，格式化查询字符串
+			supporBigNumbers布尔类型，指定是否支持使用大数值（BIGINT,DECIMAL）,默认为false
+			debug 	布尔类型，指定是否将协议细节进行标准输出，默认为false
+			multipleStatements 	布尔值，用于指定是否允许在一次查询中执行多条MySQL表达式，默认为false.
+
+		options也可以为一个字符串
+			mysql://user:password@host/db?debug=true&charset=UTF8_GENERAL_CI
+	3) 连接
+		直接连接
+		connection.connect(function(err){
+			// Use the connection
+		});
+
+		或者使用连接池
+		var pool  = mysql.createPool(config);
+		pool.getConnection(function(err, connection) {
+		  	// Use the connection
+		 	connection.query( 'SELECT something FROM sometable', function(err, rows) {
+		    	connection.end();
+		  	});
+		});
+	4) 关闭连接
+		connection.destroy();
+
+3. 执行数据的基本处理
+	在mysql模块中，通过Connection对象的query方法统一执行数据的增加，删除，查询，修改等基本操作。
+		connection.query(sql[,parameters][,callback]);
+
+		sql 	
+			:字符串，sql语句
+		parameters	
+			:数组或对象，用于存放sql参数值字符串中使用到的所有参数的参数值
+		callback(err,results)
+			:函数，用于指定执行数据的增删改查操作结束时所需执行的回调函数，results参数为一个对象，代表操作的执行结果
+
+		为了防止SQL注入攻击，需要使用Connection对象的escape方法对所有用户输入数据进行escape编码处理，该方法使用方法如下：
+			connection.escape(data);
+
+	1) 查询(对于多表查询也是支持的)
+		var sql = "select * from tbl_users where id>?"
+		connection.query(sql,[id],function(err,result){
+			if(!err){
+				console.log(result);
+			}
+		});
+
+	2) 插入
+		//connection.query("insert into tbl_category values(null,?,?)",[1111,'测试插入'],function(err){
+		
+		connection.query("insert into tbl_category set ?",{code:2222,name:"测试插入2"},function(err){
+			if(!err){
+				console.log("插入成功！");
+			}
+		});
+
+	3) 更改
+		connection.query("update tbl_category set name=? where id=?",['lalala',12],function(err){
+			if(!err){
+				console.log("更改成功！");
+			}
+		});
+	4) 删除
+		connection.query("delete from tbl_category where id=?",[12],function(err){
+			if(!err){
+				console.log("删除成功！");
+			}else{
+				console.log(err);
+			}
+		});
+
+4. 	使用连接池
+	在开发Web应用程序时，连接池是一个非常重要的概念，因为建立一个数据库连接所消耗的性能成本是比较高的，在服务器应用程序中，如果为每个接收到的客户端请求都建立一个或多个数据库连接，将严重降低应用程序的性能。因此，在服务器应用程序中，通常需要为多个数据库连接创建并维护一个连接池，当连接不再需要使用的时候，这些连接可以缓存在连接池中，当接受到下一个客户端请求时，可以从连接池中取出连接并重新利用，而不需要再重新建立数据库连接。
+	1) 创建连接池
+		var pool  = mysql.createPool(options);
+			options为对象，与createConnection方法中参数一致，此外，还可以使用如下属性：
+				createConnection:
+					如果连接池中没有可用的连接且当前在用的连接数小于连接池最大连接数时，将隐式地建立一个数据库连接。该属性值为一个函数，用于指定建立连接时使用的函数，默认值为mysql.createConnection
+				waitForConnections
+					布尔值，指定当连接池中已经没有可用连接，且当前在用的连接数已等于连接池的最大连接数时所执行的处理。如果值为true,则挂起数据库连接请求，直到一个当前在用的数据库连接释放数据库连接。如果为false,抛出异常，默认为true
+				connectionLimit
+					整数，用于指定连接池中最大的连接数，默认为10
+				queryLimit
+					整数，用于指定允许挂起的最大连接数，如果挂起连接数超过该数值，将抛出异常。默认为0
+
+	2) 从连接池中获取数据
+		pool.getConnection(function(err, connection) {
+		  	// Use the connection
+		 	connection.query( 'SELECT something FROM sometable', function(err, rows) {
+		    	connection.end();
+		  	});
+		});
+	3) 释放连接
+		当一个连接不需要使用时，将其归还到连接池中
+		connection.release();
+	4) 删除连接
+		当一个连接不需要使用时，且需要从连接池中移除时，需要使用destroy方法
+		connection.destroy();
+

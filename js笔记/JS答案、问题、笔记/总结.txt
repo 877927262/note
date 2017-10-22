@@ -1,0 +1,227 @@
+【要求：不仅能够调试，而且能够手写】?
+
+简答题：
+
+	JS命名规则
+	数据类型有哪些？
+		基本数据类型
+			Number
+			String
+			Boolean
+			undefined
+			null
+		引用数据类型
+			Object
+	相对重要的运算符
+		+
+			作为一元运算符
+			作为二元运算符?
+			作为字符串拼符?
+		三目运算�?
+			条件为真吗？为真时执行：为假时执行?
+	写出其他类型数据转换为Number类型数据，至少三种方法?
+		(1) 通过转换函数 			Number()
+		(2)通过数字解析函数		parseInt()  parseFloat()
+		(3)通过加性操作符			+
+	写出this的两种用发?构造函数，普通函数?
+	函数的调用方式?
+		函数名(参数列表)
+		函数名.call(调用者,参数列表)
+		函数名.pply(调用者,参数列表数组)
+	函数调用时，值传递和引用传递的区别?
+		画图解释
+	写出数组Array原型对象中你能够列出的方�?
+		push()		向数组的末尾追加元素
+		pop()		从数组的末尾删除元素，并返回删除后的�?
+		shift()		从数组的开头删除元素，并返回删除后的�?
+		unshift()	从数组的开头插入元�?
+		sort()		排序
+		slice()		分割数组
+		splice()	数组的插入，删除，替换
+		forEach()	数组的遍历
+		map()		数组的映射
+		filter()	数组的过滤
+		some()		回调函数返回一次真整个表达式结果就为真
+		every()		回调函数返回一次假整个表达式结果就为假
+	写出ECMAScript中内置函数？
+		Object		
+		Function 		
+		Array 		
+		Date			
+		RegExp		
+		Number			
+		Boolean
+		String
+	内置对象String常见方法和属性？
+		length		
+			属性，获取字符串的字符数量
+		charAt(i)	
+			返回给定位置的字�?
+		charCodeAt()	
+			返回给定位置的字符的字符编码
+		concat()	
+			将一个或多个字符串拼接起来，返回拼接得到的新字符串，但是大多使用"+"拼接
+		slice()	:字符串截取：
+			 如果给一个位�? ，会从该位置截取到字符串结束
+			 可以�?�? 第一个表示开始位�?
+				    第二个表示的结束位置（不包括�?
+			
+		substr()：字符串截取
+		两个参数�?
+			1.开始截取的位置
+			2.表示截取的个�?
+		substring()	
+			（开始位置，返回字符后一个字符位置）
+		indexOf();	
+			从前往后查找指定字符所在位�?
+		lastIndexOf();	
+			从后往前查找字符串所在位置，可以有第二个参数，代表从字符串中哪个位置开始查找�?
+		trim();		
+			删除前置以及后置中的所有空格，返回结果
+		toLowerCase()	:转换为小�?
+				toUpperCase()	:转换为大�?
+		search()
+		replace()
+		match()
+		aplit()
+	Math常用方法
+		Math.min()	求一组数中的最小�?
+		Math.max()	求一组数中的最大�?
+		Math.ceil()  向上舍入
+		Math.floor() 向下舍入
+		Math.round() 四舍五入
+		Math.random() 返回大于0小于1的一个随机数
+	Date常用的方�?
+		Date.getDate()		返回是日期对象中月份中的几号�?
+		Date.getDay()		返回日期中的星期几　
+		Date.getFullYead()	返回年份
+		Date.getHours()	返回日期中的小时，几点了
+		Date.getMilliseconds()	返回日期中的毫秒�?
+		Date.getMinutes()		返回日期中的分钟�?
+		Date.getMonth()　	返回日期中的月份数，返回�?(1�?-11(12�?
+	写出事件三要素？
+		事件�?
+		事件处理函数
+		事件对象
+	简述事件代理原理？优缺点？
+		事件代理原理�?
+			主要利用了事件冒泡，将事件绑定在目标元素的父元素上，当点击目标元素时，代理事件会被激发，通过event.target可以获取目标对象�?
+		优点�?
+			减少了事件绑定的次数，提高了代码运行效率
+			所以支持目标元素的动态添加�?
+			事件处理函数绑定在目标元素的父元素上�?
+			添加新元素后原先通过事件代理绑定在父元素上的事件�?
+			当点击新添加的元素时也会激发�?
+
+		缺点�?
+			滥用后导致事件管理混乱，例如�?
+			想要给td添加事件，尽量让tr来代理，
+			如果让html或者body来代理，效率也会比较低�?
+	在IE浏览器中如何阻止冒泡？如何阻止默认行为？在事件冒泡中如何获取当前操作的节点？
+		阻止事件默认行为		event.returnValue=false;
+		停止事件冒泡			event.cancelBubble=true;
+		获取当前操作的节�?event.srcElement
+	在非IE浏览器中如何阻止冒泡？如何阻止默认行为？在事件冒泡中如何获取当前操作的节点？
+		阻止事件默认行为		event.preventDefault();
+		停止事件冒泡			event.stopPropagation();
+		获取当前操作的节�?event.target
+	DOM中如何创建，添加，移除，复制，查找节点？
+			createElement()  	//创建
+			appendChild() 		//追加孩子节点
+			removeChild()		//删除孩子节点
+			replaceChild()		//替换孩子节点
+			cloneNode()		//克隆当前节点
+
+			getElementById()			//根据ID查找节点
+			getElementsByTagName()	//根据标签名查找节�?
+			children					//孩子节点
+			nextElementSibling			//下一个兄弟节�?
+			previousElementSibling		//上一个兄弟节�?
+
+
+
+
+
+
+
+
+
+编程，不仅能够调试，而且能够手写
+	写出用内置对象arguments.callee()实现n!的算�?
+		function recursion(n){
+			if(n<=1){
+				return 1;
+			}else{
+				//return n*arguments.callee(n-1);
+				return n*recursion(n-1)
+			}
+		}
+	已知有字符串foo=”get-element-by-id?写一个function将其转化成驼峰表示法”getElementById?
+	闰年
+	水仙花数
+	最大公约、最小公倍数
+	有1、2、3、4个数字，能组成多少个互不相同且无重复数字的三位数？都是多少？
+	写一段程序，要求每次刷新页面就会在页面中显示6个两位数的整数，这6个数不能重复
+		var number = [];
+		for(var i=0;i<6;i++){
+			while(true){
+				//控制在10-99之间
+				var ran = Math.floor(Math.random()*(98-10+1)+10);
+				if(!iterator(number,ran)){
+					number[i] = ran;
+					break;
+				}
+			}
+		}
+		document.write(number+"</br>");
+		function iterator(arr,num){
+			for(var i=0;i<arr.length;i++){
+				if(arr[i] == num){
+					return true;
+				}
+			}
+		}
+		document.write("<br />")
+	将输入的字符串反转输出，并将首位字母大写，其他小写
+		var s1 = prompt("请输入字符串");
+		var array = [];
+		for(var i = s1.length-1,k=0;i>=0;i--,k++){
+			array[k] = s1.charAt(i);
+		}
+		for(var i=0;i<array.length;i++){
+			if(i==0||i==array.length-1){
+				array[i] = array[i].toUpperCase();
+			}else{
+				array[i] = array[i].toLowerCase();
+			}
+		}
+		var str = array.join("");
+		document.write("处理后的字符串为:"+str);
+	今天是何年何月
+	var today = new Date();
+		document.write("今天是"+today.getFullYear()+"年"+(today.getMonth()+1)+"月"+today.getDate()+"日")
+	编写一个函数，在页面上输出1-1000之间所有能同时被3,5,7整除打印，每行打印6个数
+			//判断能否同时被整除
+			function IsThatNumber(x){
+				return x%3==0 && x%5 == 0 && x%7 ==0;
+			}	
+			var n,nb=0;
+			for(n=1;n<1000;n++){
+				if(IsThatNumber(n)){
+					if(nb%6 > 0){
+						document.write(",");
+					}
+					nb++;
+					document.write(n); 
+					if(nb%6 == 0){
+						document.write("\n");
+					}
+				}
+				
+			}
+
+
+
+
+看程序，写结果题目：
+	围绕this,函数提升，函数中变量的提升机制，函数的调用，原型，原型链

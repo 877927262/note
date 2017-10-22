@@ -1,0 +1,54 @@
+1、数据表是数据库最重要的部分之一，数据是保存在数据表中的
+
+2、创建表
+	CREATE TABLE [IF NOT EXISTS] tbl_name(
+		字段名称 字段类型 [完整性约束条件]，
+		字段名称 字段类型 [完整性约束条件]，
+		……
+	)ENGINE=存储引擎 CHARSET=编码方式;
+3、查看当前数据库下已有数据表
+	SHOW TABLES;
+
+4、查看指定数据表的详细信息
+	SHOW CREATE TABLE tbl_name;
+
+5、查看表结构(这三种写法的效果一模一样)
+	DESC tbl_name;
+	DESCRIBE tbl_name;
+	SHOW COLUMNS FROM tbl_name;
+
+6、删除指定数据表
+	DROP TABLE tbl_name;
+
+7、完整性约束条件
+	unsigned 无符号，没有负数，从零开始
+	zerofill 零填充，当显示长度不够的时候可以使用前补0的效果填充至指定长度
+	NOT NULL 非空约束，也就是插入值得时候这个字段必须要有值
+	DEFAULT 默认值，如果插入记录的时候没有给字段赋值，则使用默认值
+	PRIMARY KEY 主键，标识记录的唯一性，值不能重复，一个表只能有一个主键，自动禁止为空
+	UNIQUE KEY 唯一性，一个表可以有多个字段是唯一索引，同样的值不能重复，但是NULL除外
+	AUTO_INCREMENT 自动增长，只能用于数值列，而且配合索引所有
+	FOREIGN KEY 外键约束
+
+8、向表中插入一条记录
+	INSERT tbl_name(id,name,……) 
+	VALUES(1,'gjf'，……);
+
+9、查询表中的所有记录(可以理解为以Excel方式显示)
+	SELECT * FROM tbl_name;
+	*号代表显示所有记录
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

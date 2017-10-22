@@ -1,0 +1,185 @@
+1. 简单命令
+    pwd
+
+    cd
+        cd .
+        cd ../
+        cd ~
+        cd /
+        cd 
+    ls [options] [目录]
+        -a
+        -l
+        drwxrwxr-x 3 briup webui    4096 5月  27 10:53 Html
+
+        文件类型
+            d   目录
+            -   常规文件
+            b
+            l
+        权限
+            拥有者 rwx
+            同组人 rwx
+            其他人 r-x
+        链接数
+        文件拥有者
+        组
+        大小
+        最近访问时间
+        文件/目录名
+    clear
+        清除屏幕内容
+    more
+    tail
+    head
+    cat
+2. 用户管理
+
+    adduser
+    useradd 
+        -p  密码
+        -s
+        -m
+        -g
+
+        /etc/passwd 
+            账号名:x:uid:gid:introduce:home：shell
+        /etc/shadow
+            账号名:password
+        /etc/group
+        /etc/gshadow
+
+        新建家目录
+            /home/账号名
+        初始化家目录
+            cp /etc/skel/* /home/账号名
+
+    passwd [用户]
+    身份切换
+        su 用户名
+        su - 用户名（推荐）
+    id
+        查看该用户的基本信息
+    whoami
+    who
+
+    userdel
+        -r  删除用户所有相关内容
+
+    usermod
+        修改用户的基本信息
+
+    groupadd
+    addgroup
+    groupdel
+    groupmod
+
+3. 权限
+    ls -l
+
+4. 文件操作
+    目录
+        mkdir dir1
+        mkdir dir2 dir3 dir4
+        mkdir dir1/dir11
+        mkdir -p dir5/dir6
+    文件
+        touch
+            新建文件或者更新文件的最近访问时间
+            touch a.txt
+    cp
+        拷贝
+        -i 询问
+    mv
+        移动或重命名
+    rm
+        删除文件或者非空目录（-r）
+    rmdir   
+        删除空目录
+
+5. shell
+    记录历史命令 .bash_history
+    命令或者文件补全    tab         
+    别名          .bashrc
+        ls -al
+        =>
+        ll
+
+6. 重定向
+    >
+        覆盖
+        cal     日历
+        date    日期
+
+        cal > a.txt
+        cat /etc/passwd > b.txt
+    >>
+        追加
+        cal >> a.txt
+    <
+7. 文件压缩
+    gzip    .gz
+        gzip a.txt  ->a.txt.gz
+
+    bzip2   .bz2
+        bzip2 a.txt ->a.txt.bz2
+    zip     .zip
+        zip cd.zip c.txt d.txt  ->cd.zip
+
+    文件打包（归档）
+
+    1. 归档
+        tar cvf abcd.tar *.txt
+        //产生了abcd.tar文档，占用空间较大
+    2. 压缩
+        gzip abcd.tar
+        //产生abcd.tar.gz文档，占用空间较小
+        bzip2 abcd.tar
+        //产生abcd.tar.bz2
+    =》
+        tar cvfz abcd.tar.gz *.txt
+        tar cvfj abcd.tar.bz2 *.txt
+
+    文件拆包
+    1. 拆压缩
+        gunzip abcd.tar.gz
+        //产品abcd.tar文档
+        bunzip2 abcd.tar.bz2
+    2. 拆包
+        tar xvf abcd.tar
+
+    =>
+        tar xvfz abcd.tar.gz
+        tar xvfj abcd.tar.bz2
+
+        -C 目录
+            指定解压后文件放置目录
+        tar xvfj abcd.tar.bz2 -C /opt/abcd
+
+8、链接
+    硬链接
+    ln 源文件 目标文件（一般设置为.h结尾）
+
+    软链接
+    ln -s 源文件 目标文件（一般后缀设置为.s结尾）
+
+
+    链接和拷贝的区别：
+        拷贝是把相同的文件复制一份
+        链接是不拷贝文件也能访问到这个文件
+
+    软硬链接的区别：
+        硬链接相当于楼房的两把钥匙，楼房摆在那里，无论哪把钥匙都能开锁，
+        丢失了其中一把，不影响另一把
+
+        软链接相当于快捷方式，删除源文件，软链接就不能用了
+        
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,186 @@
+8，变量
+  ECMAScript的变量是弱类型（松散类型），可以用来保存任何类型的数据。定义变量时使用var操作符
+	
+    var 变量名;
+    声明 			var message;
+	初始化			message = "hello"
+    声明并初始化	var message = "hello";
+    定义多个变量
+					var msg1 = "hello";
+					var msg2 = "world";
+
+      				var message= "hello",found=false, age = 29;
+
+    局部变量与全局变量：
+    	1) 使用var操作符定义的变量将成为定义该变量的作用域中的局部变量。
+	      	function test(){
+				var message = "hello";  
+	      	}
+	      	test();
+	      	alert(message); //错误
+    	2) 如果在函数中定义变量没有加var，该变量为全局变量
+	      	function test(){
+				message = "hello";  
+	     	}
+	      	test();
+	      	alert(message); //可以访问
+9， 数据类型
+  	1)ECMAScript不支持自定义类型，只有6种数据类型：
+    	5中基本数据类型（简单数据类型）
+	      	Undefined	未定义	"undefined"
+				var a ;
+				var a = "undefined";//不做
+	      	Null		空引用数据类型 "null"
+				var a = null;
+	      	Boolean		布尔类型 true/false
+				var a = false;
+	      	Number		数字类型
+				整数(八进制 十进制 十六进制)
+				浮点数(小数)
+	      	String		字符串类型 "" ''
+				"hello" 'hello'
+				var a ="undefined";
+				var a ='hello';
+						
+    	1种引用数据类型（复杂数据类型）
+      		Object(本质由一组无序的键值对组成)
+			1.
+			var teacher=new Obejct();
+			typeof(student)//object
+				teacher.age=12;
+				teacher.gender="男";
+			console.log(teacher.age);//12
+		2.
+			var student={
+				name:"zhangsan",
+				age:12
+			};//空对象
+
+
+    
+  	2) typeof 操作符
+  		返回该变量名所指向数据的类型
+    	语法：
+			typeof 变量名  
+    	可有取值如下
+	      	"undefined"		未定义
+	      	"boolean"		布尔类型
+	      	"string"		字符串
+	      	"number"		数值
+	      	"object"		对象或者null
+	      	"function"		函数
+
+  	3) 基本数据类型
+    1. Undefiend 
+     	该类型只有一个值undefined。对未声明和未初始化的变量执行typeof操作符都返回undefined
+		var a;
+		console.log(a);			// undefined
+		console.log(typeof a);	// undefined
+		console.log(b);			//ReferenceError: b is not defined
+		console.log(typeof b);	// undefined
+    2. Null类型
+     	该类型只有一个值 null ,null可以表示一个空对象的指针。
+		var car = null;
+		console.log(typeof car )	//object  null被认为是空对象的引用
+
+		【使用情景】
+     		如果一个变量准备将来保存对象，可以将该变量初始化null而不是其他，这样可以通过检查null值就可以知道相应的变量是否已经保存了一个对象的引用。
+	       	if(car !=null ){
+	         	//car对象执行某些操作
+	      	}
+     	实际上 undefined 派生自null值。undefined == null 结果为 true
+		null与undefined用途不同，null可以用来表示一个空对象，但是没有必要把一个变量的值显式设置为undefined
+
+    3. Boolean类型
+     	该类型只有两个值，true,false虽然boolean类型的取值只有两个，但是ECMAScript中所有的类型的值都有与这两个Boolean值等价的值
+	       
+    4. Number
+     	该类型用来表示整数和浮点数
+     	1) 表示方法：
+			1. 整数：
+				
+       			十进制数： 55	0~9
+       			八进制数： 首位为0,其他位为（0~7 如果字面值超出了范围，前导0将会被忽略）
+					070 （表示 7*8一次方 =  56）
+					079	（超过了范围，表示79）
+       			十六进制： 前两位为0x，其他位为(0~9，A~F)
+			2. 浮点数
+				所谓浮点数值，就是该数值中必须包含一个小数点，并且小数点后必须至少有一位数字。浮点数值的最高精度是17位小数。
+					例如：	var f = 1.2;
+     			科学计数法：e
+       				var e = 3.125e7;		//31250000
+		2) 数值范围
+			由于内存的限制，ECMAScript不能保存世界上所有的数值。ECMAScript能表示的最小数值保存在Number.MIN_VALUE中，能表示的最大的数值保存在Number.MAX_VALUE中。如果某次计算的结果超过了JavaScript数值范围，将会返回Infinity(正无极)或者-Infinity(负无极)使用 isFinite()函数可以判断参数是否在最大值和最小值之间，如果在，返回true
+
+			在绝大数浏览器中：
+				Number.MIN_VALUE ： 5e-324
+       			Number.MAX_VALUE ：	1.7976931348623157e+308
+			如果某次计算返回了正的或者负的Infinity,那么该值无法继续参与下一次计算。可以使用isFinite(para)函数判断para 是否在最大数最小数之间
+		3) 非数值 NaN (not a number)
+       		该数值表示一个本来要返回数值的操作数未返回数据的情况。
+				var a = 10/'a';
+				console.log(a);		//NaN
+				
+			任何涉及到NaN的操作都会返回NaN; NaN与任何值都不相等，包括NaN本身。
+			isNaN，判断参数是否“不是数值”，当参数para不是数值的时候返回true	
+				isNaN(NaN);		true
+				isNaN("blue");	true	无法转换为数值
+				isNaN(10);		false	10
+				isNaN("10");	false	10
+				isNaN(true);	fase
+	注意：
+   		1) 默认情况下，ECMAScript会将小数点后带有6个零以上的浮点数转化为科学计数法。
+			0.0000003 => 3e-7
+		2) 在进行算术计算时，所有以八进制十六进制表示的数值都会被转换成十进制数值。
+   			
+ 		3) 保存浮点数需要的内存是整数的两倍，因此ECMAScript会不失时机将浮点转换为整数
+   			例如：
+   			var a = 1.;
+   			var b = 1.0;  都将解析为1
+		4) 避免测试某个特点的浮点数值，是使用IEEE 754数值的浮点计算的通病
+			例如：	0.1+0.2结果不是0.3，而是0.30000000000000004
+
+			Math.pow(2, 53)，十进制即 9007199254740992
+			
+    5. String
+    	字符串类型 "" ''
+     	该类型表示由零个或者多个16位Unicode字符组成的字符序列，即字符串。字符串可以由双引号或者单引号表示
+     	1)字符字面量
+      		\n	换行
+      		\t	制表
+      		\b	退格
+      		\r	回车
+      		\\	斜杠
+      		\'	单引号
+      		\"	双引号
+     	2)字符长度 	
+     		通过length属性获取字符长度
+     	
+    6. Object
+     	ECMAScript中的对象其实就是一组数据和功能的集合。对象可以通过执行"new 对象类型"来创建。
+     		var o = new Object();
+		Object类型是所有它的实例的基础，换句话说，Object类型所具有的任何属性和方法，同样存在于更具体的对象。
+		
+     		constructor:					保存用户创建当前对象的函数
+       		hasOwnProperty(propertyName);	用于检查给定的属性是否在当前对象实例中
+       		isPrototypeOf(object);			用于检查传入的对象是否是原型
+       		propertyIsEnumerable(propertyName);	用于检查给定的属性在当前对象实例中是否存在
+       		toLocaleString();				返回对象的字符串表示，该字符串与执行环境的地区对应
+       		toString();		返回对象的字符串表示
+       		valueOf();					返回对象的字符串，数值，布尔值的表示。
+
+
+
+
+       		对于不同类型的对象，js定义了多个版本的 toString 和 valueOf 方法
+			toString:
+			（1）普通对象，返回 "[object Object]";
+			（2）数组，返回数组元素之间添加逗号合并成的字符串;
+			（3）函数，返回函数的定义式的字符串;
+			（4）日期对象，返回一个可读的日期和时间字符串;
+			（5）正则，返回其字面量表达式构成的字符串;
+			valueOf:
+			（1）日期对象，返回自1970年1月1日到现在的毫秒数;
+			（2）其它均返回对象本身;
+       
+

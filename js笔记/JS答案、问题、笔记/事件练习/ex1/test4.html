@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+ul{display:block;width:150px;}
+ul li{float:left;list-style:none;width:50px;text-align:center;font-size:0.9em;font-family:weiruanyahei;background:#CCC;cursor:pointer;}
+.content{width:150px;height:150px;border:1px solid #ccc;border-top:0px;display:none;}
+</style>
+<script>
+	window.onload=function(){
+		var aLi=document.getElementsByTagName("li");
+		var aDiv=document.getElementsByClassName("content");	
+		for(var i=0;i<aLi.length;i++){
+			aLi[i].index=i;			
+			aLi[i].onmouseover=function(){
+				for(var i=0;i<aLi.length;i++){
+					aDiv[i].style.display="none";
+					aLi[i].style.background="gray";
+				}
+				this.style.background="white";
+				aDiv[this.index].style.display="block";
+			}
+			aLi[i].onmouseout=function(){
+				this.style.background="";
+				aDiv[this.index].style.display="";
+			}
+		}
+	}
+</script>
+</head>
+
+<body>
+	<ul id="ul1">
+    	<li style="background:white;">体育</li>
+        <li>娱乐</li>
+        <li>军事</li>
+    </ul>
+    <div style="clear:both;"></div>
+    <div class="content" style="display:block;">
+    	跑啊跑啊  
+    </div>
+    <div class="content">
+    	大S已哭晕在厕所。。。
+    </div>
+    <div class="content">
+    	打仗了
+    </div>
+</body>
+</html>

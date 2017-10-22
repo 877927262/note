@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var obj = {
+			name:"larry",
+			age:21,
+			sayName:function(){
+				console.log(this.name);
+			}
+		}
+		console.log(obj);
+		var str = JSON.stringify(obj);
+		console.log(str);
+		var obj = JSON.parse(str);
+		console.log(obj);
+	</script>
+</body>
+</html>

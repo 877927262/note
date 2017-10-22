@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+	//arguments代表的是实际参数的个数。
+		function test(num,obj,sayName,age){
+			//arguments:实参列表
+			// console.log(arguments);
+			// console.log(arguments[0]);
+			// console.log(arguments[1]);
+			// console.log(arguments[2]);
+			// arguments[2]();
+			// console.log("已经运行");
+			// console.log(arguments.callee);//function test(){}	
+			console.log(arguments.length);
+		}
+		var num = 10;
+		var obj={
+			value:"hello"
+		}
+		function sayName(){
+			console.log("sayName");
+		}
+		test(num,obj,sayName);
+	</script>
+</body>
+</html>

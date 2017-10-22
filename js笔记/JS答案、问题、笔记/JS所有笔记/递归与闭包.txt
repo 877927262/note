@@ -1,0 +1,165 @@
+1.递归
+    函数表达式
+	var functionName = function(arg0,arg1,arg2){
+		//函数体
+	}
+	创建一个函数对象，并将其赋给functionName,这种函数称为匿名函数或者拉姆达函数。
+
+    递归函数
+	递归函数数在一个函数通过名字调用自身的情况下构成的
+		function factorial(num){
+			if(num <= 1){
+				return  1;
+			}else {
+				return num * factorial(num-1);
+			}
+		}
+		var demo = factorial;
+		factorial = null;
+		var a = demo(4); //报错 ： TypeError: factorial is not a function
+		console.log(a);
+	报错原因为递归函数中有访问函数名为factorial的函数，但是该函数已经置为空。引用与函数名耦合解决办法，arguments.callee是一个指向正在执行的函数的指针。
+		function factorial(num){
+			if(num <= 1){
+				return  1;
+			}else {
+				return num * arguments.callee(num-1);
+			}
+		}
+	但是在严格模式下，不能通过脚本访问arguments.callee.
+		<script>
+		  "use strict" //使用严格模式
+		  /*	
+			//如果使用arguments.callee，将会报如下错误
+
+			TypeError: 'caller', 'callee', and 'arguments' properties 
+			may not be accessed on strict mode functions or the arguments
+			objects for calls to them
+		  */
+		
+		</script>
+	可以使用命名函数表达式来解决
+		var factorial = (function f(num){
+			if(num <=1 ){
+				return 1;
+			}else{
+				return num * f(num-1);
+			}
+		});
+2.闭包
+    1) 基本概念
+	闭包是指有权访问另一个函数作用域中的变量的函数，代码块和创建该代码块的上下文中数据的结合。
+		var x = 20;
+		function foo(){
+			alert(x);
+		}
+		x = 10;
+		foo();
+
+		//foo的闭包为
+	    {
+		    foo,
+		    scope:{
+				x = 20
+		    }
+	    }
+
+	闭包常见的创建方式是：在一个函数内部创建另外一个函数。例如之前的万能比较函数。
+		function personComparator(name){
+		    return function(p1,p2){
+				if(p1[name] < p2[name]){
+					return -1;
+				}else if(p1[name] > p2[name]){
+					return 1;
+				}else {
+					return 0;
+				}
+		    }
+		}
+		返回函数为闭包，闭包为：
+		{
+			function 匿名函数
+			scope:{
+			    x = name
+			} 
+		}
+    2)  执行环境
+	    function compare(val1,val2){
+			if(val1 < val2){
+				return -1;
+			}else if(val1 > val2){
+				return 1;
+			}else {
+				return 0;
+			}
+	    }
+	    var result = compare(3,6);
+		后台的每个执行环境都有一个表示变量对象--变量对象。全局环境的变量对象始终存在，而像compare()函数这样的局部变量的变量对象，只在函数执行的过程中存在。在创建compare()函数时，会创建一个预先包含全局变量对象的作用域链，这个作用域链会被保存在内部的[[Scope]]属性中，当调用compare()函数时，会为函数创建一个执行环境，然后通过复制函数的[[Scope]]属性中的对象构建起执行环境的作用域链
+	 	 一般来讲，当函数执行完毕后，局部活动对象就会被销毁，内存中仅保存全局作用域但是闭包不同：
+
+	  	var compare = personComparator("name");
+	  	compare闭包{
+			返回的比较函数,
+			数据{
+		    	name:"name"
+			}
+	  	}
+	  	compare()函数仍然可以访问到personComparator函数中的参数变量name
+	  	var result = compare({name:"cc"},{name:"aa"});
+	  	在外部函数内部定义的函数会将外部函数的活动对象添加到它的作用域链中。在personComparator()函数执行完毕后，其活动对象不会被销毁，因为匿名函数的作用域链仍然在引用这个活动对象。
+
+    3)  闭包与变量
+        所有的内部函数都共享同一个父作用域,闭包只能取得包含函数中任何变量的最后一个值，因为闭包保存的是一个变量对象
+	    function test(){
+			var arr = [];
+			for(var i=0;i<3;i++){
+				arr[i] = function(){
+					alert(i);
+				}
+			}
+			return  arr;
+	    }
+	    var fns = test();
+	    for(var key in fns){
+			arr[key]();	//每次弹框内容均为3
+	    }
+	    这段代码中，function(){alert(i)}的闭包为
+	    {
+	      	该函数的引用，
+	      	变量对象:{
+				arr:[],
+				i:
+	      	}
+	    }
+	    当test执行完毕后，返回一个数组arr,该数组中的每个元素为一个函数，该函数打印i,但是i指向外部外部环境变量中的i，因此当在执行过程中，数组中的每个函数中的i指向同样一个变量，并且都为最新的i值，因此打印均结果为4
+
+	  解决办法：	//每次弹框内容分别为0,1,2
+	    function test(){
+	        var arr = [];
+	        for(var i=0;i<3;i++){
+			    arr[i] = (function(num){
+				return function(){
+						alert(num);
+				}})(i);
+	        }
+	        return  arr;
+        }  
+
+    4)  块级作用域
+	  JavaScript没有块级作用域，这意味着在块语句中定义的变量，实际上是包含在函数中
+        而非语句中。
+	  function out(){
+		for(var i=0;i<10;i++){
+			console.log(i);
+		}
+		alert(i);//10
+	  }
+	  out(); 
+	  变量i定义在out()的活动对象中，因此从它定义开始，就可以在函数内部随处访问它。
+
+	  可以使用匿名函数模拟块级作用域。
+	  (function(){
+		//块级作用域
+	  })();
+	  当函数指定完毕后，局部活动对象就会被销毁。因此在块级作用域中声明的属性
+	  也会被销毁。

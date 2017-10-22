@@ -1,0 +1,60 @@
+1.写出ECMAScript中所有的内置函数
+	Object		基对象
+	Function 	函数
+	Array 		数组
+	Date		日期
+	RegExp		正则
+	Number			
+	Boolean
+	String
+2.写出Array原型对象中的所有方法，说明其含义，写出返回值并指出是否改变了原来的数组
+	例如：
+		arr.push(),表示向数组的末尾添加一个数据，返回值为添加元素后的数组，改变了原来的数组
+		测试方法：
+			var arr = [1,2,3];
+			arr.push();
+			console.log(arr);
+			console.log(arr.push());
+3.随即选取1~100之间的10个整数,并把这些值放到一个数组中,然后使用sort对该数组进行升序排序
+	var arr = [];
+	for(i=0;i<10;i++){
+		var random = Math.round(Math.random()*100);
+		arr.push(random);
+	}
+	console.log(arr);	//排序前
+	arr.sort(function(a,b){
+		if(a>b){
+			return 1;
+		}else{
+			return -1;
+		}
+	});
+	console.log(arr);	//排序后
+4.使用递归和循环实现1!+2!+3!+4!+...+10!
+	//递归，计算n的阶乘
+	function recursion(n){
+		if(n<=1){
+			return 1;
+		}else{
+			//return n*arguments.callee(n-1);
+			return n*recursion(n-1)
+		}
+	}
+	//循环
+	var result = 0;
+	for(var i=1;i<11;i++){
+		result += recursion(i);
+	}
+	console.log(result);
+5.输出今天的日期，以YYYY-MM-DD的方式，比如今天是2017年8月30日，则输出2017-08-30
+	var d = new Date();
+	// 获取年，getFullYear()返回4位的数字
+	var year = d.getFullYear();
+	// 获取月，月份比较特殊，0是1月，11是12月
+	var month = d.getMonth() + 1;
+	// 变成两位
+	month = month < 10 ? '0' + month : month;
+	// 获取日
+	var day = d.getDate();
+	day = day < 10 ? '0' + day : day;
+	alert(year + '-' + month + '-' + day);

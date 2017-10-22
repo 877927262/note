@@ -1,0 +1,36 @@
+mysql的默认配置文件是my.cnf
+
+1、登录
+	mysql -uroot -p
+	//或
+	mysql -uroot -p密码		（注意：此处是明文密码，不推荐使用）
+2、退出
+	quit
+	//或
+	exit
+	//或
+	\q
+3、得到版本号
+	mysql -V
+	//或
+	mysql --version
+4、mysql语句要以分号或者\g结束
+	;
+	\g
+5、常用语句		（注意mysql的关键字大写；库名，表名，字段等小写）
+	得到登录的用户
+	SELECT USER() 
+
+	得到MySQL的版本信息
+	SELECT VERSION()
+
+	得到当前时间
+	SELECT NOW()
+
+	得到当前打开的数据库
+	SELECT DATABASE()
+
+
+
+
+

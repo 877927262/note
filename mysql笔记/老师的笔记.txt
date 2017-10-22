@@ -1,0 +1,459 @@
+1. what
+    mysql
+    关系型数据库
+    student         stucou              course
+    id  name age    id  sid  cid grade   id name credit 
+    1   terry 12    1   1     1   41      1  html
+    2   larry 13    2   1     2   88      2  css
+    3   tom   14    3   2     1   92      3  js
+
+    1   terry 12    1   1     1   41    1  html
+
+
+2. why
+    新致软件(newtouch)
+    前端          后台          数据库
+    vue         java            mysql(oracle)
+
+    axios.get('http://192.168.15.135:8080/getAllCourses.action').then((resp)=>{
+        resp.data
+    });
+
+    显示所有课程信息
+    编号  名称  学分  
+    1    java  4
+    2    js    4
+
+    
+
+
+3. how
+    0) 项目开发流程
+        1. 需求分析（原型axure）
+        2. 总体设计
+            数据建模
+                表
+                关系
+                    student
+                    course
+                    teacher
+                    classRoom
+                    ...
+            前端设计（ps）
+        3. 详细设计（平行开发）
+            前端
+                |
+                |交流接口(url,params,return)
+                |
+            后台java（node.js http mysql）
+                |
+                |
+            数据库(原始数据)
+
+mysql使用
+    1. 安装以及配置
+        $ apt-get install mysql-server-5.7
+        下载安装包 二进制（配置）
+        deb
+
+        /etc/my.cnf(mysql核心配置文件)
+        .bashrc/profile/.vimrc
+    2. 启动mysql服务
+        $ service mysql start/stop/restart/status
+    3. 连接Mysql数据库
+        1) 登录本地数据库
+            $ mysql -uroot -p
+        2) 远程登录
+            $ mysql -hhost -uroot -p
+            mysql中有两个内置的数据库
+            mysql
+                user 用户信息
+                （user,host）
+            sys     系统信息
+
+            1. 查看当前dbms中所有数据库实例
+                mysql> show databases;
+            2. 选择一个数据库进行使用
+                mysql> use 数据库实例名称
+            3. 查看当前数据库实例中所有的表
+                mysql> show tables;
+            4. 查看user表中所有的用户信息
+                mysql> show databases;
+                mysql> use mysql;
+                mysql> show tables;
+                mysql> select user,host from user;
+            5. 更改user表中root用户的host列 %
+                mysql> update user set host='%' where user='root'
+        3) 退出mysql
+            mysql> exit
+            mysql> quit
+            mysql> \q
+        4) sql && mysql
+            sql
+                标准化查询语言
+                1. DDL（数据库定义语言）
+                    create
+                    alter
+                    drop
+                2. DML（数据库修改语言）
+                    查询语句
+                        select
+                    更新语句
+                        insert
+                        delete
+                        update
+            mysql/oracle/sqlserver
+                数据库管理系统，支持sql语言的，可以解析sql
+        5) 数据库的创建
+            mysql> create database 数据库名
+        6) 表的创建
+            mysql> create table student(
+                id int(20) primary key,
+                name varchar(20),
+                gender char(1),
+                brith date
+            );
+        7) 对数据库表的操作
+            1. 插入
+                insert into 表名[(列)] values(值);
+
+                insert into student values(1,'terry','男','96-3-4');
+                insert into student(id,name) values(2,'larry');
+            2. 查询
+                select 列名 from 表名 
+                select * from student;
+    4. 用户管理
+        root用户
+        1) 创建用户
+            create user 用户名[@host] identified by 密码
+
+            mysql> create user 'admin'@'localhost' 
+                -> identified by 'admin'
+        2) 授权
+            grant 权限 on 数据库.表 to 用户
+            权限
+                all privileges
+                create/drop/alter
+                select/insert/delete/update
+            mysql> grant all privileges on *.* to 'admin'@'localhost';
+        3) 删除用户
+            drop user 用户名
+            mysql> drop user 'admin'@'localhost'
+        4) 修改用户密码
+            alter user 用户名@host identified by 密码
+            mysql> alter user 'admin'@'localhost' 
+                -> identified by 'admin'
+        
+        作业：
+            1. 使用root命令本地登录
+            2. 创建admin用户
+            3. 为admin授权 all privileges
+            4. 退出root用户
+            5. 使用admin用户进行本地登录
+            6. 创建数据库 web1702
+            7. 直接在web1702中创建表
+                course(
+                    id int(20) primary key,
+                    name varchar(50),
+                    credit int(1)
+                )
+            8. 插入3条模拟数据
+            9. 创建customer用户，为customer授权 
+            select on web1702.course,测试customer能否删除数据
+            
+
+mysql 是数据库管理系统
+    dbms(数据库管理系统)
+        -> db（数据库）
+            -> table（表）
+                -> column（列）
+
+创建数据库表
+    create table table_name(
+        column1 数据类型 [约束（列级约束）],
+        column2 数据类型 [约束],
+        ....,
+        约束（表级约束）
+    )编码设置;
+    create table pk_student(
+        id INT primary key ,
+        name varchar(45) not null,
+        gender char(1) ,
+        birth date
+    );
+
+主键(码)
+    约束：
+        唯一不可以重复
+
+    唯一确定一行记录的标识
+    表
+    学生表(主键,学号,姓名，性别，生日)
+    
+    2 1002 larry 男 1996
+    3 1001 terry 男 1996
+外键
+    约束：
+        可以为空
+        如果不为空，外键必须参照一个存在的主键
+
+
+    在一张表中有一个键，但是不是主键，它指向另外一张表的主键
+
+    手机表（主键,颜色,型号,owner）
+    1 土豪金 iphone7   3
+    2 土豪金 iphone7   
+
+
+    丈夫
+    1 terry 26
+    2 larry 28
+    3 tom   32
+    4 jacky 22
+
+    妻子         外键（唯一性）
+    1 vicky 22  1
+    2 rose  21  4
+
+    破电脑    内存(64位 8G(260))+固态（128G （400+30））
+    thinkpad t470p  4G(8G) 固态    8k
+    mac pro 8G(内存) 256(闪存)      9k
+            16G
+        air     6k
+
+
+电影票订票网站（猫眼） 数据建模
+    电影（电影名称，上映时间，价格，介绍，票房）
+
+    电影院（电影院名称，地址，评价）
+
+    影厅（影厅名称，座位数量）
+
+    座位（坐标，状态）
+
+
+
+1. 创建数据库
+    create database 数据库名
+2. 删除数据库
+    drop database 数据库名
+3. 数据库表的操作
+    1) 创建表
+        create table 表名(
+            列1 数据类型 约束,
+            列2
+            ...
+        );
+        数据类型
+            数字类型
+                INT
+                DOUBLE
+            字符类型
+                VARCHAR
+                CHAR
+                TEXT
+            日期
+                DATE        YY-MM-DD    
+                DATETIME    YY-MM-DD HH:MM:SS
+        约束
+            1. 主键约束
+                PRIMARY KEY
+                唯一非空
+            2. 外键约束
+                FOREIGN KEY(student_id) REFERENCE student(id)
+                参照其他表主键的键，被称为外键。
+                务必指向一个存在的主键
+            3. 非空约束
+                NOT NULL
+            4. 唯一性约束
+                UNIQUE
+            5. 默认值
+                DEFAULT
+    2) 修改表中列
+        alter table 表名 add column 列定义
+        alter table 表名 drop column 列定义
+        alter table 表名 modify column 列定义
+    3) 查看表结构
+        desc 表名
+    4) 删除表
+        drop table 表名
+    5) 清空表中所有数据
+        truncate 表名
+4. 表关系（通过外键实现的表关系）
+    1) 一对多关系
+        外键维护在多的一方，外键命名“参照表_id"
+        teacher -> class(teacher_id)
+
+        {"movieRoom":{
+            "name":"一号厅",
+            "seat":[{
+                    "no":"11"
+                },{
+                    "no":"12"
+                }
+            ]
+        }}
+    2) 一对一关系
+        外键维护在任意一方，外键必须唯一
+    3) 多对多关系
+        可以使用两个一对多关系来体现，主从表都是对桥表使用一对多关系，外键维护在桥表中。
+----------------------------
+数据库修改
+    1. 插入数据
+        insert into 表名[(列1，列2...)] values(值1,值2...);
+
+        如果没有指定列名，values中的值的顺序必须和表结构中列的顺序一致。
+        如果指定列名，valeus中的值的顺序必须和指定列名的顺序一致
+
+    2. 修改数据
+        update 表名 set 列1=值1, 列2=值2... where子句 ...
+    3. 删除数据
+        delete from 表名 where子句...
+    4. 查询数据
+        select 列1,列2 
+        from 表名
+        where 
+
+1. 开班
+    insert into xk_clazz values(null,'web1701');
+2. 准备课程
+    insert into xk_course values(null,'unix',2);
+    insert into xk_course values(null,'html',2);
+    insert into xk_course values(null,'css',3);
+    insert into xk_course values(null,'javascript',4);
+    insert into xk_course values(null,'jquery',1);
+    insert into xk_course values(null,'mysql',2);
+3. 学生报到
+    insert into xk_student values(null,'terry','男','92-3-1',1);
+    insert into xk_student values(null,'larry','男','93-3-1',1);
+    insert into xk_student values(null,'tom','男','94-3-1',2);
+    insert into xk_student values(null,'lucy','女','93-3-1',1);
+    insert into xk_student values(null,'vicky','女','92-3-1',2);
+4. 学生选课
+    insert into xk_studentcourse values(null,null,1,1);
+    insert into xk_studentcourse values(null,null,2,1);
+    insert into xk_studentcourse values(null,null,3,1);
+    insert into xk_studentcourse values(null,null,4,1);
+    insert into xk_studentcourse values(null,null,5,1);
+    insert into xk_studentcourse values(null,null,1,2);
+    insert into xk_studentcourse values(null,null,2,2);
+    insert into xk_studentcourse values(null,null,3,2);
+    insert into xk_studentcourse values(null,null,4,2);
+
+5. 查询哪些学生选修了unix课程
+
+6. 查询所有的男生的姓名
+    select name
+    from xk_student
+    where gender='男'
+
+7. 查询学生表中有几种性别
+    select distinct gender
+    from xk_student;
+8. 查询课程名称以‘java’开头的
+    select * 
+    from xk_course
+    where name like 'java%';
+9. 查询出生日期在'93-1-1' ~'95-1-1'之间的所有学生
+    select * 
+    from xk_student 
+    where birth between '93-1-1' and '95-1-1'
+10.查询性别为男或者出生日期在93年之后的学生
+    select * 
+    from xk_student
+    where gender = '男'
+    or birth > '93-1-1';
+10.查询性别为女并且出生日期在93年之后的学生
+    select * 
+    from xk_student
+    where gender = '女'
+    and birth > '93-1-1';
+
+11.查询出所有选修了unix课程的学生的信息
+    studentName,courseName,grade
+    student,course,studentcourse
+
+    select s.name,c.name,sc.grade
+    from xk_student as s,xk_course as c,xk_studentcourse as sc
+    where s.id = sc.student_id
+    and c.id = sc.course_id
+    and c.name = 'unix';
+
+
+11. 统计出选修了unix课程的学生数量
+    select count(*)
+    from xk_student as s,xk_course as c,xk_studentcourse as sc
+    where s.id = sc.student_id
+    and c.id = sc.course_id
+    and c.name = 'jquery';
+
+12. 查询出学生表中年龄最小的男生年龄和最小的女生
+    select name,max(birth),gender
+    from xk_student
+    group by gender;
+13. 查询出所有的学生，按照id降序
+    select * 
+    from xk_student
+    order by id desc; 
+
+14. 考试
+     update xk_studentcourse
+     set grade=80
+     where student_id = 2
+     and course_id =( select id
+        from xk_course 
+        where name = 'unix');
+
+15. 统计出选修了unix课程所有学生的平均成绩
+    select course_id,avg(grade)
+    from xk_studentcourse
+    group by course_id;
+
+    select avg(grade)
+    from xk_studentcourse
+    where course_id = (select id from xk_course where name = 'unix');
+    
+
+16. 查询出学生和班级之间的关系，按照班级名称升序排序
+    学生，班级
+    select s.name,c.name
+    from xk_student s,xk_clazz c
+    where s.class_id = c.id
+    order by c.name asc;
+
+    =>
+    select s.name,c.name
+    from xk_student as s join xk_clazz as c
+    on s.class_id = c.id
+    order by c.name asc;
+
+17. 查询出学生和班级之间的关系，按照班级名称升序排序,并且将没有班级的学生也查询出来
+    select s.name,c.name
+    from xk_student as s left join xk_clazz as c
+    on s.class_id = c.id
+    order by c.name asc;
+18. 查询出学生和班级之间的关系，按照班级名称升序排序,并且显示所有班级的信息
+    select s.name,c.name
+    from xk_student as s right join xk_clazz as c
+    on s.class_id = c.id
+    order by c.name asc;
+
+
+    select c.name, count(s.name)
+    from xk_student as s right join xk_clazz as c
+    on s.class_id = c.id
+    group by c.name
+    order by c.name asc;
+
+
+
+
+
+
+
+
+
+
+
+
+

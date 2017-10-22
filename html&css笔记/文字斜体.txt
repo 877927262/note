@@ -1,0 +1,2 @@
+文字斜体
+文字斜体:font-style:italic;

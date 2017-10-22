@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var stus = [{
+            name:"terry",
+            age:12,
+            salary:3500,
+            toString:function(){
+                return 2;
+            }
+        },{
+            name:"larry",
+            age:17,
+            salary:14500,
+            toString:function(){
+                return 21;
+            }
+        },{
+            name:"tom",
+            age:19,
+            toString:function(){
+                return 11;
+            }
+        }];
+        //2)获取stus数组中年龄大于18岁的对象
+       /* for(var i=0;i<stus.length;i++){
+            var arr1=[];
+            if(stus[i].age>18){
+                var j=0;
+                arr1[j++]=stus[i];
+            }
+            console.log(arr1);
+        }*/
+
+       //3)判断是否所有学生都有工资
+        /*for(var i=0;i<stus.length;i++){
+            var arr1=[];
+            if(stus[i].salary>=0){
+                console.log(stus[i].name,stus[i].salary);
+            }
+        }*/
+
+        //4)获取所有学生姓名组成的数组
+       /* var arr1=[];
+        var j=0;
+        for(var i=0;i<stus.length;i++){
+            arr1[j++]=stus[i].name;
+        }
+        console.log(arr1);*/
+
+        //5.如果执行以下代码，会打印什么样的结果，原因是什么？
+        var result=stus.filter(function (item) {
+            return item.age>15;
+        });
+        console.log("年龄大于15岁的学生有:"+result);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

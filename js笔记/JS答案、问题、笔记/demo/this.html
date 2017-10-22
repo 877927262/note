@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+//普通函数this的指向
+	/*function a(){
+	    var user = "larry";
+	    console.log(this.user); //undefined
+	    console.log(this); //window
+	}
+	a();*/
+
+	/*var o = {
+	    user:"larry",
+	    fn:function(){
+	        console.log(this.user); //larry
+	    }
+	}
+	o.fn();*/
+
+
+	/*var o = {
+	    user:"larry",
+	    fn:function(){
+	        console.log(this.user); //larry
+	    }
+	}
+	window.o.fn();*/
+
+
+
+	/*var o = {
+	    a:10,
+	    b:{
+	        a:12,
+	        fn:function(){
+	            console.log(this.a); //12
+	        }
+	    }
+	}
+	o.b.fn();*/
+
+
+
+	/*var o = {
+	    a:10,
+	    b:{
+	        a:12,
+	        fn:function(){
+	            console.log(this.a); //undefined
+	            console.log(this); //window
+	        }
+	    }
+	}
+	var j = o.b.fn;
+	j();
+	window.j();
+*/
+
+
+//构造函数this的指向问题
+	function Person(name,age){
+		this.name = name;
+		this.age = age;
+		this.sayName = function(){
+			console.log(this.name);
+		}
+		console.log(this);
+	}
+	var p1 = new Person("larry",40);
+	p1.sayName();
+
+
+
+
+</script>	
+</body>
+</html>

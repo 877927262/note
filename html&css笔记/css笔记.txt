@@ -1,0 +1,1066 @@
+一、什么是css
+	css
+		层叠样式表
+			Cascading Style Sheets
+			是一种修饰语言
+			html 	css 		js
+			脸		化妆技术 		动画
+二、css要写在哪里
+	css样式表的引入位置（也就是说css样式表应该写到哪里）
+		1）行内样式表
+				直接给标签添加style属性，在style属性中写css样式
+				举个栗子：
+				<p style="color: red">这是一大段文字</p>
+
+		2)内部样式表
+				在head标签内添加<style></style>标签，在style标签内写css样式
+				举个栗子：
+				<!DOCTYPE html>
+				<html lang="en">
+				<head>
+					<meta charset="UTF-8">
+					<title>Document</title>
+					<style>
+						p{
+							background: red;
+						}
+					</style>
+				</head>
+				<body>
+					
+				</body>
+				</html>
+
+		3)外部样式表
+			第一步：新建一个以.css结尾的文档，在里边写css样式
+			第二部：回到html文档，在<head></head>标签内加入
+					<link rel="stylesheet" href="css文件的位置">
+					举个栗子：
+					<!DOCTYPE html>
+					<html lang="en">
+					<head>
+						<meta charset="UTF-8">
+						<title>Document</title>
+						<link rel="stylesheet" href="style.css">
+					</head>
+					<body>
+						
+					</body>
+					</html>
+		4）在一个css外部样式表中引入其他的css文件
+		       只需在文件的第一行添加一句 @import url("其他css文件的位置");
+
+	css中的注释是	 /* */
+
+三、css语法
+	语法：
+		css声明
+			属性名：属性值;
+			属性名：属性值;
+
+		css选择器
+			{
+				属性名：属性值;
+				属性名：属性值;
+			}
+
+
+四、三种样式表的优先级
+	就近原则：
+		谁离代码近，谁就起作用
+		举个栗子：
+			1）如果代码是这样放置
+				link
+	          	style
+	            div style=""
+
+	            那么效果就是这样的
+	            	行内样式表>内部样式表>外部样式表
+
+			2）如果代码是这样放置
+				style
+            	link
+                div style=""
+                那么效果就是这样的
+            		行内样式表>外部样式表>内部样式表
+
+
+
+五、css选择器
+
+	1）标签选择器
+		标签名{
+			属性名：属性值;
+		}
+		举个栗子：
+			div{
+				width:100px;
+			}
+	2）类选择器
+		第一步：先给元素添加一个class属性，并且赋类名
+		第二部：.类名{
+					属性名：属性值;
+				}
+			举个栗子：
+				.one{
+					width:100px;
+				}
+
+	3）id选择器
+		第一步：先给元素添加一个id属性，并且赋id名
+		第二部：#id名{
+					属性名：属性值;
+				}
+			举个栗子：
+				#one{
+					width:100px;					
+				}
+
+	4）全局选择器（普遍选择器）
+		*
+		举个栗子：
+			*{
+				padding：0;
+				margin:0;
+			}
+	5)后代选择器
+		祖先元素 后代元素{
+					属性名：属性值;
+				}
+		举个栗子：
+			header div{
+					width:100px;
+				}
+	6）群组选择器
+		元素1,元素2,元素3,元素4{
+							属性名：属性值;
+						}
+		举个栗子：
+			h1,h2,h3{
+					color:red;
+				}
+	7)子元素选择器（只算儿子，不算孙子）
+		父级元素>子元素{
+				属性名：属性值;		
+		}
+		举个栗子：
+			div>p{
+				background:red;
+			}
+			div下的子元素，如果它是p标签,就把它的背景颜色设置为红色
+	8）嵌套选择器（我知道它不叫这个名字，先暂时这么写上）
+		标签名.类名	
+			或者
+		标签名#id名{
+				属性名：属性值;
+			}	
+		举个栗子：
+			div.hehe{
+				background:red;
+			}
+			意思就是给类名为hehe的div设置背景颜色为红色
+	
+	9）兄弟元素选择器 + 			选择下一个兄弟元素
+		哥哥元素+弟弟元素{
+			属性值:属性值;
+		}
+		举个栗子：
+		div+p{
+				background:red;			
+		}
+		div的下一个弟弟如果是p标签，那么把它的背景颜色设置为红色
+	10）兄弟元素选择器 ~			选择之后的所有兄弟
+		哥哥元素~弟弟们元素{
+				属性值:属性值;
+		}
+		举个栗子：
+		div~p{
+			background:red;	
+		}
+		div之后的所有弟弟们，如果他们之中有一个或多个p标签的话，那么把他们的背景颜色变为红色
+	11）属性选择器
+		1.元素[属性名]
+			[key]
+			选择具有某个属性值的元素
+			举个栗子：
+			div[title]{
+				background:red;
+			}
+			将所有具有title属性的div元素的背景设置为红色
+		2.元素[属性名=属性值]
+			[key=val]
+			选择具有某个具体的属性值得元素
+			举个栗子：
+			div[title=one]{
+				background:red;
+			}
+			将title=one的div的背景颜色设置为红色
+		3.元素[属性名^=属性值]
+			[key^=val]
+			选择属性值以val开始的元素
+			举个栗子：
+			div[title^=he]{
+				background:red;
+			}
+			将title值以he开头的div的背景颜色设置为红色；
+		4.元素[属性名&=属性值]
+			[key&=val]
+			选择属性值以val结尾的元素
+			举个栗子：
+			div[title&=he]{
+				background:red;
+			}
+			将title值以he结尾的div元素的背景颜色设置为红色
+		5.元素[属性名*=属性值]
+			[key*=val]
+			选择属性值中包含val的元素
+			举个栗子：
+			div[title*=he]{
+				background:red;
+			}
+			将title值包含he的div元素的背景颜色设置为红色
+		6.元素[属性名~=属性值]
+			[key~=val]
+			选择属性值中拥有val的元素
+			举个栗子：
+			div[class~=one]{
+				background:red;
+			}
+			将拥有class为one的div的背景颜色设置为红色
+
+	12）伪类选择器
+		1.子代选择器：（nth选择器）
+			1）元素:first-child
+								（选择属于其父元素的首个子元素的每个element元素，并为其设置样式）
+			举个栗子：
+			ul li:first-child{
+				background:red;
+			}
+
+			///ul下，如果它的第一个元素是li的话，那就把它的背景颜色设置为红色///
+
+		
+			2)p:only-child   独生子p
+
+            3)p:first-child  p作为第一个孩子的被选中
+
+            4)p:last-child   p作为最后一个孩子的被选中
+
+            5)p:nth-last-child(n)p作为倒数第几个孩子的被选中
+
+            6)p:nth-child(n) p作为第几个孩子的被选中
+            	解释：相对父元素来说如果第几个孩子是p元素的话，那么它就被选中
+				举个栗子：
+				ul li:nth-child(3){
+						background:red;
+				}
+				ul的所有子元素中，如果它的第3个元素是li的话就把它的背景颜色设置为红色；
+
+
+
+
+				相对父元素来说，子元素中所有的p标签中，选中其中一个
+            1)p:first-of-type
+                每个类型中的第一个
+            2)p:last-of-type
+                每个类型中的最后一个
+            3)p:nth-of-type(n)
+                每个类型中的第几个
+            4)p:nth-last-of-type(n)
+                每个类型中的倒数第几个
+            括号的取值:
+                n  自然数
+                2n+1  
+                odd  奇数
+                even 偶数 
+			举个栗子：
+				ul li:nth-of-type(3){
+							background:red;
+				}
+
+				///ul下的第三个li的背景颜色设置为红色（不管它是不是ul的第3个孩子，只要它是第3个li就好）///
+
+		:nth-child(n)和:nth-of-type(n)的区别：
+			:nth-child(n)是选择父元素下的第n个孩子，如果它是你要的类型，那就设置它的样式
+			:nth-of-type(n)是选择父元素下指定类型的第n个孩子，不管它是整体的第几个孩纸
+
+		2.状态选择器：
+			达到某一特定情况下激发
+
+			1）:link			未访问的状态
+			2) :visited 	访问过的状态
+			3）:hover		悬停的状态
+			4) :active		激活的状态
+
+			表单的
+			1）:focus		聚焦
+			2）:disabled 	禁用
+			3）:enabled		可用
+			4）:checked		单选或多选的选中状态
+			5）:default		默认的选中的状态
+			6）:valid		通过验证的状态
+			7）:invalid		不通过验证的状态
+			8）:required		必填状态
+			9）:optional		非必填状态
+			10):in-range 	范围内
+			11):out-of-range范围外
+			12）:readonly 	只读标签样式
+			
+	13）伪元素选择器：
+			1）::before 			在选中的元素的内容之前插入内容
+				举个栗子：
+				div::before{
+					content:"hello";
+					color:red;
+				}
+					在div的内容之前加入一个红色的hello
+
+			2）::after 			在选中元素的内容之后插入内容
+								清除浮动的方法我猜是这样的
+								div::after{
+									content:"";
+									clear:borth;
+								}
+
+			3）::first-line		第一行
+			4）::first-letter	第一个字符
+			5）::selection		选中文字的状态
+
+
+六.css选择器的优先级
+    1. !important修饰的最优先
+    	在属性值后面，分号前面加
+    	举个栗子：
+    		div{
+    			background:red !important;
+    		}
+    2. 特性值 权值和最大的优先
+         style属性内部的样式  1000
+         ID选择器   100
+         class,属性选择器,伪类选择器  10
+         标签选择器,伪元素选择器  1
+         > ~ + 空格 *   0
+    3.权值一样的话,采用就近原则
+
+
+
+七、浏览器加载页面的过程:（此处我不确定，有时间看看慕课）
+    加载html-解析html------------DOM--展示
+                    |           |
+                  加载css----解析css
+
+八、css基本属性
+	1.基本属性：
+			color:red;			颜色		
+
+			width:100px;		宽 	
+
+			height:100px;		高 	
+
+			background：red;		背景 
+
+			line-height:100px;	行高 	（将行高设置为容器高度可以将文字垂直居中）
+
+			text-align:center;	文本对齐方式 	(一般让文字水平居中用这个)
+					  :left;
+					  :right;	
+	
+	2.块级元素水平居中：
+				第一步：设置宽度
+				第二部：margin: 0 auto;
+
+
+
+
+九.盒子模型
+
+    1.w3c标准盒子模型
+        div{
+            width:100px;
+            padding:10px;
+            border:10px;
+            margin:10px;
+        }
+        内容区宽度100px
+        盒子宽度  width+padding*2+border*2
+        所占空间 width+padding*2+border*2+margin*2
+    2.IE盒子模型
+        div{
+            width:100px;
+            padding:10px;
+            border:10px;
+            margin:10px;
+        }
+        内容区宽度width-2*padding-2*border
+        盒子宽度  width 100px
+        所占空间 width+margin*2
+
+    3.使用w3c盒子还是ie盒子
+    	使用 box-sizing来设置盒子类型
+	    	content-box   默认盒子，w3c盒子
+	    		所设置的width为contentWidth
+	    	border-box    IE盒子
+	    		所设置的width为contentWidth+2*padding+2*border
+
+
+
+	4.盒子模型的各个属性都有四个值
+		举个栗子：
+			分开写：
+				margin-top:
+				margin-right:
+				margin-bottom:
+				margin-left:
+			合起来写：
+				margin:10px;		设置一个值
+					上右下左
+				margin:10px 20px;	设置两个值
+					上下	  左右
+				margin:10px 20px 5px; 设置三个值
+					上 左右 下
+				margin:10px 20px 5px 3px; 设置四个值
+					上右下左
+
+
+
+
+十、浮动
+		1、什么是浮动float    
+					浮动 将一个元素飘起来,脱离文档流
+        	float:left;		向左浮动
+        	float:right;	向右浮动
+        	float:none;		不浮动
+
+		2、浮动产生的影响
+			1）对父级元素的影响
+				我们通常不设置父级元素的高度，父级元素的高度通常都是由子元素撑开的，
+				子元素浮动以后，就支撑不了父元素的高度，父元素会产生塌陷问题，这时，我们需要清除浮动，使用
+					overflow:hidden;
+
+			2）对兄弟元素的影响
+				一个元素浮动以后，便会脱离标准文档流，当它脱离标准文档流之后，它的兄弟元素就会填补它空缺出来的位置，如果我们不希望它的兄弟元素收到浮动的影响，这时，我们需要清除浮动，我们使用
+					clear:both;
+					  	 :left;
+					  	 :right;
+			3）边距问题：
+				在不浮动的情况下,两个相邻元素的上下margin共用.
+            	如果两个元素都浮动,两个相邻元素的左右margin不共用,它们会累加.
+		3、清除浮动
+			对父元素：verflow:hidden;
+			//或
+			对兄弟元素：clear:both;
+					  	   :left;
+					  	   :right;
+        
+十一、继承
+    可继承属性
+        color
+    不可继承属性
+        border
+
+    将可继承属性变为不可继承,使用initial属性值
+    将不可继承属性变为可继承属性,使用inherit属性值
+    将可继承的可继承,不可继承的不可继承,默认状态,使用unset属性值
+
+十二、文字
+1.字体样式：
+	1)color 		为字体指定颜色
+		颜色值或关键字
+	2)font-family 		为文字指定特殊的字体，浏览器只会使用浏览器可以访问到的字体
+		serif 		:有衬线的字体				
+		sans-serif	:无衬线的字体				
+		monospace	:等宽字体，用于代码				
+		cursive 	:草书				
+		fantasy 	:梦幻 	装饰字体 
+	3)font-style		用于打开和关闭斜体文本
+		normal	: 正常字体，关闭斜体				
+		italic 	: 斜体				
+		oblique	: 模拟斜体
+
+	4)font-weight		为字体设置粗细程度
+		normal, bold 	: 正常，加粗字体	  400,700			
+		lighter, bolder	: 设置当前元素字体比父元素更细或者更粗
+		100–900 	: 数值类型的粗细程度（值越大字体越粗）
+	5)text-transform 	设置或者取消字体改变
+		none 	:防止任何改变			
+		uppercase: 将文本转换为大写				
+		lowercase: 将文本转换为小写		
+		capitalize: 将所有单词第一个字母转换为大写
+		full-width: 转换为类似于一个等宽字体字体
+
+	6)text-decoration 	设置或者取消文本修饰
+		none	 	: 取消所有文本修饰			
+		underline 	: 为文本添加下划线			
+		overline 	: 为文本添加上划线			
+		line-through	: 为文本添加删除线
+
+		1.text-decoration-line: 		添加什么样的线
+			underline 	: 为文本添加下划线			
+			overline 	: 为文本添加上划线			
+			line-through	: 为文本添加删除线
+		2.text-decoration-style:		添加线的样式
+			solid：
+				  实线
+			double：
+				  双实线
+			dotted：
+				  点状线条
+			dashed：
+				  虚线
+			wavy：
+				  波浪线
+		3.text-decoration-color:  颜色
+
+			这三个属性合起来写，不分顺序
+			text-decoration:solid red line-through;
+	7)text-shadows 	设置或者取消文本阴影
+		text-shadow: h-shadow v-shadow blur color;
+			none	 	:   取消所有阴影			
+			h-shadow 	:  必需。水平阴影的位置。允许负值。			
+			v-shadow	:  必需。垂直阴影的位置。允许负值。			
+			blur		:  可选。模糊的距离。
+			color		:   可选。阴影的颜色。参阅 CSS 颜色值。
+
+	8)text-align 	设置对齐方式
+		text-align
+		left 	把文本排列到左边。默认值：由浏览器决定。
+		right 	把文本排列到右边。
+		center 	把文本排列到中间。
+		justify 	实现两端对齐文本效果。
+		inherit 	规定应该从父元素继承 text-align 属性的值。
+
+	9)font-size 	 	为文字指定大小
+		默认16
+	10)font属性：
+	    [<font-style>] [<font-weight>] <font-size/line-height>  <font-family>
+
+
+十三.列表
+	list-style-type	: 	  设置列表项标志类型
+		none		: 没有		
+		disc		: 实心圆
+		circle		: 空心圆	
+		square		: 实心方形
+		decimal	 	: 数字，Beginning with 1
+		lower-roman 	:小写罗马数字 i, ii, iii, iv, v…	
+		upper-roman	: 大写罗马数字 I, II, III, IV, V…
+		decimal-leading-zero	: 小于10的前面加0  01, 02, 03, … 98, 99
+	list-style-position	: 设置列表项标志出现的位置
+		outside		: 列表项标志出现在主块框的外部
+		inside		: 列表项标志出现在主块框的内部
+	list-style-image 	: 自定义设置列表项标志
+		url()		: 指定图标位置
+	list-style		: 列表样式的速记写法
+		<type>[<image>][<position>]
+	line-height 		: 设置列表的行高
+
+	ul有margin上下16px，padding 左40px
+	dl有margin上下16px，没有padding，但是dd有margin-left为40px
+	p有margin上下16px
+
+十四.鼠标
+	cursor鼠标样式的取值：
+		url 使用自己的图片 URL。
+		注释：请在此列表的末端始终定义一种普通的光标，以防没有由 URL 定义的可用光标。
+		default 	默认光标（通常是一个箭头）
+		auto 		默认。浏览器设置的光标。
+		crosshair 	光标呈现为十字线。
+		pointer 	光标呈现为指示链接的指针（一只手）
+		move 		此光标指示某对象可被移动。
+				【东east   西west  南north  北south】
+		e-resize 	此光标指示矩形框的边缘可被向右（东）移动。
+		ne-resize 	此光标指示矩形框的边缘可被向上及向右移动（北/东）。
+		nw-resize 	此光标指示矩形框的边缘可被向上及向左移动（北/西）。
+		n-resize 	此光标指示矩形框的边缘可被向上（北）移动。
+		se-resize 	此光标指示矩形框的边缘可被向下及向右移动（南/东）。
+		sw-resize 	此光标指示矩形框的边缘可被向下及向左移动（南/西）。
+		s-resize 	此光标指示矩形框的边缘可被向下移动（南）。
+		w-resize 	此光标指示矩形框的边缘可被向左移动（西）。
+		text 		此光标指示文本。
+		wait 		此光标指示程序正忙（通常是一只表或沙漏）。
+		help 		此光标指示可用的帮助（通常是一个问号或一个气球）。
+十五.outline:
+	outline与border的区别：
+		1.outline是不占空间的，既不会增加额外的width或者height
+		2.outline有可能是非矩形的
+	outline-color 	规定边框的颜色。
+	outline-style 	规定边框的样式。
+		none 	默认。定义无轮廓。
+		dotted 	定义点状的轮廓。
+		dashed 	定义虚线轮廓。
+		solid 	定义实线轮廓。
+		double 	定义双线轮廓。双线的宽度等同于 outline-width 的值。
+		groove 	定义 3D 凹槽轮廓。此效果取决于 outline-color 值。
+		ridge 	定义 3D 凸槽轮廓。此效果取决于 outline-color 值。
+		inset 	定义 3D 凹边轮廓。此效果取决于 outline-color 值。
+		outset 	定义 3D 凸边轮廓。此效果取决于 outline-color 值。
+		inherit 	规定应该从父元素继承轮廓样式的设置。
+	outline-width 	规定边框的宽度。
+
+
+
+
+
+十六.display   展现形式
+	inline  行内展示   将块级元素转换为行内元素（不可设置宽高）
+	block   块级展示   将行内元素转换为块级元素（可设置宽高）
+	inline-block 行内展示，可设置宽高
+	none    元素隐藏  不占据屏幕空间
+visibility  可见性
+	hidden 不可见   占用屏幕空间
+	visible 可见
+overflow 超出处理
+	hidden  当子元素有浮动的时候 ，清除浮动，使父元素有高度
+			当子元素不浮动，但是内容超过父元素的时候，让超出部分隐藏
+	scroll  无论是否有溢出，都有滚动条
+	auto    有溢出有滚动条，不溢出没滚动条
+
+
+十七.背景:
+    background-color  背景颜色
+    background-image 背景图片
+        url()
+    background-position 背景图片的位置
+        关键字
+            水平方向 left center right
+            垂直方向 top center bottom
+        px
+            可以为负值
+            参考原点为元素左上角
+            可以制作图片精灵
+    background-size:
+        背景图片的大小
+        正常情况下,背景图片的大小为 图片的大小
+        
+        百分比    100% 100%
+        px        30px 30px
+        cover   一定比例充满元素
+    background-repeat： 重复方式
+    	no-repeat  不重复
+    	repeat     x y 都重复
+    	repeat-x   x方向重复
+    	repeat-y   y方向重复
+    background-origin 背景图片原点
+        border-box   border开始
+        padding-box  paddign开始 默认
+        content-box  content开始
+    background-clip  图片裁剪的范围 结束的位置
+        border-box   border结束 默认
+        padding-box  paddign结束
+        content-box  content结束
+    background-attachment 将图片绑定到什么上
+        fixed   绑定到视口上
+        scroll  绑定到元素上 默认的
+        local   绑定到元素内容上
+    background 速记属性
+        background-image background-repeat
+
+        background:url() no-repeat;
+        .....
+十八.边框
+    border   速记属性
+        border-width border-style border-color
+
+        border-width  设置宽度
+        border-style  线条样式
+            solid 
+            double
+            dashed
+            dotted
+            wavy  ??
+            groove  
+            ridge
+            inset 
+            outset
+        border-color    边框颜色
+
+    border-image    边框图片
+        border-image-source:
+            url()
+        border-image-slice:  裁剪
+            top right bottom left
+            30 30 30 30
+        注意border:10px solid;
+        border-image-width: 30%;
+
+        border-image-repeat:重复方式
+            round
+            repeat	重复
+            stretch 伸展
+
+    border-radius   圆角边框
+    	px
+    	百分比
+    	超过50%  就为圆
+
+
+
+    	如果我们需要给边框设置图片，通常，我们这样设置
+    	border:10px solid ;
+    	border-image: url("京东_11.png") 40% 40% stretch;
+    					source 		  slice width repeat				
+十九.表格
+    border-collapse			修改table的属性
+        collapse  合并
+        separate  不合并
+
+    caption-side  标题的位置
+        top
+        bottom
+
+    table-layout  布局方式
+        auto    自动
+        fixed   固定
+
+二十、盒阴影
+	box-shadow  盒子阴影
+	    h-offset v-offset blur size color
+	    水平 垂直 模糊距离 阴影大小  颜色
+
+二十一、布局
+	1.默认文档流的特点
+        文档书写顺序就是页面展示顺序
+        块级元素独占一行,行内元素与其他共享一行
+
+	2.如何改变默认文档流
+		1）float
+
+        2）dispaly
+
+        3）position  定位
+            static 默认定位
+            flex   固定定位  固定在浏览器上  脱离文档流
+            relative  相对定位  相对于原本的位置  不脱离文档流
+            absolute  绝对定位
+                脱离文档流
+                相对于页面或者离它最近的祖先定位元素定位
+            定位元素是使用poaition属性,并且属性值为flex或者relative.
+            定位元素有一些特用属性,left,right,top,bottom 
+
+	3.弹性盒子布局
+		display:flex  弹性盒子布局
+	    容器
+	        父元素
+	        display:flex;
+	        flex-direction:方向
+	            row  默认.显示在一行,从左开始
+	            row-reverse 显示在一行,从右开始  最前面的子元素在最右面
+	            column 显示在一列,从上开始
+	            column-reverse 显示在一列,从底下开始
+	        flex-wrap  自动换行
+	            nowrap 默认 不自动换行
+	            wrap   自动换行
+	            wrap-reverse 自动换行,最底下的在最上面
+	        align-items  垂直对其方式
+	            stretch  拉伸
+	            flex-start 上对齐
+	            flex-end   下对齐
+	            center    居中
+	        justify-content 水平方向对齐
+	            flex-start 左对齐
+	            flex-end  右对齐
+	            center   居中
+	            space-between 子元素之间有空白
+	            space-around  子元素周围有空白  左跟右
+	    项目
+	        子元素
+	        flex:比例 px;
+	            占得总比例,最小宽度
+
+二十二、变形
+
+	2d变形
+
+		transform
+			transform:rotate(角度deg)	旋转
+			transform:translate()		平移
+			transform:scale(几倍) 		缩放
+			transform:skew() 			倾斜
+			transform:					矩阵
+
+			1）transform:rotate(角度deg)		旋转
+				参数是旋转角度，正数表示顺时针，负数表示逆时针
+
+			2）transform:translate() 		平移
+				transform:translateX(x) 		沿x轴移动
+				transform:translateY(y) 		沿Y轴移动
+				transform:translate(x,y) 	同时沿x轴和y轴移动
+
+				注：translate如果只写一个参数，另一个参数默认为0；
+
+			3）transform:scale 			缩放
+				transform:scaleX(x) 		水平方向缩放
+				transform:scaleY(y) 		垂直方向缩放
+				transform:scale(x,y)		水平和垂直同时缩放
+
+				注：scale的参数是数字，不是角度也不是像素，而是放大的倍数
+
+			4)transform:skew()			倾斜
+				transform:skewX(x) 		水平方向倾斜
+				transform:skewY(y) 		垂直方向倾斜
+				transform:skew(x,y) 	水平和垂直方向同时倾斜
+
+				参数是角度
+
+	3d变形
+		transform
+			transform:rotate3d(角度deg)	旋转
+			transform:translate3d()		平移
+			transform:scale3d(几倍) 		缩放
+			transform3d:				矩阵
+
+		1）transform:rotate3d(角度deg)		旋转
+			transform:rotateX(x) 		沿x轴旋转
+			transform:rotateY(y) 		沿y轴旋转
+			transform:rotateZ(z) 		沿z轴旋转
+			transform:rotate3d(x,y,z,角度)
+			注：x y z 参数值是1 和 0 ，1为旋转，0不旋转 
+		2）transform:translate3d() 
+			同2d，就是多了个z轴，还有transform:translate3d(x,y,z)
+		3)scale也是
+
+		transform-origin可以更改坐标原点
+			举个栗子：
+			transform-origin:left top 25%;
+		/////////再看一遍慕星人////////////
+
+二十三、过渡
+	transition
+
+	1)transition-property 	设置对象中参与过渡的属性（可以省略）
+
+	2）transition-duration 	过渡持续时间
+
+	3）transition-timing-function 	过渡动画的速度类型
+			linear 	线性过渡
+			ease 	平滑过渡
+			ease-in 	由慢到快
+			ease-out 	由快到慢
+			ease-in-out 由慢到快再到慢
+	4）transition-delay 	延迟时间
+
+	速记属性：
+		transition:property duration timing-function delay;
+			注：顺序不能错
+
+二十四、动画
+	animation
+		1)animation-name 	 动画的名称
+
+		2）animation-duration 	持续时间
+
+		3）animation-timing-function 动画的过渡类型
+			linear 	线性过渡
+			ease 	平滑过渡
+			ease-in 	由慢到快
+			ease-out 	由快到慢
+			ease-in-out 由慢到快再到慢
+		4）animation-delay 		延时
+			
+		5）animation-iteration-count 	动画的循环次数
+				infinite 		无限次循环
+		6）animation-direction 		是否反向运动
+			normal	正常方向
+			reverse 反方向
+			alternate 先正向再反向，循环交替
+			alternate-reverse 先反向，再正向，循环交替
+		7）animation-fill-mode
+			动画未开始或结束后的状态
+
+
+		@keyframs 动画名称{
+			from{
+				css属性名=属性值
+			}
+			to{
+				css属性名=属性值
+			}
+		}
+
+二十四、弹式盒布局flex
+		1.组成
+			1）.父容器 
+			   子元素
+
+			2）.主轴：向哪边排列那哪边就是主轴
+			   交叉轴：与主轴垂直的就是交叉轴
+
+			3）.轴的起点start和终点end
+
+		2.把盒子变得有弹性，一共分几步？
+
+			给父元素设置display:flex;即可
+
+			display:flex;将父元素设置为弹性盒子
+			display:inline-flex;将父元素设置为弹性盒子的同时，将父元素变为行内元素
+			
+		3.我对弹性布局的认识
+			将块级元素变为行内元素，并且以主轴的方向排列
+
+		4.flex容器属性
+			1）flex-direction 	定义子元素在主轴的排列方向(定义了主轴的方向)
+					row (默认)		主轴的方向自左向右
+					row-reverse		主轴的方向自右向左
+					column			主轴的方向从上往下
+					column-reverse	主轴的方向从下往上
+
+			2)flex-wrap				一行放不下是否换行
+					nowrap（默认）		不换行	
+									注：此时设置的宽度是不生效的
+					wrap				换行
+					wrap-reverse		换行，并且上下的位置颠倒
+
+			3）flex-flow			复合属性，由flex-direction和flex-wrap复合而成
+				flex-flow:row wrap;
+
+			4)align-content 		控制容器内 多行 在交叉轴上的对齐方式(如果不换行，那就没有意义了)
+					flex-start		从交叉轴开始的地方排列（）
+					flex-end		从交叉轴结束的地方排列
+					flex-center		从交叉轴中间排列
+					flex-stretch	按顺序拉伸沾满整个容器，
+					space-between	各个元素之间留缝隙
+					space-around	各个元素之间留缝隙，并且两端之外也留缝隙
+			4)justify-content		子元素在主轴上的对齐模式（对齐方式）
+					flex-start(默认)		主轴开始的地方对齐
+					flex-end			主轴结束的地方对齐
+					center				主轴中心对齐
+					space-between		两端对齐，中间的空隙平分
+										（伸缩项目两边碰，中间空间平均分）
+					space-around		中间的空隙平分，两端的剩余空间也平分
+										（伸缩项目平均分，剩余空间两边碰）
+			5）align-items 			子元素在交叉轴上的对齐模式
+					flex-start		交叉轴开始的地方
+					flex-end		交叉轴结束的地方
+					center			交叉轴的中心
+					baseline		子元素在交叉轴上以内容的基线为准来对齐
+					stretch			在交叉轴上拉长占满
+
+
+		水平垂直居中对齐		justify-content:center;
+							align-items:center;
+
+		5.子元素属性
+			1）order		控制子元素出现在父容器的顺序（就是排序123456）
+					0
+					任何整数
+					-1		无效
+
+					没有设置order的会排在前面，设置了order的按顺序排列
+			2）flex-grow		分配剩余空间（注意：是剩余空间平均分，不是整个空间平均分，要除去内容，所以可以出现数值相等的情况下，大小不相等）
+					0
+					数字
+					不能是负数
+				1.设置为同一数字，空间AA制
+				2.设置为不同数值，谁大谁多
+			3）flex-shrink	当容器的大小容纳不了元素的时候，设置容忍度（能否被压缩），越大越能容忍，0是不容忍
+					1
+					数字
+					不能是负数
+			4）flex-basis 	
+
+
+
+
+
+
+
+
+
+二十五、响应式布局
+媒体查询
+	媒体类型：
+		all 	所有设备
+		print 	打印
+		screen 	屏幕
+		speech 	声音合成器
+	媒体特性
+		color
+		device-width/dexice-height	设备宽高
+		width/height 	窗口的宽高
+
+		min-width:992px;
+		max-width:1200px;
+		992-1200
+
+	尺寸划分
+	--超小屏--768----小屏-----992-----中屏----1200px---大屏----
+
+	逻辑运算符
+		and 	并且
+		not		除了
+		only 	只有
+媒体查询模块
+	媒体查询类型
+	css样式
+	@media screen and (max-width:768px){
+		//选择器和声明块
+		div{
+			background:red;
+		}
+	}
+	@media screen and (min-width:768px) and (max-width:992px){
+		//选择器和声明块
+		div{
+			background:blue;
+		}
+	}
+	@media screen and (min-width:992px) and (max-width:1200px){
+		//选择器和声明块
+		div{
+			background:pink;
+		}
+	}
+	@media screen and (min-width:1200px){
+		//选择器和声明块
+		div{
+			background:blue;
+		}
+	}
+
+
+
+
+
+二十六、水平垂直居中对齐
+	1.直接给元素设置margin:0 auto;水平居中后再设置合适的margin-top来调整位置
+	2.决对定位
+		position:absolute;
+		top:50%;
+		left:50%;
+		margin-top:-高度的一半;
+		margin-left:-宽度的一半;
+	3.拔河效应
+		position:absolute;
+		top:0;
+		right:0;
+		bottom:0;
+		left:0;
+		margin:auto;
+	4.相对定位
+		计算出移动的位置
+	5.弹性布局
+		父级:
+			display:flex;
+		子级:
+			justify-content:center;
+			align-items:center;
+
+
+二十七、父子元素外边距合并问题
+	
+	1.最简单的方法，给父元素设置overflow:hidden;
+	2.使用父元素padding代替子元素margin
+	3.相对定位。绝对定位
+	4.子元素或者父元素浮动
+
+
+
+
+
+
+
+
+
+
+
+

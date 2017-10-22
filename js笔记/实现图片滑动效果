@@ -1,0 +1,42 @@
+实现图片滑动效果
+
+文字斜体:font-style:italic;
+
+控制字间距letter-spacing:7px;
+
+过渡transition和动画animation的区别
+过渡transition：需要触发事件
+动画animation：不需要触发事件
+
+box-shadow不会改变盒子的大小
+
+使用before或after等伪类生成的是一个内联元素，如需设置宽高，则要变为块级元素
+
+鼠标变成小手
+cursor: pointer;
+一个内联元素加了浮动属性或者是决对定位，他就自动转换为块级元素了
+label标签的使用
+通常想改变input标签的样式比较繁琐，所以我们使用label标签和input标签联系起来，代替input标签写样式；
+<input type="radio" name="radio-set" id="select-img-1" class="cr-selector-img-1">
+		<label for="select-img-1"></label>
+
+具体操作是把label标签的for属性的值写为input标签的id的值
+￼
+
+这样的话我们不需要点在input标签上，只需要点击在label标签里的文字上就可以选中input标签；
+
+注意label标签是一个内联元素
+
+css导入字体的方法
+先把下载好的字体放在css文件夹下，然后通过这种方式引入字体
+@font-face
+{
+	font-family: "BebasNeue";
+	src:url("fonts/BebasNeue-webfont.eot"),
+		url("fonts/BebasNeue-webfont.woff") format("woff"),
+		url("fonts/BebasNeue-webfont.ttf")format("truetype"),
+		url("fonts/BebasNeue-webfont.woff")format("woff"),
+		url("fonts/BebasNeue-webfont.svg")format("svg");
+}
+
+然后字体就可以正常使用了，按照以往的方式引入即可

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function Person(name,age){
+			this.name = name;
+			this.age = age;
+		}
+		Person.prototype.sayName = function(){
+			console.log(this.name);
+		}
+		function Man(name,age,gender){
+			this.name = name;
+			this.age = age;
+			this.gender = gender;
+		}
+		// Man.prototype = new Person();
+		// Man.prototype.constructor = Man;
+		Man.prototype.sayGender = function(){
+			console.log(this.gender);
+		}
+		var m1 = new Man("李四",30,"男");
+
+		console.log(Person.prototype);
+		console.log(Man.prototype);
+
+
+
+	</script>
+</body>
+</html>

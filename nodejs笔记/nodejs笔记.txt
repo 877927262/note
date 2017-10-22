@@ -1,0 +1,636 @@
+一、什么是nodejs
+	Node是一个JavaScript的运行环境，相当于浏览器的控制台
+二、node的使用
+	1）node 后面直接跟js文件
+	2）REPL环境
+		node 回车
+		输入js代码
+		作用相当于直接在控制台里输入
+三、模块化
+	1.模块化的步骤
+		mian.js          node_modules
+				     module1      module2
+				     index.js     index.js
+		第一步：将模块的基本结构搭起来
+		第二步：在每个模块的index.js文件中封装方法，并且将方法暴露出去
+				module.exports.属性名=方法名
+		第三步：在main.js中引入其他模块暴露出来的方法
+			 	require('模块名称')
+			 	1)如果按照标准的结构搭建起文件目录，那么require()
+			 		中只写模块名称即可
+			 		node会沿着如下路线寻找模块
+		                系统模块
+		                当前目录node_modules
+		                上一级目录node_modules
+		                上上一级目录node_modules
+		                ...
+			 	2)否则require()的参数必须是详细的路径,
+			 		当前目录下不能省略 ./
+
+	2.模块作用域
+		每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见.如果想让其他模块使用此处的变量或者函数，那么就需要将这些变量或者函数暴露出去。
+		或者将他们定义为 global 对象的属性。
+		global.warning = true;
+		
+	3.模块对象module（module模块不需要引进来）
+		module对象拥有模块的基本信息
+
+		module.id 	
+			模块id,默认情况下，主模块ID属性值为".",其他模块的ID属性值为该模块文件的绝对路径。
+		module.filename
+			当前模块文件的文件名（路径+文件名）
+		module.loaded
+			布尔类型值，表示模块是否加载完毕
+		module.parent
+			当前模块的父模块对象，即调用当前模块的模块对象
+		module.children
+			数组，存放了当前模块的所有子模块对象。
+		module.exports
+			该对象的作用是用来暴露属性和方法的，默认为{}一个空对象
+		exports变量
+		为了方便，Node为每个模块提供一个exports变量，指向module.exports。这等同在每个模块头部，有一行这样的命令。
+		var exports = module.exports;
+
+	4.内部核心模块
+		1）path模块
+			path模块提供了一些工具函数，用于处理文件与目录的路径，使用如下方法引用：
+			var path = require('path');
+
+			path.basename()	该方法返回一个参数路径的最后一部分
+			path.dirname() 		该方法返回一个 path 的目录名
+			path.extname() 	该方法返回 path 的扩展名，即从 path 的最后一部分中的最后一个 .（句号）字符到字符串结束。
+			path.isAbsolute() 	该方法会判定 path 是否为一个绝对路径。
+			path.join() 		该方法使用平台特定的分隔符把全部给定的 path 片段连接到一起，并规范化生成的路径
+				【注】Linux/Unix系统是”/“，Windows系统是”\“。
+			path.normalize() 	该方法会规范化给定的 path，并解析 '..' 和 '.' 片段
+				
+			path.delimiter		该属性提供平台特定的路径分隔符
+			另外：
+			__filename：指向当前运行的脚本文件名。
+			__dirname：指向当前运行的脚本所在的目录。
+		2）querystring模块
+			querystring 模块提供了一些实用函数，用于解析与格式化 URL 查询字符串。使用如下方法引用
+			var querystring = require('querystring');
+			1.querystring.stringify(obj[, sep[, eq]])
+				将对象转换为查询字符串
+					obj  要序列化成 URL 查询字符串的对象。 
+					sep 用于界定查询字符串中的键值对的子字符串。默认为 '&'。 
+					eq   用于界定查询字符串中的键与值的子字符串。默认为 '='。
+			2.querystring.parse(str[, sep[, eq]])	将查询字符串转换为对象
+
+		3）url模块
+			querystring模块提供了一些实用函数，用于 URL 处理与解析。 可以通过以下方式使用
+			var url = require('url');
+			url.parse() 	将一个url地址转换为一个对象
+				这个对象的 pathname 属性可以获取到路由
+				这个对象的 query 属性可以获取到查询字符串
+			url.resolve() 	该方法会以一种 Web 浏览器解析超链接的方式把一个目标 URL 解析成相对于一个基础 URL
+			url.resolve('/one/two/three', 'four'); 
+				 '/one/two/four' 	
+			url.resolve('http://example.com/', '/one');
+				'http://example.com/one'
+			url.resolve('http://example.com/one', '/two');			
+				'http://example.com/two'
+
+
+			
+			端口是用来访问服务的
+四、http模块
+		http模块的使用
+		第一步：将http模块引入
+		第二步：新建一个http服务器
+		第三步：监听端口
+
+		第一步：将http模块引入
+			var http=require('http');
+		第二步：新建一个http服务器
+			var server=http.createServer(function(req,resp){
+					console.log("接收到了请求");
+			});
+
+			createServer的参数是一个回调函数，这个回调函数接收两个参数
+			1.rep 请求对象
+				rep的一些属性：
+					req.method
+						表示客户端向服务器端发送请求时使用的方法， "GET"/"POST"
+					req.url
+						表示客户端发送请求时使用的 URL 参数字符串，
+						例如 "/","/post/new/?param=value"
+					req.headers
+						表示客户端返回发送的请求对象，
+						其中存放了客户端发送的所有请求头信息，
+						包括各种 cookie 信息以及浏览器的各种信息
+					req.headers.host
+						主机名？？？？？？
+				rep的一些方法
+					req.pause();
+						暂停此 request 触发事件，对于控制上传非常有用
+					req.resume()
+						恢复一个暂停的 request
+				req的事件
+					data
+						当接受到消息体中的一部分时候发出 data 事件
+					end 
+						每次完全接受完消息后都会触发一次
+
+					栗子：
+					在回调函数中
+					var param = new Buffer(0);
+	                req.on('data',function(data){
+	                    param += data;
+	                });
+	                req.on('end',function(){
+	                    console.log(querystring.parse(param.toString()));
+	                });
+
+
+			2.resp 响应对象
+				1. response.end([data][,encoding])
+					结束响应，这个方法会告诉服务器此响应的所有报文头以及报文体已经发出，服务器在此 调用后认为这条信息已经发送完毕，这个方法必须对每个响应调用一次。如果指定的 data 参数，相当于调用了 response.write(data,encoding); 然后跟着调用了 response.end()
+				2. response.write(chunk[,encoding]);
+					发送响应内容， chunk 可以是一个字符串或者一个 buffer, 如果 chunk 是一个字符串
+					，则第二个参数指定如何将这个字符串编码成字节流，默认编码为 "utf8” 
+				3. response.writeHead(statusCode[,reasonPhrase,][headers]);
+					statusCode reasonPhrase headers
+					用于指定一个三位的 HTTP 状态码 , 例如 404 字符串，用于指定该状态码的描述信息 
+					对象，用于指定服务器端创建的响应头对象
+
+
+		第三步：监听端口
+			server.listen(8080,function(){
+				console.log("正在监听8080端口");
+			});
+
+			server.listen接收好几个参数
+			(port[,host][,backlog][,callback]);
+
+		栗子：
+			//引入http模块
+			var http=require('http');
+			//创建一个http服务
+			var server=http.createServer(function(req,resp){
+				console.log("接收到了请求");
+			});
+			//监听端口
+			server.listen(8080,function(){
+				console.log("正在监听8080端口");
+			});
+
+		一个处理get请求，路由，参数完整的小栗子：
+			//引入各个模块
+			var http=require('http');
+			var url=require('url');
+			var querystring=require('querystring');
+			//创建一个http服务
+			var server=http.createServer(function(req,resp){
+				console.log("接收到了请求");
+				//获取浏览器的url
+				var url0=req.url;
+				console.log(url0);
+				//将url0转换为一个对象
+				var urlObj=url.parse(url0);
+				// 获取到路由
+				var pathname=urlObj.pathname;
+				//获取到查询字符串
+				var query=urlObj.query;
+				console.log(query);
+				//将查询字符串转换为对象
+				var queryObj=querystring.parse(query);
+				
+				//发送响应内容
+				resp.write('hehe');
+				//结束响应
+				resp.end();
+			});
+			//监听端口
+			server.listen(8080,function(){
+				console.log("正在监听8080端口");
+			});
+
+			//浏览器地址栏输入http://localhost:8080/courses?id=666&code=888
+
+五、mysql模块
+	先通过npm下载安装mysql模块
+	两种方法使用mysql模块，推荐使用第二种，有地址池的那种：
+		第一种：
+			第一步：导入mysql模块
+				var mysql =require('mysql');
+			第二步：创建数据库的连接对象
+				var connection=mysql.createConnection({
+				    host:'127.0.0.1',
+				    port:'3306',
+				    user:'root',
+				    password:'root',
+				    database:'imooc'
+				});
+			第三步：连接数据库
+				connection.connect();
+			第四步：进行查询或更新（用户的操作，此处以查询为栗）
+				var sql='select * from imooc_user';
+				connection.query(sql,function(err,results,fields){
+				    //如果错误，抛出异常
+				    if(err){
+				        throw err;
+				    }else{
+				        console.log(results);
+				        console.log(fields);
+				    }
+				})
+
+				其中：连接对象的.query()方法的作用是
+					执行数据的增加，删除，查询，修改等基本操作。
+					它有两个参数，第一个参数是执行的sql语句，第二个参数是一个回调函数
+					这个回调函数也有三个参数
+					err，如果产生错误...
+					results 数据库返回的结果
+					fields	查询结果的属性信息
+
+
+			第五步：关闭数据库连接
+				connection.end();
+
+		第二种：
+			第一步：导入mysql模块
+				var mysql =require('mysql');
+			第二步：创建连接池
+				var pool=mysql.createPool({
+					host:'127.0.0.1',
+				    port:'3306',
+				    database:'imooc',
+				    user:'root',
+				    password:'root'
+				})
+			第三步：获取连接			
+				pool.getConnection(function (err,connection) {
+				    if(err){
+				        throw err;
+				    }else {
+				        var sql='select * from imooc_user';
+				        connection.query(sql,function(err,results){
+				            if(err){
+				                throw err;
+				            }else {
+				                console.log(results);
+				            }
+				        });
+				        //释放链接到连接池，供下次使用
+				        connection.release();
+				        //关闭地址池
+				        pool.end();
+				    }
+				})
+
+				其中poll.getConnection方法的参数是一个回调函数
+				它有两个参数
+				第一个是err
+				第二个是connection 连接对象
+
+				其中连接对象的query方法有两个参数
+				sql语句
+				和一个回调函数
+				这个回调函数有三个参数
+				err 出错。。。
+				results 数据库返回的结果
+				fields	查询结果的属性信息
+
+
+
+				特别注意：pool.getConnection() 这里会有异步问题，
+					封装的话需要使用回调函数
+
+			第四步：释放链接到连接池里，供下次使用
+				    connection.release();
+				    （我把它放在了pool.getConnection中）
+			第五步：关闭地址池
+				    pool.end();
+				    （我也把它放在了pool.getConnection中）
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+在封装方法的时候，你通常会遇到异步问题
+解决异步的方法就是，在方法中使用回调函数
+	//封装一个能够获取到查询字符串的方法
+function hehe(handler){
+		if(method=='GET'){
+			//获取到查询字符串
+			var query=urlObj.query;
+			//将查询字符串转换为对象
+			var queryObj=querystring.parse(query);
+			//我猜接下来应该将对象的属性操作完之后再将对象转换为查询字符串传出去
+
+			handler.call(this,queryObj);
+		}
+		//如果是post请求,里边会涉及事件的触发，难以拿到触发事件之后的变量，
+		//这时就需要使用回调函数了
+		else{
+			var query = new Buffer(0);
+			req.on('data',function(data){
+				query += data;
+			});
+			req.on('end',function(){
+				//将查询字符串转换为对象
+				var queryObj=querystring.parse(query);
+				handler.call(this,queryObj);
+	        });
+
+		}
+	}
+	
+	//在方法外部操作事件里的变量
+	hehe(function(queryObj){
+		console.log(queryObj);
+	});
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+六、npm
+	1.如何解决npm下载速度慢
+		查看npm配置
+		npm config list
+
+		注：npm  -g 全局安装的东西在/usr/local下，这个文件夹下普通用户没有权限新建文件和文件夹
+		所以一般会报错
+
+		我们这样来解决这个问题
+		sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
+
+
+		1）使用cnpm
+			////随后补上
+		2）更改npm的注册中心地址，让它去淘宝的注册中心去找
+				npm set registry=http://registry.npm.taobao.org
+
+		3）本地仓库
+			sinopia
+			当安装这个仓库时，npm安装东西的时候，会首先在这个本地仓库寻找，
+			如果本地没有的话，那就去淘宝的注册中心去找（默认是官网的注册中心，之后我们把它
+			改成淘宝），找到的话，那就在本地缓存一份，下一次就直接在本地寻找
+			1.cnpm install -g sinopia
+
+			
+			2.改默认的注册中心，在家目录下修改~/.config/sinopia/config.yaml这个文件
+				将里面的注册中心改成淘宝
+				url:https://registry.npm.taobao.org
+
+			3.启动sinopia(直接在命令行输入sinopia)
+				所在端口为3874
+
+			4.将npm的默认注册中心改为sinopia
+				npm set registry=http://localhost:4873
+
+	2. npm init
+    	初始化模块
+    	npm init -y
+    	初始化模块之后，形成一个package.json文件(模块的配置文件)，这个文件存放了模块的配置信息
+
+    3.npm run
+
+    4.npm install
+    	拷贝一个别人的项目不需要把node_moudls拷过来，只需要一句npm install
+    	就能将所需要的依赖全部安装
+
+    	-g  全局安装
+
+        --save-dev或者-D,是把配置文件中的依赖信息写在devDependencies中
+        而不是Dependencies
+        
+        --no-save 安装或者删除模块，不改变配置文件中的信息
+
+        --save  安装模块，并且写入package.json 的Dependencies中
+
+    5.npm update 更新模块
+
+    6.npm uninstall 删除模块
+    	删除模块的时候模块名后面要加@版本号，一个一个的删除
+
+七、express
+	1.安装express
+		npm install express
+		安装第三方中间件以支持post
+        npm install body-parser
+	2.加载
+		var express = require('express');
+        var bodyParser = require('body-parser');
+	3.配置路由
+		var app = express();
+		app.get("/students",function(req,resp){
+            //获取ｇｅｔ方式提交的参数
+            req.query 
+            res.send();
+        });
+
+     	app.use(bodyParser.urlencoded({extended:true})
+       	app.post("/students",function(req,resp){
+            //获取post方式提交的参数
+            //1. 使用原生的事件监听方式获取参数
+            //2. 使用第三方的中间件
+            //获取post方式提交的参数
+            req.body
+            res.send()
+               
+        });
+    4.监听端口
+        app.listen(8080,function(){
+
+        })
+    5.express脚手架
+    	npm install -g express-generator 
+
+    	使用脚手架
+    	express 项目名
+
+   	6.路由中间件
+   		使用了路由中间件之后，我们的代码应该是这样的
+   		var express=require('express');
+        var bodyParser = require('body-parser');
+   		var app=express();
+   		//路由中间件
+   		var studentRouter=express.Router();
+     	app.use(bodyParser.urlencoded({extended:true})
+   		//在中间件中定义子路由
+   		studentRouter.get('/findAll',function(rep,resp){
+   			resp.send('查询所有学生信息');
+   		});
+   		studentRouter.post('/login',function(rep,resp){
+   			resp.send('登录成功');
+   		});
+   		//将中间件绑定到app上，在之前还定义了一级路由
+   		app.use('/student',studentRouter);
+
+   		app.listen(8080,function(){
+   			console.log('8080的端口已经开启');
+   		})
+
+
+
+   		res.send([body])	发送http请求，body可以为流，字符串，对象，或者数组
+		res.json([body])	与send方法参数相同，可以将其他类型参数转换为json
+		res.jsonp([body])	发送一个支持 JSONP 的 JSON 格式的响应。
+		res.end([data] [, encoding])	结束响应进程
+		res.redirect(path)	重定向
+
+
+八、企业级开发
+	1.先使用express脚手架搭建一个项目的基本结构
+		express app1
+		前端代码放到public目录下
+		后端代码放到routes目录下
+		数据库代码新建一个db文件夹
+	2.从数据库入手
+
+		1）	connection.js 创建连接池，并且封装连接方法
+
+			首先，你需要创建一个连接池，用来和数据库连接
+			然后，封装一个使用连接池连接数据库的方法
+			最后，将连接数据库的方法暴露出去
+
+		2） studentDB.js 连接并且操作数据库
+			在这个模块中，你将操作数据库
+
+			首先，封装一个使用sql语句操作数据库的方法
+			（因为操作数据库除了sql语句不同外，其他代码都相同）
+			然后，根据不同的功能，定义不同的方法
+			（其实就是写了不同的sql语句，将sql语句作为参数，操作数据库）
+			最后，将这些功能不同的操作数据库方法暴露出去
+
+	3.后端写路由
+		将路由引入app.js,并且绑定在app上，同时设定一级路由
+		不同的路由调用不同的方法，实现不同的功能
+
+	4.前端代码
+
+九、Ajax
+	1.http请求
+		一个完整的http请求过程，通常有7个步骤
+		1）建立TCP连接
+		2）web浏览器向web服务器发送请求命令
+		3）web浏览器发送请求头信息
+		4）web服务器应答
+		5）web服务器发送应答头信息
+		6）web服务器向浏览器发送数据
+		7）web服务器关闭tcp连接
+
+	2.一个http请求一般由4部分组成
+		1）请求的方法或动作，比如是GET还是POST
+		2）正在请求的URL，总得知道请求的地址是什么吧
+		3）请求头，包含一些客户端环境信息，身份验证信息等等
+		4）请求体，也就是请求正文，请求正文中可以包含客户提交的查询字符串信息，表单信息等等
+	3.一个http响应一般由3部分组成
+		1.一个由数字和文字组成的状态码，用来显示请求是成功还是失败
+		2.响应头，响应头也和请求头一样包含许多有用的信息，例如服务器类型，日期时间，内容类型和长度等
+		3.响应体，也就是响应正文
+
+	4.状态码
+		1XX：信息类，表示收到web浏览器请求，正在进一步的处理中
+		2XX：成功，表示用户请求被正确接收，理解，和处理：200 OK
+		3XX：重定向，表示请求没有成功，客户必须采取进一步动作
+		4XX：客户端错误，表示客户端提交的请求有误，400 NOT FOUND ,意味着请求中所引用的文档不存在
+		5XX：服务器错误，表示服务器不能完成对请求的处理，500
+	
+	5.js中的ajax
+
+    	创建一个XMLHttpRequest对象
+    		var request=new XMLHttpRequest();
+
+
+    	XMLHttpRequest发送请求
+    		request.open(method,url)
+    		request.setRequestHeader("content-type","application/x-www-form-urlencoded");(请求头信息)
+    		request.send(string)  
+    		其中send方法的参数就是传递的数据，我们一般将get的数据加在url中，
+    		将post的数据就要携带在send方法中了
+
+    	XMLHttpRequest取得响应
+    		responseText:获得字符串形式的响应数据
+    		responseXML:获得XML形式的响应数据
+    		status和statusTest：以数字和文本形式返回HTTP状态码
+    		getAllResponseHeader():获取所有的响应报头
+    		getResponseHeader():查询响应中的某个字段的值
+
+    	readyState属性 
+    		0：请求未初始化，open还没有调用
+    		1：服务器连接已建立，open已经调用
+    		2：请求已接收，也就是接收到头信息了
+    		3：请求处理中，也就是接收到响应主体了
+    		4：请求已完成，且响应已就绪，也就是响应完成了
+
+    	一个完整的流程
+    		1.新建一个XHR对象
+    			var request=new XMLHttpRequest();
+    		2.调用以下三个方法
+    			request.open(method,url)
+    			request.setRequestHeader("content-type","application/x-www-form-urlencoded");(请求头信息)
+    			request.send(string)
+    		3.对这个过程进行监听
+    			request.onreadystatechange=function(){
+    				if(request.readyState === 4 && request.status===200 ){
+    					//做一些事情request.responseText
+    				}
+    			}
+
+    6.jQuery中的ajax
+    	$.getJSON(url,{携带的数据},function(data){
+
+    	})
+
+    	$.ajax({
+            url:'student/addStudent',
+            data:JSON.stringify(ids),
+            method:'post',
+            contentType:'application/json',
+            success:function(data){
+                $('.table_box').empty();
+                $('.table_box').load("table.html");   
+            }
+        })
+
+
+    7.跨域的两种方式：
+    	1）	cors   在路由中加入响应头
+	    	resp.writeHead(200,'ok',{
+	    		"Content-Type":"text/plain;charset=utf-8",
+	    		"Access-Control-Allow-Origin":"*"
+	    	})
+
+	    2）  jsonp
+	    	通俗的讲，就是使用<script>标签发送请求，后端返回一个js代码，
+	    	这个js代码调用了前端的方法，数据当做方法的参数
+	    	前端：
+		    	<script>
+			    	function aaaa(data){
+			    	  console.log(data);
+			    	}
+			  	</script>
+			  	<script src="http://localhost:3000/student/testJSONP?cb=aaaa">
+			  	</script>
+			后端路由：
+				studentRouter.get("/testJSONP",function(req,resp){
+ 					var data = [{name:"larry"},{name:"terry"}]
+				  	var cb = req.query.cb;
+				  	resp.send(cb+'.call(this,'+JSON.stringify(data)+')');
+				});
+
+		3）jQuery中的jsonp
+
+
+
+	    	
+    	
+
+
+
+
+
+
+十、git
+ 
+
+
+
+
+
+
+
+
+
+
+
+

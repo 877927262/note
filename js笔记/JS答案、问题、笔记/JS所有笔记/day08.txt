@@ -1,0 +1,317 @@
+面向对象的程序设计 
+1.深入理解对象(选读)
+    ECMA-262对象的定义：无序属性的集合，其属性可以包含基本值，对象，或者函数。可以将对象想象成散列表:键值对，其中值可以是数据或者函数。
+    1) 属性类型
+		1.数据属性：例如：name
+			包含一个属性值的位置，这个位置可以读取和写入值。
+			[[Configurable]]
+				表示是否通过delete删除属性从而重新定义属性，能否修改属性的特性，或者能否把属性修改为访问器属性直接定义在对象中，默认为true)
+			[[Enumerable]]
+				表示能否通过for-in循环返回属性。(直接定义在对象中，默认为true)
+			[[Wriable]]
+				表示能否修改属性的值。(直接定义在对象中，默认为true)
+			[[Value]]
+				包含这个属性的数据值 name:jacky
+				要修改属性默认的特性，必须使用ECMAScript5的Object.defineProperty()方法
+				defineProperty(属性所在的对象,属性的名字,一个描述符对象);
+				configurable: 当为false时，不能修改
+                2.访问器属性 例如:_year--> year(访问器属性)
+			访问器属性不包含数据值，包含一对setter,getter方法。
+			[[Configurable]]:
+			[[Enumerable]]  :
+			[[Get]]	  
+				在地区属性时调用的函数，默认为undefined
+			[[Set]]	  
+				在写入属性时调用的函数，默认为undefined
+				var book = {
+					_year :2004,
+					edition:1
+				}
+				Object.defineProperty(book,"year",{
+					get:function(){
+						return this._year;
+					},
+					set:function(year){
+						this._year = _year;
+					}
+				});
+				_year前面的下划线是一种常用的记号，用来表示只能通过对象方法访问的属性。而访问器属性year则包含一个getter函数和一个setter函数。
+	                例如:  Object.defineProperty(xx,"name",{
+		   	      //writable:false,
+		   	      value:"wnawu"  ,
+		   	      // enumerable:false ,
+		   	      configurable:false
+		   	}
+		   	    );
+	2) 定义多个属性
+        Object.defineProperties();
+		该方法接受两个对象参数，第一个是要添加或者要修改属性的对象；第二个对象的属性和第一个对象中要添加和修改的属性对应
+			var book = {};
+			Object.defineProperties(book,{
+				_year :{		//数据属性
+					value:1001
+				},
+				edition :{		//数据属性
+					value:1
+				},
+				year :{			//访问器属性
+					get:function(){
+						return this._year+1
+					},
+					set:function(year){
+						this._year = year
+					}
+				}
+			});
+			console.log(book.year);
+   
+	3) 读取属性的特性
+        Object.getOwnPropertyDescriptor();获取指定属性的描述符该方法接受两个参数，第一个为属性所在的对象,第二个为要读取其描述符的属性名称
+			var descriptor = Object.getOwnPropertyDescriptor(book,"_year");
+			console.log(descriptor.value);		//1001
+			console.log(descriptor.configurable)	//false
+---------------------------------------------------
+2.创建对象
+	1) 工厂模式
+		function createPerson(name,age,job){
+			var o = new Object();
+			o.name = name;
+			o.age = age;
+			o.job = job;
+			o.sayName = function(){
+				alert(this.name);
+			}
+			return o;
+		}
+		var p1 = createPerson("terry",11,"boss");
+		var p2 = createPerson("larry",12,"daBoss");
+
+		工厂模式的问题
+			var t1 = typeOf p1;	//object 无法对象识别，即所有对象都是Object类型
+    2) 构造函数模式
+        js中可以自定义构造函数，从而自定义对象类型的属性和方法，构造函数本身也是函数，只不过可以用来创建对象
+
+		function Person(name,age,job){
+			this.name = name;
+			this.age = age;
+			this.job = job;
+			this.sayName = function(){
+				alert(this.name);
+			}
+		}
+		var p1 = new Person("terry",11,"boss");
+		var p2 = new Person("larry",12,"daBoss");
+		使用new操作符调用构造函数创建对象实际上经历了如下几个步骤
+			1) 创建一个新对象
+			2) 将构造函数的作用域赋给新对象（this指向这个新对象）
+			3) 执行构造函数中的代码
+			4) 返回新对象。
+		这种创建对象的方法可以将实例标识为一种特定类型（例如Person类型）。
+			var t1 = typeOf p1;	//t1为Person
+
+		1.构造函数当做函数
+		  Person("larry",12,"daBoss")
+		  当在全局作用域中调用一个函数时，this总是指向Global对象（window对象）。
+		2.构造函数的问题
+			每个方法都需要在每个实例上重新创建一遍，但是毫无必要。
+			可以在全局范围中声明一个函数，然后将引用传递给对象中的函数属性。但是这样做会导致全局函数过多，体现不了对象的封装性
+			console.log(p1.sayName == p2.sayName);	//false
+
+    3) 原型模式
+		每个函数都有一个属性：prototype(原型属性)，
+		这个属性是一个指针，指向一个对象，该对象的
+		用途是包含可以由特定类型的所有实例共享的属性和方法。
+			function Person(){
+
+			}
+			Person.prototype.name = "tom";
+			Person.prototype.age = 22;
+			Person.prototype.job="boss";
+			Person.prototype.sayName = function(){
+				alert(this.name);
+			}
+			var p1 = new Person();
+			p1.name = "terry";
+
+			var p2 = new Person();
+			p2.name = "larry";	
+		创建了自定义的构造函数之后，其原型对象默认会取得constructor属性；当调用构造函数创建一个新实例后，该实例的内部将包含一个指针（内部属性），指向构造函数的原型对象。（指向的是原型对象而不是构造函数）
+
+		1.属性的访问
+			每当代码读取某个对象的某个属性时，都会执行一次搜索，目标是具有给定名字的属性。
+			1) 首先从对象实例本身开始查找
+			2) 如果不在对象实例中，则继续搜索指针指向的原型对象。
+		2.删除实例属性
+			当为对象实例添加一个属性时，这个属性就会屏蔽原型对象中保存的同名属性。通过delete操作符可以完全删除实例属性。
+		3.检测属性是否存在于实例中
+			hasOwnProperty(p); 判断p指定的属性是否存在于实例中，如果存在返回true
+			console.log(p1.hasOwnProperty("name"));	//false 存在于原型中而不是实例对象中
+        4.原型与in操作符
+			1) 在for-in 可以访问存在于实例中的属性，以及原型中的属性
+			2) 单独使用
+			a in b;  通过b对象可以访问到a属性的时候返回true，无论该对象在实例中还是在原型中
+			console.log("name" in p1);		//true
+			判断一个属性是否在原型
+				function hasPrototypeProperty(obj,name){
+					//不在实例中但是可以访问到的属性属于原型属性
+					return !obj.hasOwnProperty(name) && (name in obj);
+				}
+        5.原生对象的原型
+			通过原生对象的原型，不仅可以取得所有默认方法的调用，而且可以定义新方法。可以向修改自定义对象的原型一样修改原生对象的原型，可以随时添加方法。
+			String.prototype.startsWith = function(text){
+				return this.indexOf(text) ==    0;
+			}
+			var msg = "Hello world";
+			alert(msg.startsWith("Hello"));	//true
+	6.原型对象的问题	
+		所有实例在默认情况下都将取得相同的属性值，这种共享对于函数来说非常合适，但是包含引用数据类型的值就不太好
+		Person.prototype = {
+			name : "briup",
+			friends : ["larry","terry"]
+		}
+		var p1 = new Person();
+		var p2 = new Person();
+		p1.name = "terry";
+		p1.friends.push("tom");
+
+		p1.friends;	//["larry","terry","tom"]
+		p2.friends;	//["larry","terry","tom"]
+
+	7.更简单的原型语法
+		将原型对象设置为等于一个对象字面量形式创建的新对象。实例对象使用效果相同，但是原型中的constructor属性不再指向Person，因为每创建一个对象，就会同时创建它的 prototype对象，这个对象也自动获得constructor属性。这里我们重写了prototype对象因此该原型中constructor属性就变成了新对象的constructor属性（Object）
+		p1.constructor.prototype.constructor //Object
+		function Person(){
+	
+		}
+		Person.property = {
+			//constructor: Person,   如果constructor比较重要，可以指定它的值，Enumerable ,true,默认为false
+			name:"tom",
+			age :22,
+			job :"boss",
+			sayName:function(){
+				alert(this.name);
+			}
+		}
+		//定义constructor属性，不可遍历
+		Object.defineProperty(Person.prototype,"constructor",{
+			enumerable : false,
+			value : Person
+		});
+	
+	4) 组合使用构造函数模式和原型模式
+		构造函数用于定义实例属性，原型模式用于定义方法和共享属性。这种模式是目前在ECMAScript中使用最广泛，认同度最高的一种创建自定义类型的方法。
+			function Person(name,age){
+				this.name = name,
+				this.age = age,
+				this.friends = []
+			}
+			Person.prototype = {
+				constructor : Person,
+				sayName:function(){
+					alert(this.name);
+				}
+			}
+			var p1 = new Person("terry",11);
+			var p2 = new Person("larry",12);
+			p1.friends.push("tom");
+			p2.friends.push("jacky");
+			console.log(p1);
+			console.log(p2);
+
+3.继承
+	1) 原型链	      
+	  每个构造函数都有一个原型对象，原型对象中都包含一个指向构造函数的指针，而实例都包含一个指向原型对象的内部指针。当原型对象等于另外一个类型的实例即继承。调用某个方法或者属性的步骤
+	    a.搜索实例
+	    b.搜索原型
+	    c.搜索父类原型
+		//定义父类类型
+		function Animal(){
+			this.name = "animal"	
+		}
+		Animal.prototype = {
+			sayName : function(){
+				alert(this.name);
+			}
+		}
+
+		//定义子类类型
+		function Dog(){
+			this.color = "灰色"
+		}
+		//通过将子对象的原型对象指向父对象的一个实例来完成继承
+		Dog.prototype = new Animal();
+		//子对象的方法其实是定义在了符类对象的实例上。
+		Dog.prototype.sayColor = function(){
+			alert(this.color);
+		}
+		var dog = new Dog();
+		console.log(dog);
+		dog.sayColor();
+		dog.sayName();
+		1.默认原型
+			所有函数默认原型都是Object的实例，默认原型中都会包含一个内部指针，指向Object.prototype.
+		2.确定原型和实例的关系
+			1) 通过使用instanceof
+				instance instanceof Object	//true
+				instance instanceof SuperType	//true
+				instance instanceof SubType	//true
+			2) 通过使用isPrototypeOf()
+				只要是原型链中出现过的原型，都可以说是该原型链所派生的实例的原型
+				Object.prototype.isPrototypeOf(instance)	//true
+				SuperType.prototype.isPrototypeOf(instance)	//true
+				SubType.prototype.isPrototypeOf(instance)	//true
+		3.谨慎定义方法
+			子类型覆盖超类型中的某个方法，或者是需要添加超类中不存在的方法，都需要将给原型添加方法的代码放在继承之后（即替换原型的语句之后）
+		4.原型链问题
+			1)通过原型来实现继承时，原型实际上会变成另一个类型的实例，原来的实例属性也就变成了现在的原型属性
+			2)在创建子类型的实例时，不能向超类型的构造函数传递参数。
+			因此实践中很少会单独使用原型链
+
+    2) 借用构造函数	 
+		也称 "伪造对象" 或 "经典继承",在子类型构造函数的内部调用超类型构造函数。函数不过是在特定环境中执行代码的对象，因此通过apply(),call()方法可以在（将来）新建对象上执行构造函数,即	在子类型对象上执行父类型函数中定义的所有对象初始化的代码。结果每个子类实例中都具有了父类型中的属性以及方法
+		function Animal(name){
+			this.name = name;
+			this.colors = ["red","gray"];
+		}
+		function Dog(name){
+			//继承了Animal
+			Animal.call(this,name);
+			this.color = "gray";
+		}
+		Animal.prototype.sayName = function(){
+			alert(this.name);
+		}
+
+		var dog = new Dog();
+		dog.colors.push("hhh");
+		console.log(dog);
+		var animal = new Animal();
+		console.log(animal);
+				//如果将函数定义在构造函数中，函数复用无从谈起
+		dog.sayName();	
+				//在超类型的原型中定义的方法，对于子类型而言是无法看到的
+
+    3) 组合函数
+		也称"伪经典继承"，将原型链和借用构造函数的技术组合在一起。原理是：使用原型链实现对原型属性和方法的继承，而通过借用构造函数实现对实例属性的继承。
+		function Animal(name){
+			this.name = name;
+			this.colors = ["red","gray"];
+		}
+		function Dog(name){
+			//继承了Animal（属性）
+			Animal.call(this,name);
+			this.color = "gray";
+		}
+		Animal.prototype.sayName = function(){
+			alert(this.name);
+		}
+		//继承方法
+		Dog.prototype = new Animal();
+		Dog.prototype.constructor = Animal;
+
+		var dog = new Dog();
+		dog.colors.push("hhh");
+		console.log(dog);
+		var animal = new Animal();
+		console.log(animal);
+		dog.sayName();	//可以调用

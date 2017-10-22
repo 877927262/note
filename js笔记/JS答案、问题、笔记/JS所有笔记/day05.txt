@@ -1,0 +1,145 @@
+﻿1. Array类型
+	ECMAScript数组和其他语言中的数组都是有序列表，但是有以下特性：
+    a.每一项都可以保存任何类型的数据。
+    b.数组的大小是可以动态调整。（只针对JS）
+    c.数组的length属性：可读可写，可以通过设置length的值从数组的末尾移除项或向数组中添加新项
+
+    1) 创建方法
+       1. 使用Array构造函数
+          var arr = new Array();
+          var arr = new Array(20);  // 预先指定数组的大小
+          var arr = new Array("terry","larry","boss"); //传入参数
+          注意：new 关键字也可以省略，但是尽量不要省略
+       2. 使用数组字面量
+          由一对包含数组项的方括号表示，多个数组项之间用逗号分隔
+          var arr = ["terry","larry","boss"];
+          var arr = []			//空数组
+
+    2) 访问数组元素
+       数组变量名[索引]
+		1.如果索引小于数组的长度，返回对应项的值
+			var arr = ["terry","larry","boss"];
+			arr[0] ;			//访问数组中第一个元素,返回值为terry
+        2.如果索引大于数组的长度，数组自动增加到该索引值加1的长度
+			var arr = ["terry","larry","boss"];
+			arr[3] ="jacky";	//添加元素,数组程度变为4
+
+		数组最多可以包含4 294 967 295个项
+
+    3) 检查数组
+		var arr = [];
+		typeof(arr);		//返回object
+		Array.isArray(arr);	//判断arr是否是数组类型
+
+    4) 转换数组为字符串
+       数组继承Object方法，并且对这些方法进行了重写
+        toLocalString();
+        toString();		在默认情况下都会以逗号分隔字符串的形式返回数组项
+			例如：
+			var arr = ["terry","larry","boss"];	
+			arr.toString()		//terry,larry,boss 
+			valueOf(); 在默认情况下以数组字面量的方式显示（firefox）
+			arr.valueOf();		//["terry","larry","boss"];	
+			join();	     使用指定的字符串用来分隔数组字符串
+			例如：
+			arr.join("||");		//briup||terry||jacky
+
+    5) 栈，队列方法
+		1.栈  LIFO (Last-In-First-Out)
+			push() 可接受任意类型的参数，将它们逐个添加到数组的末尾，并返回数组的长度
+			pop()	 从数组的末尾移除最后一项，减少数组的length值，返回移除的项
+		2.队列	FIFO (First-In-First-Out)
+			shift()  移除数组中的第一个项并且返回该项，同时将数组的长度减一。
+			unshift() 在数组的前端添加任意个项，并返回新数组的长度。
+    6) 排序
+       reverse()  反转数组项的顺序
+       sort()	  
+         1.默认排序：该方法会调用每个数组项的toString() 转型方法，然后排序
+         2.自定义排序：
+			a.该方法可以接受一个比较函数作为参数，比较函数有两个参数
+			b.如果第一个参数位于第二个参数之前，返回负数
+			c.如果第一个参数位于第二个参数之后，返回正数
+			var arr = [11,5,23,7,4,1,9,1];
+			console.log(arr.sort(compare));
+
+			//该比较函数适合于大多数数据类型
+			function compare(v1,v2){
+				if(v1>v2){
+					return -1;
+				}else if( v1<v2){
+					return 1;
+				}else{
+					return 0;
+				}
+			}
+	7) 操作方法
+		concat()	:先创建当前数组的一个副本，然后将接收到的参数添加到这个副本的末尾，返回副本
+		var arr = ["aa","bb","cc","dd"];
+		var arr_new = arr.concat("ee","ff"); // arr_new = ["aa", "bb", "cc", "dd", "ee", "ff"]// arr不改变
+
+		slice()	:可接受一个或者两个参数（返回项的起始位置，结束位置）
+			当接受一个参数，从该参数指定的位置开始，到当前数组末尾的所有项
+			当接受两个参数，起始到结束之间的项，但是不包含结束位置的项
+			例如：
+			var arr = ["aa","bb","cc","dd"];
+			1.接受一个参数时
+			  var arr_new = arr.slice(1);
+				// arr_new = ["bb", "cc", "dd"],arr 不改变
+			2.接受两个参数时
+			  var arr_new = arr.slice(1,2);	
+				// arr_new = ["bb"]; arr不改变
+
+		splice(): 向数组的中部插入数据将始终返回一个数组，该数组中包含从原始数组中删除的项。
+			删除：指定两个参数(删除第一的起始位置，要删除的项数)
+			插入：指定三个参数(起始位置，0，要插入的项任意数量的项)
+			替换：指定三个参数(起始位置，要删除的项，要插入的任意数量的项)
+
+			例如：
+			var arr = ["aa","bb","cc","dd"];
+			1.删除
+			  var del_arr = arr.splice(1,2);
+				// arr = ["aa","dd"];	 在原数组进行了删除操作
+				// del_arr = ["bb","cc"];返回删除的元素数组
+			2.插入
+			  var del_arr = arr.splice(1,0,"ee","ff");
+				// arr =  ["aa", "ee", "ff", "bb", "cc", "dd"] 将指定项插入到1位置处
+				//del_arr = [], 返回空数组
+			3.替换
+			  var del_arr = arr.splice(1,2,"ee","ff");
+				// arr =  ["aa", "ee", "ff", "dd"] 将"bb","cc" 替换成了"ee","ff"
+				//del_arr = ["bb", "cc"], 返回删除的元素数组
+		indexOf()(要查找的项，开始查找的位置(可选)) 从数组开头向后查找，使用全等操作符，找不到该元素返回-1
+			var arr = ["22","11","cc","dd","11"];
+			arr.indexOf(11); //返回-1，因为使用"==="进行匹配
+			arr.indexOf("11"); //返回1，从前往后匹配，返回第一个匹配元素的位置
+		lastIndexOf()(要查找的项，开始查找的位置(可选)) 从数组末尾向前查找，使用全等操作符，找不到该元素返回-1
+			var arr = ["22","11","cc","dd","11"];
+			arr.lastIndexOf("11"); //返回1，从后往前匹配，返回第一个匹配元素的位置
+    
+    8) 迭代方法：
+		参数： 每一项上运行的函数，运行该函数的作用域对象（可选）
+		every();对数组中的每一运行给定的函数，如果该函数对每一项都返回true,则返回true
+			var arr = [11,5,23,7,4,1,9,1];
+			var result = arr.every(function(item,index,arr){
+				return item >2;
+			});
+			console.log(result); //false
+		some(); 对数组中的每一运行给定的函数，如果该函数对任一项返回true,则返回true
+			var result = arr.every(function(item,index,arr){
+				return item >2;
+			});
+			console.log(result); //true
+		filter();对数组中的每一运行给定的函数，会返回满足该函数的项组成的数组
+			var result = arr.filter(function(item,index,arr){
+				return item >2;
+			});
+			console.log(result); // [11, 5, 23, 7, 4, 9]
+		map();对数组中的每一运行给定的函数,返回每次函数调用的结果组成的数组
+			var result = arr.map(function(item,index,arr){
+				return item * 2;
+			});
+			console.log(result); // [22, 10, 46, 14, 8, 2, 18, 2]
+		forEach();对数组中的每一运行给定的函数,没有返回值，常用来遍历元素
+			var result = arr.forEach(function(item,index,arr){
+				console.log(item);
+			});

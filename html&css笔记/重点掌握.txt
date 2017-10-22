@@ -1,0 +1,36 @@
+块级元素  h1~h6 div p table tr td thead tbody tfoot  ul li dl dt dd ol header footer section nav aside 
+行内元素	span b strong i em s del input a
+锚链接
+表格合并 cellspace cellpadding 
+表单的所有type  text reset submit button radio checkbox email number date datetime-local time month week range tel url color search 
+表单新增的属性		novalidate
+新增其他标签 meter progress out``` 
+
+
+选择器的种类
+	
+
+伪类选择器的种类
+权值优先级
+盒子模型
+文字属性
+
+水平垂直居中
+
+鼠标样式cursor:pointer
+
+display
+visibility 	disabled visible
+overflow的好几种
+
+弹性，
+
+背景加到什么上
+
+
+元素的默认样式
+
+
+
+
+

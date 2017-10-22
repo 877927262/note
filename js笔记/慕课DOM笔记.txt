@@ -1,0 +1,95 @@
+一、DOM基础
+	1.获取元素的方法
+		1）document.getElementById()
+
+		2）document.getElementsByTagName()
+			返回一个数组
+	2.如何设置元素的css样式
+		ele.style.styleName=styleValue
+
+			注意：当styleName为减号连接的复合形式时需要使用驼峰形式
+				（font-weight-->fontWeight）
+	3.innerHTML
+		获取和设置标签之间的文本和html内容
+
+	4.className
+		ele.className
+		获取和设置元素的class属性(设置得话，会替换掉元素本身的类)
+			（你也可以使用getAttribute("class")来获取）
+
+		注：你也可以通过 . 的方式获取其他属性，比如src title什么的
+			ele.src=""   ele.title="" ,只不过class比较特殊，你不能
+			直接写成ele.class,而是必须写成ele.className
+
+	5.获取和添加元素的属性
+		1.获取元素的属性
+			1）ele.getAttribute(属性名)
+
+			2）ele.属性名 （除class以外都能获取到，class需要使用className）
+				如：p.id
+				注：这种方法只能获取和设置标签自带的属性，不能设置用户自定义的属性
+
+		2.设置元素的属性
+			1）ele.setAttribute(属性名,属性值)
+			2）p.id="hehe";
+
+		3.删除属性
+			ele.removeAttribute(属性名)
+
+二、DOM事件
+	事件就是文档或浏览器窗口中发生的一些特定的交互瞬间
+		onload:页面加载时触发
+		onunload:页面卸载时触发
+		onclick:鼠标点击时触发
+		ondblclick:双击鼠标时触发
+		onmouseover:鼠标滑过时触发
+		onmouseout:鼠标离开时触发
+		onfoucs:获得焦点时触发
+		onblur:失去焦点时触发
+		select:当用户选择文本框(<input>,<textarea>)中的一个或多个字符时触发
+		onchange:域的内容改变时触发（select）
+		onsubmit:表单中的确认按钮被点击时触发（加在form上的，不是button上的）
+		onmousedown:鼠标按下时触发
+		onmousemove:鼠标移动时触发
+		onmouseup:鼠标抬起时触发
+		onresize:调整浏览器窗口时触发
+		onscroll:拖动滚动条时触发
+	1.HTML事件：
+		就是把事件写在行内
+		<p onclick="alert('hehe')">这是一个p标签</p>
+		<p onclick="function()">这是一个p标签</p>
+	2.DOM 0级事件
+		先获取到元素，然后再给元素绑定事件
+
+		在事件的函数中，可以使用this，因为谁触发的事件，谁就是this
+
+		function clickBtn(){
+			alert("hehe");
+		}
+		btn.onclick=clickBtn;   //这里千万不要加括号，因为这里并不是函数的调用
+
+
+	事件类型：
+		onload:页面加载时触发
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

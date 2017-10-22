@@ -1,0 +1,156 @@
+1，Javascript 简介
+    诞生于1995年，当时的主要目的是处理由以前服务器语言负责的一些没有填写的必填域，是否输入了无效的值。在web日益流行的同事，人们对客户端脚本语言的需求也越来越强烈，那时绝大多数因特网用户使用的速度仅为28.8kbit/s的猫上网，但网页的大小和复杂性却不断增加，为完成简单的表单验证而与服务器交换数据只会加重用户的负担。
+	
+    1995年2月 计划在Netscape Navigator2开发名为LiveSript的脚本语言，同时在浏览器和服务器中使用，为了赶在发布日期前完成LiveScript开发，Netscape和sun公司建立了一个开发联盟，在Netscape Navigator2发布的前夕，为了搭上媒体上热炒的java顺风车，临时把LiveScript改名为javaScript。在Navigator3发布不就，ie3就加入了名为JScript的javaScript的实现。这意味着有两个不同的javascript版本：javascript,jscript.当时并没有标准规定JavaScript的语法和特性。
+
+    1997年，JavaScript1.1 为蓝本的建议被提交给了ECMA（European Computer ManufacturersAssociation欧洲计算机制造商协会）。定义了ECMAScript新脚本语言的标准(ECMA-262)。第二年，ISO/IEC（International Organization for Standardization and International Electrotechnical Commission,国标标准化组织和国际电工委员会）也采用了ECMAScript作为标准（ISO/IEC-16262）,自此浏览器开发商就致力于将ECMAScript作为各自JavaScript实现的基础。
+
+Js特点	
+	1)脚本语言
+		在html中执行
+		标记语言
+			本身没有行为能力，只能够被读取
+		脚本语言
+			本身具有行为能力，逻辑能力，需要被浏览器解析执行
+		编译语言
+			本身具有行为能力，逻辑能力，
+			需要编译运行
+
+		
+	2)解释性语言 
+		浏览器中内置解析器
+		火狐：js解析器
+		谷歌：js解析器
+		编译型语言
+		Java C
+			（
+
+				.java->.class	字节码
+				.c   ->.o		二进制
+					编译：语法校验
+			 ）
+	3)弱类型语言
+		java:
+			int a=12;
+				a="hello";//报错
+		js:
+			var a=12;  //a--》数字
+				a="hello";//字符串
+				a=true;//a:布尔类型
+
+	4)从上往下顺序解析执行
+		
+		
+
+2，JavaScript的实现
+  	一个完整的JavaScript的实现应该包含：
+	    核心			ECMAScript
+	    文档对象模型	DOM
+	    浏览器对象模型	BOM
+  	1) ECMAScript
+    	ECMA-262 定义的EMCAScript与Web浏览器没有依赖关系。浏览器仅是ECMAScript实现可能的宿主环境之一，宿主环境不仅提供基本的ECMAScript实现同时也提供该语言的扩展，以便语言与环境之间对接交互。扩展如DOMECMA规定了这门语言的组成部分
+	    1，语法
+	    2，类型
+	    3，语句
+	    4，关键字
+	    5，保留字
+	    6，操作符
+	    7，对象（万物皆对象）
+  	2) DOM（文档对象模型）
+    	DOM(Document Object Model) 是针对XML但经过扩展用于HTML的应用程序编程接口。DOM将整个页面映射成一个多节点结构。
+      	html代码：
+		<html>
+	  		<head>
+				<title>hello</title>
+				<meta>
+	  		</head>
+	  		<body>
+				<p>nihao </p>
+				<!--注释节点-->
+	  		</body>
+		</html>
+      		dom模型
+      		doucment
+      			|
+			html节点
+		    /	\
+		head	body
+		 |		 |
+		title	 p
+		 |		 |
+		'hello'	'你好'
+  	3) BOM（浏览器对象模型)
+  		alert()
+    	BOM(Browser Object Model),开发人员可以使用BOM控制浏览器显示的页面以外的部分。弹出新浏览器窗口；移动，缩放，关闭浏览器的功能；提供浏览器详细信息的navigator对象;提供浏览器所加载页面的详细信息的location对象；提供用户显示器分辨率详细信息的screen对象；对cookies的支持；支持XMLHttpRequest,IE中的ActiveXObject自定义对象
+
+3，兼容性
+  	JavaScript的三个组成部分，在当前五个主要浏览器（IE,Firefox,Chrom,Safari,Opera）中得到了不同程度支持，其中，所有浏览器对ECMAScript3支持大体都还不错，对ECMAScript支持程度越来越高，但对DOM的支持彼此相差较多，对已经正式纳入HTML5标准的BOM来说，尽管各浏览器都实现了某些总所周知的共同特性，但其他特性还因浏览器而异。
+
+4，在HTML中使用JavaScript
+    1)通过<script>元素，有如下几个属性
+		type 	: 可看做是language的替代属性，表示编写代码使用的脚本语言的内容类型，MIME这个属性非必须，默认是text/javascript
+      	src 	: 表示包含要执行代码的外部文件
+
+      	async 	：立刻下载脚本，但应妨碍页面中其他操作（只针对外部脚本文件）
+      	charset : 指定src属性指定的代码的字符集，大多数浏览器会忽略这个值。
+      	defer 	: 表示脚本可以延迟到文档全部被解析和显示之后再执行（只针对外部脚本文件）
+      	language: 已废弃
+      	
+    2)两种方式：
+      	1. 直接嵌入在页面中
+        <script type="text/javascript">
+			//javascript代码
+			function(){
+		  
+			}
+		</script>
+      	2. 包含外部的js文件
+			<script type="text/javascript" src="test.js"></script>
+			 (后标签不要省略，不符合html规范)
+		【注意事项】
+        	1.不要在<script>标签中再填写其他js代码，否则将会忽略
+			2.src 可以跨域访问 。例如：http://cdn.code.baidu.com/ 百度静态资源公共库
+			3.标签位置<head>标签中：等到全部的js代码都被下载，解释和执行完成后才能开始呈现页面的内容。可将代码引用放到<body>元素放到内容后面。
+			4.延迟脚本 defer="defer"，延迟至浏览器遇到</html>标签后再执行。如果有多个延迟脚本，并不会按照顺序执行。最好包含一个延迟脚本，并且将其放在页面最底部，该属性适用于外部引用的js
+
+5，<noscript>
+  	当浏览器不支持脚本或者浏览器支持脚本，脚本被禁用，可以让页面平稳的退化
+	<noscript>
+		本页面需要浏览器支持（启用）javascript
+	</noscrpt>
+6，基础语法
+  	1) 区分大小写 
+      	typeof 关键字， typeOf 非关键字
+  	2) 标识符
+      指变量，函数，属性的名字或者函数的参数。标识符是按照以下规则组合起来的一或多个字符：
+	  1.字母，数字，下划线，$组成。
+	  2.只能以字母，下划线，$开头。
+	  3.不能将关键字作为标识符。
+	  4.命名尽量采用驼峰式命名
+  	3) 注释
+    	//单行注释
+    	/*
+      	多行注释
+    	*/
+  	4) 语句
+    	每个语句以分号结尾，如果省略分号，由解析器确定语句的结尾，即分号可以省略，但是我们要求每个语句的末尾都应该有分号
+
+7，关键字保留字 
+    1) 关键字:(在js中有特殊功能)
+	    break		do 		instanceof	typeof
+	    case		else	new,		var
+	    catch		finally	return,		void
+	    continue	for		switch,		while
+	    debugger	this	function	with
+	    default		if 		throw		delete
+	    in 			try
+
+    2) 保留字：(将来可能成为关键字)
+	    abstract	enum	int			short
+	    boolean		export	interface	static
+	    byte		extends	long		super
+	    char		final	native		synchronized
+	    class		float	package		throws
+	    const		goto	private		transient
+	    debugger	double	implements	protected
+	    volatile	import	public

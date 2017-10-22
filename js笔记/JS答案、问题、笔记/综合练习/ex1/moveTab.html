@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>图片滚屏效果 </title>
+<link href="miaov_style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+window.onload=function(){
+  var oDiv= document.getElementById("roll");
+  var oA1=document.getElementsByTagName("a")[0];
+  var oA2=document.getElementsByTagName("a")[1];
+  var oUl=document.getElementsByTagName("ul")[0];
+  var oLi=document.getElementsByTagName("li");
+  var   speed =5;
+  var  item =0;
+  //复制一份li  追加到ul 
+   oUl.innerHTML= oUl.innerHTML  +oUl.innerHTML;
+   console.log(oUl.innerHTML);
+   //设置UL的宽度
+   //offsetWidth
+   //offsetHeight
+   //offsetLeft
+  //拿到的单个li 的宽度
+     oUl.style.width = oLi[0].offsetWidth*oLi.length+"px";
+      oA1.onclick =function(){
+                 speed=5;
+               }
+      oA2.onclick=function(){
+             speed=-5;
+            }
+   //让其先向左走
+     item  = setInterval(function(){   
+     //这个方法内部  让我们left   不断变化
+     //如果是往左运行   向左移动的距离  比整个Ul的宽度的一般大的时候  往回拉
+     oUl.style.left=oUl.offsetLeft-speed+"px";
+     if(oUl.offsetLeft<= - oUl.offsetWidth/2){
+         oUl.style.left="0px";
+    }
+    if(oUl.offsetLeft>0){
+       console.log(-oUl.offsetWidth)
+      oUl.style.left=-(oUl.offsetWidth/2)+"px";
+    }
+   },30);
+
+  oUl.onmouseover=function(){
+    //清除定时器
+    clearInterval(item);
+   }
+   oUl.onmouseout=function(){
+      item = setInterval(function(){
+      oUl.style.left=oUl.offsetLeft-speed+"px";
+      if(oUl.offsetLeft<= - oUl.offsetWidth/2){
+       oUl.style.left="0px";
+ }
+     if(oUl.offsetLeft>0){
+       console.log(-oUl.offsetWidth)
+      oUl.style.left=-(oUl.offsetWidth/2)+"px";
+    }
+      },30);
+    }
+  }
+ 
+</script>
+</head>
+<body>
+
+
+<div class="roll" id="roll">
+    <a href="javascript:void(0);" class="btn_left"></a>
+    <a href="javascript:void(0);" class="btn_right"></a>
+    <div class="wrap">
+        <ul>
+            <li><img src="images/1.jpg" /></a></li>
+            <li><img src="images/2.jpg" /></a></li>
+            <li><img src="images/3.jpg" /></a></li>
+            <li><img src="images/4.jpg" /></a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

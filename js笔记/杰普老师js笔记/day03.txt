@@ -1,0 +1,238 @@
+1. 类型转换
+	01) 其他数据类型到Boolean类型转换
+		通过Boolean() 函数转换
+
+		   【Boolean	  true	    false】
+			String		非空字符串	""
+			Number		任何非0		0和NaN
+			Object		任何对象	null
+			Undefined	n/a			undefined	(n/a not applicable 不适用)
+		例如：
+			Boolean("");		//false
+			Boolean(0);			//false
+			Boolean(NaN);		//false
+			Boolean(null)		//false
+			Boolean(undefined)	//false
+			Boolean("briup");	//true
+			Boolean(1);			//true
+
+	02) 其他数据类型到数值类型转换
+		1.Number()
+			1) 如果转换的值是null,undefined,boolean,number
+				Number(true);		//1
+				Number(false);		//0
+				Number(null);		//0
+				Number(undefined);	//NaN
+				Number(10);			//10 如果是数字值,原样输出
+		
+			2) 如果是字符串：
+				Number("123");  //如果仅包含数值，转换为对应的数值
+				Number("234.1");//解析为对应的小数
+				Number("+12.1");//首位为符号位，其余为为数值，转换为对应的数值
+				Number("1+2.3");//NaN 符号位出现在其他位置，解析为NaN
+				Number("0xa");  //如果仅包含十六进制格式，转为为对应的十进制的值
+				Number("010");	//【注意！】不会当做八进制被解析，结果为10
+				Number("");		//空字符串被转换为0
+				Number("123ac");//包含其他字符： NaN
+				Number(" 12");	//12
+		2.parseInt()
+			1) 如果转换的值是null,undefined,boolean,number
+				parseInt(true);		//NaN
+				parseInt(false);	//NaN
+				parseInt(null);		//NaN
+				parseInt(undefined);//NaN
+				parseInt(10);		//10 如果是整数值，原样输出
+				parseInt(10.3);		//10 如果是小数，舍去小数点一级后面的内容
+			2) 如果是字符串：
+				parseInt("123");  //123；如果仅包含数值，转换为对应的数值
+				parseInt("234.1");//234；小数点后面的数值省略
+				parseInt("+12.1");//12； 首位为符号位，其余为为数值，转换为整数
+				parseInt("0xa");  //10； 如果仅包含十六进制格式，转为为对应的十进制的值
+				parseInt("010");  //10； 【注意！】不会当做八进制被解析，结果为10
+				parseInt("");	  //NaN；空字符串被转换为NaN
+				parseInt("1+2.3");//1;	如果首位为数值，依次向后解析，找到连续的数值，直到遇到第一个非数值的，将之前获取的数值转换为Number返回
+				parseInt("123ac");//123;
+       	3.parseFloat()
+	 		与parseInt() 类似，但是也有不同： 
+				1.字符串中的第一个小数点是有效的，而第二个小数点则无效其后的内容会被省略
+				2.始终忽略前导0
+					parseFloat("22.3.4")	//22.3
+					parseFloat("022.34");	//22.34
+				3.不能解析0x
+	03) 其他数据类型到字符串类型转换
+		1. toString()函数
+			默认情况下，toString()是以十进制格式返回数值的字符串表示，通过传递参数，可以输入以二进制，八进制，十六进制乃至任意有效进制格式的字符串值
+				var num = 10;
+				num.toString();		"10"
+				num.toString(2);	"1010"
+				num.toString(8);	"12"
+				num.toString(16);	"a"
+			但是null ,undefined 没有toString() 方法
+      			null.toString()			//报错 TypeError: null has no properties	 
+       			undefined.toString();	//报错 TypeError: undefined has no properties
+		2. String() 构造函数
+       			String(null)		 "null"
+       			String(undefined);	 "undefined"
+
+2，操作符
+	01) 一元操作符
+		++,--,+,-操作符应用任何类型数值都返回一个【数值类型】，先将任意类型的值转换为Number然后进行运算(通过Number()方法进行转换)
+		1.递增 ++  
+			var a = "11";
+			1+a++;
+			1+ ++a;
+			前置：操作该变量之前进行递增或者递减操作
+			后置：操作该变量之后进行递增或者递减操作
+			对任意数据类型的操作数都适用，使用前先将其转换为数字(Number())，然后再进行运算,在应用于对象的时候，优先先调用对象的valueOf方法，以取得一个可供操作的值,如果子类对象仅重写了toString(),调用该方法。
+		2.递减 --
+			前置：操作该变量之前进行递增或者递减操作
+			后置：操作该变量之后进行递增或者递减操作
+			对任意数据类型的操作数都适用，使用前先将其转换为数字，然后再进行运算在应用于对象的时候，先调用对象的valueOf方法，以取得一个可供操作的值,如果子类对象仅重写了toString(),调用该方法。
+		3.加 +
+			相当于调用Number();
+			var a = "12"
+			+a ;	// 12  相当于调用了Number("12")
+		4.减 -
+			将一元减应用于数值时，数值会变成负数。
+			将一元减应用于非数值时，遵循与一元加操作符相同的规则，最后将得到的数值转化为负数
+
+	02) 布尔操作符, 非(NOT)
+		逻辑非 !
+		该操作符应用任何类型数值都返回一个【布尔值】。先将任意类型的数值转换为Boolean，然后取反，
+			!a ==> !Boolean(a)
+			!0		//true
+			!""		//true	
+			!NaN	//true	
+			!false	//true
+
+			连用两次逻辑非 ，就可以将任意数据类型转化为Boolean类型，!!a ==> Boolean(a)
+			!!""	//false
+    03) 逻辑与 && (同真才真，有假则假) 也被称为短路语句
+		可应用于任意数值。如果有一个操作数不是布尔类型，逻辑与就不一定返回boolean类型
+
+		1.如果第一个操作数是 
+			null,NaN,undefined,false,0,""可被转换为false的值的时候返回该值
+		2.如果第一个数其他，返回第二个数
+			var s1 = 8;
+			var s2 = "briup";
+			var s3 = "";
+			var result	= s1 && s2;	//briup
+			var result2 = s3 && s2;	//空字符串
+
+    04) 逻辑或 ||(有真则真，同假才假)
+		false || 
+
+		如果第一个操作数是null,NaN,undefined,false,0,"" 则返回第二个操作数
+    05) 加性操作符
+		1. 加法 +
+			m + n
+			1) 当m,n不为String,Object类型的时候，先将m,n转换为Number类型，然后再进行计算
+				true + false;	  //1；Number(true)+Number(false);
+				true + 1;	  //2；Number(true) + 1
+				null + undefined; //NaN；Number(undefined) -> NaN
+			2) 当m,n有一个为String,无论另一个操作数为何（但不为对象）都要转换为String，然后再进行拼接
+				"1" + true;	// 1true
+				"1" + undefined;// 1undefined
+				"1" + 1;	// 11
+			3) 当m,n 有一个为对象，如果该对象既重写toString,又重写了valueOf方法，先调用valueOf方法获取返回值，将该返回值和另外一个操作数进行运算。如果该对象没有重写valueOf方法，将调用toString方法获取返回值，将该返回值和另外一个操作数进行运算。
+				var o = {
+					name:"briup",
+					valueOf:function(){
+						return "1";
+					}
+				}
+				o+1;		//2；o+1
+		
+		2. 减法 -
+			返回值为【数值类型】。无论操作数为任何类型，先将其使用Number()转换器转换为Number类型，然后再计算。
+			true - 1;		//0;	1-1
+			null - true;	//-1 ;	0-1
+			1 - undefined	//NaN
+			var o = {
+				name:"briup",
+				valueOf:function(){
+					return 1;
+				}
+			}
+			o-1;		//0;	1-1
+	 
+	06) 乘性操作符
+		返回值为【数值类型】当操作数为非数值的时候执行自动的类型转化Number()
+		1. 乘法 *
+			如果两个数都是数值，执行常规的乘法计算
+			如果一个操作数是NaN,结果为NaN
+			超过数值范围返回Infinity
+			如果有一个操作数不是数值，则先调用Number()将其转换为数值。
+		2. 除法 /
+			如果一个操作数是NaN,结果为NaN （0/0 ; NaN）
+			一个非0值除0 Infinity   
+			如果有一个操作数不是数值，则先调用Number()将其转换为数值。
+			var s1 = 5;
+			var s2 = 2;
+			var result = s1/s2;  //2.5
+		3. 取余 %
+			如果两个数都是数值，执行常规的取余计算
+			如果一个操作数是NaN,结果为NaN（任意数%0 ; NaN）
+			如果有一个操作数不是数值，则先调用Number()将其转换为数值。
+
+	07) 关系操作符
+		< > <= >= ,返回一个【Boolean】值
+		1.如果两个操作数是字符串，比较字符串中对应位置的每个字符的字符编码值
+			"a">"b"	//false
+			"1">"a"	//false
+		2.如果一个操作数是数值，将另外一个操作数也转换为数值进行比较
+			"3">1;			//true
+			3>true;			//true 3>Number(true)
+			3>undefined;	//false Number(undefined)=NaN ;任何数和NaN比较结果都为false
+		3.如果一个操作数是对象，先调用valueOf(),再调用toString()将返回值与另外一个操作数比较，如果没有重写toString() valueOf()则始终为false
+			var o = {
+				name:"briup",
+				valueOf:function(){
+					return "13";
+				}
+			}
+			o>2		// true ; "13">2
+    08) 相等操作符,返回【Boolean】
+		1.相等和不相等 ==, != (先转换在比较)
+			1.如果两个操作数都为字符串，比较字符序列
+			2.如果两个操作数都为数值类型，比较值的是否相等
+			var a=3;
+			var b="4";
+			a==b//false
+			3.如果两个操作数都是对象，比较的对象的引用
+			4)null == undefined			//true
+			5)NaN与任何值（包括NaN）相等比较结果为false，不等结果为true.
+			6)如果一个操作数为number类型，另外一个操作数为undefined,null,boolean,string之一，先将这些数据类型转换为数值，再进行比较
+
+		2.全等和不全等
+			仅比较不转换，先比较两个数所属的数据类型，如果类型不同则不同，如果类型相同，再继续比较两个数的值
+			console.log("55" == 55); true
+			console.log("55" === 55);false
+			null == undifined;		//true null派生自undifined
+			null === undifined;		//false
+
+    09) 三目运算符 ? : 
+		variable = boolean_expression ? true_value : false_value;
+		如果boolean_expression为true,将true_value赋给variable，否则将false_value赋给variable
+	    
+		例如：求任意两个数之间最大值
+	       function max(m,n){
+				return m>n?m:n;	//如果m>n为true返回m,如果m>n为false,返回n
+	       }
+    10) 赋值运算符 = 
+       将右侧的值赋给左侧的变量
+       可以和其他算术运算符连用 *= /= %= += -= 
+	   var a = 4;
+
+       a *= 3; //=> a = a*3;
+    11) 逗号操作符
+       可以在一条语句中执行多个操作
+       var num1=1,num2 = 2, num3 = 3;
+
+
+
+
+
+
+
+    

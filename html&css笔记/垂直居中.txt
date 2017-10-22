@@ -1,0 +1,8 @@
+Text- align属性对行内元素生效；
+Vertical-align属性对行级元素生效；
+垂直居中的方法，在父元素内添加display：table；在子元素里添加display：table-cell；和vertical-algin：middle；
+
+
+
+块级元素的水平居中，是给自己加margin: 0 auto; 
+行内元素的水平居中，是给父级加text-align: center;

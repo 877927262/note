@@ -1,0 +1,105 @@
+1，流程控制语句
+    01) if语句
+		if(condition){
+			statement1
+		}else{
+			statement2
+		}
+		condition表示任意表达式，该表达式求值的结果不一定是布尔类型，如果不是布尔类型，ECMAScript会调用Boolean() 转换函数将这个表达式结果转换为一个布尔类型，如果condition求值结果为true,执行statement1。如果求值结果为false，执行statement2
+
+		if(condition){
+			statement1
+		}
+		statement2
+
+		
+    02)switch语句
+		switch(expression){
+			case val:
+
+				break;
+			case val2:
+
+				break;
+			default:
+		}
+		==>
+		switch(expression){
+			case val:{
+
+				break;
+			}
+			case val2:{
+				break;
+			}
+			default:
+		}
+      可以在switch语句中使用任何数据类型。
+      case的值不一定是常量，也可以是变量，甚至是表达式。
+	  expression === val
+	  break
+
+
+2. 循环语句	
+	01)for语句
+		for循环是一种前测试循环语句，但它具有在执行循环之前初始化变量和定义循环后要执行的代码的能力。以下是for循环的语法：
+        初始化表达式，控制表达式，循环后表达式
+		for(initialization;expression;post-loop-expression){
+			//loop option
+		}
+		三要素：
+			初始条件
+			结束条件
+			迭代条件
+		for(var i=9;i<=5;i++){
+			//循环体
+			console.log();
+		}
+
+
+		例如:
+		var sum = 0;
+		for(var i=0;i<10;i++){
+			sum +=i;
+		}
+		console.log(i); //10  
+
+		ECMAScript不存在块级作用域，在循环内部定义的变量也可以在外部访问到
+	
+		死循环
+		for(;;){
+			//当for中的表达式省略的时候，会创建一个死循环
+		}
+		while(true){
+		
+		}
+	02) do-while语句  
+		do{
+			
+		}while(condition); 
+		后测试循环语句，即只有在循环体中的代码执行之后，才会测试出口条件。循环体内的代码最少被执行一次。
+
+	03)	while语句
+		开始条件
+		结束条件
+		迭代条件
+
+		var i=1;	
+		while(结束条件){
+			迭代条件
+		}
+		前测试循环语句，即在循环体内的代码被执行之前，就会对出口条件求值。因此，循环体内的代码有可能永远不会被执行。
+		while(false){
+			//
+		}
+    04) for-in 语句
+		是一种精准的迭代语句，可以用来枚举对象的属性
+		for(property in expression){
+			statement
+		}
+		例如:
+		打印出window对象中所有的属性
+			for(var propName in window){
+				console.log(propName);
+			}
+    

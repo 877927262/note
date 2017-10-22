@@ -1,0 +1,676 @@
+一、什么是html
+	hypertext markup language    
+    超文本标记语言
+	用来制作网页的语言
+    	例如：www.baidu.com/index.html
+    浏览器   --http---  服务器 
+    url    
+        http://www.baidu.com/index.html
+
+        127.0.0.1   唯一标识一台主机
+
+    B/S架构
+        浏览器/服务器
+    C/S架构 
+        客户端/服务器
+
+二、html的发展历史
+	html 1.0
+    第一次浏览器大战   
+    html 4.01
+    XHTML   
+    html5
+
+三、html的特点
+	不需要编译直接由浏览器执行
+	它是一个文本文件
+	它的后缀是html 或者htm
+	大小写不敏感
+
+四、创建一个html基本文档
+		使用sublime开发工具
+		    快捷键的简单使用
+
+五、搭建html基本结构
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<title>Document</title>
+	</head>
+	<body>
+		
+	</body>
+	</html>
+
+	1)声明文档类型
+		<!DOCTYPE html>
+			告诉浏览器你要使用html或者xml的哪个版本
+				html:4t   传统版
+		        html:4s   严格版
+		        html:5    html5版
+		注意：
+			1)DOCTYPE声明必须放在html文档的第一行
+			2)注意DOCTYPE声明不是标签
+	2)网页编码设置
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+六、认识一下html标签
+	成对出现，用尖括号包起来
+		例如：<p>这是一个段落</p>
+	当然也有不是成对的标签
+		例如：<hr/>
+
+七、html元素
+	每一个标签都是一个元素
+		块级元素		独占一行 可以设置宽高
+		行内元素		与其他元素共享一行 不能设置宽高
+		空元素
+		替代元素		例如：<img/>
+
+八、html属性
+	添加在标签的左尖括号内
+	<标签名 属性名=“属性值” 属性名=“属性值”></结束标签>
+	<table bgcolor="red" align="center"></table>
+		例如：<body bgcolor="red">
+				<p>这是一个p标签</p>
+			 </body>
+
+	html核心属性  大部分标签可以使用的属性
+            id     唯一标识
+            class  可以重复，为一类
+            style  写css样式
+            title  提示信息
+
+	一些常用的属性，遇见再详细看
+		1)align
+			left	左对齐
+			right	右对齐
+			center	居中对齐
+			justify	对行进行延伸，使每行都可以有相等的长度（两端对齐）
+		2)
+
+九、在html文档中怎么添加注释
+	<!-- 注释内容 -->
+
+十、html标签
+	标题标签	<h1></h1>~<h6></h6>		文字样式由大到小
+
+	段落标签 <p></p>
+		align属性
+			left	左对齐
+			right	右对齐
+			center	居中对齐
+			justify	对行进行延伸，使每行都可以有相等的长度（两端对齐）
+
+	换行标签 <br/>
+		在文档中敲击回车是起不到换行的作用的
+		如果想换行，应该使用<br/>标签
+			空格  &nbsp;
+
+	预格式化标签	<pre><pre/>		写在pre标签里了内容，可以保留空格换行等
+
+	水平线	<hr/>
+		属性
+			width	设置水平线的宽度
+			color	设置水平线的颜色
+			align 	设置水平线对齐方式
+			noshade	设置水平线无阴影
+
+	其他常用标签
+		<i></i>		只是倾斜，不含强调
+		<em></em>	强调，倾斜
+		<strong></strong> 强调并加粗
+		<b></b>		加粗，不含强调作用
+		<sup></sup> 上标
+        <sub></sub> 下标
+        <u></u>		下划线
+        <ins></ins>	下划线
+        <s>   		删除键
+        <del>		删除线
+
+    特殊符号
+    	&nbsp;		空格
+    	&gt;		大于
+    	&lt;		小于
+    	&copy;		版权
+    	&reg;		已注册
+    	&trade;		商标
+
+十一、列表标签
+		无序列表
+			<ul>
+				<li>列表项</li>
+				<li>列表项</li>
+				<li>列表项</li>
+			</ul>
+			type属性值	   //css中设置的方法是list-style
+				disc	圆点
+				aquare	正方形
+				circle	圆圈
+		有序列表
+			<ol>
+				<li>列表项</li>
+				<li>列表项</li>
+				<li>列表项</li>
+			</ol>
+			type属性值       //css中设置的方法是list-style
+				1	数字123
+				a 	小写字母abc
+				A	大写字母ABC
+				i  	小写罗马数字i
+				I 	大写罗马数字I
+		定义列表
+			<dl>
+				<dt>定义列表项</dt>
+				<dd>列表项描述</dd>
+				<dt>定义列表项</dt>
+				<dd>列表项描述</dd>
+			</dl>
+
+			*特别注意dt和dd是同级标签，不是嵌套关系，并且不能省略dl
+十二、图片
+	<img src="" alt="">
+		属性
+			src 	要显示图片的url
+			alt		图片不能显示时的提示文字
+			width	图片的宽度
+			height	图片的高度
+
+			此处涉及到绝对路径和相对路径的使用
+				绝对路径是从根目录开始的路径
+				相对路径是从当前位置开始的路径
+
+	img在布局时有一个小bug 
+	img直接放在div中img下面会出现一行小空白
+	解决的方法有很多，最方便的是给div设置overflow:hidden;
+	或者给img设置浮动，或者给div设置display:block;
+
+十三、超链接
+		<a href=""></a>
+			href属性		 
+				跳转的地址
+
+				发送电子邮件
+					<a href="mailto:liuyr@briup.com"></a>
+
+				文件下载
+					<a href="文件的地址"></a>
+
+			target属性 
+				打开链接页面的方式
+	                _self  默认，当前页面打开
+	                _blank 打开一个新的选项卡
+	                _top   
+	                _parent
+
+			锚链接的用法
+                第一步：在目标位置定义id属性
+                第二部：在a链接里设置href属性href="#id值"
+
+
+       小技巧：如果不想让a标签跳转，通常我们使用href="#",
+       		如果涉及到数据的传输，在url中显示a标签的跳转地址，
+       		我们就不能使用href="#",而是使用href="javascript:void(0)",
+       		或者使用js阻止默认行为
+
+
+（看视频有点累了，接下来就不看慕课的视频了，直接总结老师的内容）
+
+十四、表格
+		table 表格   cellspacing cellpadding width border align  
+            caption 标题
+            colgroup  列组					<!-- 此处需要进一步测试看杰普的视频 -->
+                col  一列   height属性		一般我们对行设置高度
+            thead   表头						对列设置宽度
+                tr   一行
+                    th 单元格
+            tbody   表体
+                tr  一行    height属性
+                    td 单元格   colspan rowspan width
+            tfoot   表尾
+                tr  一行
+                    td 单元格
+
+
+		<table cellspacing="0" cellpadding="0" border="0" align="centrer">
+			<caption>标题</caption>
+			<thead><!-- 表头 -->
+				<tr>
+					<td></td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td></td>
+					<td></td>
+				</tr>
+			</tfoot>
+		</table>
+		
+		cellspacing="0"		表格与表格之间的间距
+		cellpadding="0"		文字与表格的间距
+		align="centrer"		表格的对齐方式
+	
+		colspan		合并列，效果是把竖线去掉了
+		rowspan		合并行，效果是把横线去掉了
+
+		在css中这样取消表格之间的间隙
+		border-collapse:collapse;
+
+十六、怎么将项目部署到服务器上
+			1.怎么将项目部署到服务器中:
+                将项目复制到apache2目录下的htdocs,目录下
+            2.启动服务器
+                sudo ./apachectl -k start
+            3.访问项目
+                127.0.0.1:80/form.html
+            4.查看请求体
+                F12快捷键调出开发者工具
+                右键 Inspect Element
+                选择Network面板.重新载入,重新发送请求,产生请求信息.点进请求信息,右侧面板中有一个params参数面板.点击,内容就是post请求体的内容.
+
+十七、表单
+		form标签的作用：
+			与后台服务器进行数据交互
+	<form action="" method="" target="" name="" enctype="">
+		表单控件
+	</form>
+		action属性    提交表单数据到哪里
+	    target属性    服务器返回页面的显示位置 _blank _self
+	    method属性    表单数据提交的方式
+	        get     默认 数据在地址栏中，容易暴露数据，不安全
+	        post    数据在请求体中，比较安全
+
+	    name属性      表单的名字
+	    ectype属性    表单数据的编码方式
+	        一共有三种	       
+            application/x-www-form-urlencoded       默认的,将空白转换为+,特殊字符采用ASCII编码
+            multipart/form-data
+                文件上传与下载的时候用
+            text/plajpg
+	
+	表单控件
+	（1）input控件
+            type
+                10种取值
+                    text        单行文本框
+                    password    密码框
+                    submit      提交
+                    reset       重置
+                    radio       单选框
+                    checkbox    复选框
+                    file        文件系统
+                    hidden      隐藏框
+                    image       提交按钮图片
+                    button      控件按钮
+
+				属性值
+		                name属性  传递给后台的属性
+		                value属性 传递给后台的属性
+
+		                后台：url？
+
+		                checked        表示被选中
+		                size属性        控件的宽度
+		                maxlength      可输入的最大字符长度
+		                minlength		输入的最小字符长度
+
+	（2）button控件
+            type属性
+                3种取值
+                    button     不提交
+                    submit      提交
+                    reset       重置
+
+	（3）select控件    
+            multiple属性，控制是否多选（按command键或者ctl键）
+            size属性      设置显示出来的行数
+
+		option      一个一个的选项
+                    value   必须写
+                optgroup       对option进行分组
+                    lable的作用：用来设置分组的名字
+
+                option  子元素
+                    selected属性    默认选中
+		<select>
+			<optgroup label="组名">
+				<option value=""></option>
+				<option value=""></option>
+				<option value=""></option>
+				<option value=""></option>
+			</optgroup>
+			<optgroup label="组名">
+				<option value=""></option>
+				<option value=""></option>
+				<option value=""></option>
+				<option value=""></option>
+			</optgroup>
+		</select>
+
+	 (4)label控件
+            将自己的文本与表单中的某个空间绑定，那么点击该文本的时候，就是点击该控件
+            (实现点击文字选择单选框)
+            <lable for="username">用户名</lable>
+            <input type="text" id="username"></input>
+			第一步：给input框添加id值
+			第二部：label的for属性里放input的id值，就搞定了
+
+	 (5)textarea控件  readonly    disabled
+            name
+            value
+            cols
+            rows
+	（6）fieldset标签		|--hehe--|
+		legend 	标题 	|		 |
+		...表单控件 		|________|
+		<fieldset>
+			<legend>标题</legend>
+		</fieldset>
+	readonly属性：	只读
+	disabled属性：	禁用
+
+
+    readonly和disabled和type=hidden的区别
+            1、显示的区别
+                type=hidden是隐藏，
+                readonly是鼠标可放进去，但是不能修改，背景色变为灰色
+                disabled是鼠标放不进去，背景变为灰色
+            2、提交的区别
+                type=hidden的数据是可以提交的
+                readonly的数据也是可以被提交的.
+                disabled的数据是不可以提交的
+
+	一个问题：
+		哪些按钮可以实现提交效果，哪些按钮不能提交？
+		答：
+			可以实现提交效果的有：
+				<button>提交</button>
+				<input type="submit" value="提交">
+				<button type="submit">提交</button>
+				<input type="image" src="路径">
+
+			不能提交的按钮有：
+				<input type="button" value="按钮">
+
+			能实现重置功能的按钮有：
+				<input type="reset" value="重置">
+				<button type="reset">重置</button>
+
+
+十八、html5中新增的表单元素和属性
+
+	html5新增的标签
+		header
+        article
+        section
+        nav
+        aside    
+        footer  
+        address 
+
+		html5中新增的其他标签
+        	figure              //定义一组媒体内容以及他们的标题（图片，音频，视频）
+            figcaption          （标题）
+        	details   open属性      //summary details 的显示内容  
+            summary                 //summary 嵌套在detials标签内
+            						//收起detail所显示的内容
+			hgroup(存放h标题的区域)
+			dialog对话框
+    		纯粹的块级标签  div
+    		纯粹的行内标签  span
+		下面还有其他新增标签
+
+
+	1.新增的表单元素
+		1）progress 		进度条
+				max     最大工作量
+	            value   当前工作进度
+	                //一般是从后台获取值，而不提交值
+
+	      	举个栗子：
+				<progress value="90" max="100"></progress>
+
+		2）meter     磁盘容量
+				min 	最小值
+	            max 	最大值
+	            value 	当前值
+	            low     下限值
+	            high    上限值
+	            optimum="5" 最优值
+
+	                如果optimum小于low的话，越低越好
+	                    如果value小于low的话，是绿色
+	                    如果value在low和high之间的话是黄色
+	                    如果value大于high的话是红色
+
+	                如果optimum在low和high之间的话，最好
+	                    value在low和high之间是绿色
+
+	                optimum大于high的话，越高越好
+	                    value小于low是红色
+	                    value在low和high之间是黄色
+	                    value大于high是绿色
+			举个栗子：
+			<meter min="0" max="100" value="50" low="10" high="80" optimum="5"></meter>
+
+		3）output    输出信息（js配合使用）
+			用法：
+				第一步：给output标签添加一个name属性或者id属性
+				第二步：在form标签中添加oninput属性，并且设置output的value值
+			举个栗子
+				<form action="#" oninput="result.value=parseInt(a.value)+parseInt(b.value)">
+					<input type="number" value="5" id="a">+
+					<input type="number" value="5" id="b">=
+					<output name="result">10</output>
+				</form>
+
+		4）datalist 		作用类似于下拉列表
+											<select>
+												<option value=""></option>
+												<option value=""></option>
+											</select>
+						(但是要配合input使用)
+			举个栗子：
+					<input type="text" list="datalist" name="mylist">
+					<datalist id="datalist">
+						<option value="">请选择</option>
+						<option value="shangahi">上海</option>
+						<option value="jiangsu">江苏</option>
+						<option value="shanxi">山西</option>
+					</datalist>
+			但是需要注意：
+				1.点击之后，datalist显示的是value值，select那边显示的是option的元素内容
+				2.数据提交都提交的是option的value值
+				3.datalist在火狐上只显示内容，谷歌上显示value和内容
+
+
+	2.input标签新增的type属性值（火狐不支持）
+		1）date    年月日
+				举个栗子：
+				<input type="date" name="date">
+
+		2）datetime-local 	年月日时分
+            	举个栗子：
+            	<input type="datetime-local" name="datetime-local">
+
+        3）time    时 分
+        		举个栗子：
+        		<input type="time" name="time">
+
+        4）month   年月
+        		举个栗子：
+        		<input type="month" name="month">
+
+        5）week    年周
+        		举个栗子：
+				<input type="week" name="week">
+
+        6）number  数值
+                属性
+                    min     最小值
+                    max     最大值
+                    step    步长（点击小箭头变化的数值） 
+				举个栗子：
+				<input type="number" min="0" max="100" step="2">
+
+        7）range   滑块
+                属性
+                    min     最小值
+                    max     最大值
+                    step    步长（点击小箭头变化的数值）
+                    value   默认值
+                举个栗子：
+                <input type="range" min="0" max="100" step="20" value="0">
+
+        8）tel     电话
+                属性
+                    pattern=[0-9]{11}
+				举个栗子：
+                <input type="tel" pattern="[0-9]{11}" name="tel">
+        9）url    	url地址
+                        http://www.baidu.com
+
+                举个栗子：
+                <input type="url" name="url">
+
+        10）color   颜色
+                #ccc
+                举个栗子：
+                <input type="color">
+
+        11）search 搜索
+				举个栗子：
+				<input type="search" placeholder="请输入内容" name="search1">
+        12）email   邮件
+        		举个栗子：
+        		<input type="email" name="email">
+                877927262@qq.com
+
+	3.一些表单属性：
+		1）form属性
+				如果你把input或其他表单写在了form标签的外面
+                那么，给你的form标签设置一个id值
+                给你的外面的input设置form="id值"即可
+			举个栗子：
+				<form action="" id="myform">
+					<input type="submit" value="提交">
+				</form>
+					<input type="text" form="myform">
+
+		2）novalidate  	取消表单验证
+                给form标签加入  novalidate="true" 这个属性，表单就不会验证，直接提交
+                举个栗子：
+                	<form action="#" novalidate="true">
+                		邮箱：<input type="email">
+                			 <input type="submit">
+                	</form>
+
+        3)required
+                给input标签添加 required 属性，这个表单就必填，否则不能提交
+                举个栗子：
+                	<form action="#">
+                		姓名：<input type="text" required>
+                	</form>
+
+		4)autofocus
+                给input标签中加入   autofocus 这个属性，打开页面的时候自动聚焦
+				举个栗子：
+					<form action="#">
+                		姓名：<input type="text" autofocus>
+                	</form>
+
+        5)placeholder
+				提示用户输入信息
+				举个栗子：
+					<form action="#">
+						<input type="image" src="..." formnovalidate="true">
+					</form>
+
+			placeholder 占位符与value的区别
+                1、显示上，placeholder是灰色，value是正常色
+                2、提交的时候，placeholder的值不会提交，value是会提交的
+                3、输入数据之后，placeholder的值会消失，value需要先删除
+
+		6）pattern   验证表单（使用正则表达式）
+				举个栗子：
+					<form action="#">
+						密码：<input type="password" pattern="[a-z]{8}">
+					</form>
+
+		7)图片提交按钮的属性(也可以用在提交按钮上)
+			1. formaction
+					给input的图片提交按钮加 formaction="hehe.html" 属性，可以把数据提交到其他地方
+					举个栗子：
+					<form action="#">
+                		密码：<input type="password">
+                		<input type="submit">
+                		<input type="image" formaction="hehe.html">
+                	</form>
+
+	 		2.formmethod
+	 				添加 formmethod="post"属性，重新定义提交方式
+					举个栗子：
+					<form action="#">
+                		密码：<input type="password">
+                		<input type="submit">
+                		<input type="image" formmethod="post">
+                	</form>
+
+	 		3.formtarget
+	 				添加  formtarget="_blank"属性，重新定义提交打开页面的位置
+					举个栗子：
+					<form action="#">
+                		密码：<input type="password">
+                		<input type="submit">
+                		<input type="image" formtarget="_blank">
+                	</form>
+
+	 		4.formnovalidate
+	 				给input的图片提交按钮加 formnovalidate="true" 属性，提交表单不用验证
+					举个栗子：
+					<form action="#">
+						<input type="image" src="..." formnovalidate="true">
+					</form>
+
+			5.formenctype
+					enctype:表单的编码方式
+					            3种
+					            application/x-www-form-urlencoded       默认的,将空白转换为+,特殊字符采用ASCII编码
+					            multipart/form-data
+					                文件上传与下载的时候用
+					            text/plajpg
+
+					 <form action="#">
+						<input type="image" src="..." formenctype="...">
+					</form>
+
+十九、html5中其他新增标签
+	1）mark    高亮显示
+    2）cite    斜体显示（一般是书的引用，和电影的引用）
+
+    3）	<ol start="5" reversed>
+	        <li>pingguo</li>
+	        <li>pingguo</li>
+	        <li>pingguo</li>
+    	</ol>
+
+        start="5"   从几开始
+        reversed    倒叙  	
+	
+
+
+
+
+
+
+
+

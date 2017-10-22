@@ -1,0 +1,120 @@
+一、先从后端入手
+    1.因为后端是服务器，所以第一件事就是搭建服务器
+        var http=require('http');
+        var server=http.createServer(function(req,resp){
+            
+        });
+        server.listen(8080,function(){
+            console.log('正在监听8080端口');
+        });
+    2.接下来服务器处理拿到的请求，将路由提取出来，将查询字符串提取出来
+    	//获取请求的整个url
+	    var url0=req.url;
+	    //将url转换为对象,需要使用url模块
+	    var urlObj=url.parse(url0);
+	    //获取路由
+	    var pathname=urlObj.pathname;
+
+	    //获取查询字符串
+	    var querystring=require('querystring');        
+	    //这里自己封装了一个方法，不管是get请求还是post请求，都能拿到查询字符串
+		function queryFun(handler){
+			if(method=='GET'){
+				//获取到查询字符串
+				var query=urlObj.query;
+				//将查询字符串转换为对象
+				var queryObj=querystring.parse(query);
+				
+				handler.call(this,queryObj);
+			}
+			//如果是post请求
+			else{
+				var query = new Buffer(0);
+				req.on('data',function(data){
+					query += data;
+				});
+				req.on('end',function(){
+					//将查询字符串转换为对象
+					var queryObj=querystring.parse(query);
+					handler.call(this,queryObj);
+		        });
+
+			}
+	    }
+	    //操作查询字符串
+	    queryFun(function(queryObj){
+	        
+	    });
+
+
+    至此，服务器的结构就搭建好了
+
+    根据路由进行数据库的操作
+
+
+二、链接数据库
+	1.创建一个连接池
+		//第一步先导入mysql模块
+		var mysql=require('mysql');
+		//创建一个连接池
+		var pool=mysql.createPool({
+		    host:'127.0.0.1',
+		    port:'3306',
+		    user:'root',
+		    password:'root',
+		    database:'web1702'
+		});
+		//将连接池暴露为全局对象
+		global.pool=pool;
+	2.操纵数据库
+		//将连接池引入
+		require('./pool.js');
+		var pool=global.pool;
+		//封装方法
+		function findAll(handler){
+		    pool.getConnection(function(err,connection){
+		        if(err){
+		            throw err;
+		        }
+		        else{
+		            var sql='select * from xk_student';
+		            connection.query(sql,function(err,result){
+		                if(err){
+		                    throw err;
+		                }else{
+		                    handler.call(this,result);
+		                }
+		            });
+		        }
+		    });    
+		}
+		暴露方法
+		module.exports.findAll=findAll;
+
+	3.让服务器将操纵mysql的结果返回给前端
+		studentDB.findAll(function(result){
+	        resp.end(JSON.stringify(result));
+	    });
+
+三、前端发送请求，接收数据
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

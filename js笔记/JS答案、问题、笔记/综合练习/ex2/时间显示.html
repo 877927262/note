@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//h2D XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/h2D/xhtml1-transitional.h2d">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>超酷数码钟表</title>
+<link href="miaov_style.css" rel="stylesheet" type="text/css" />
+<style type="text/css"> 
+    * { padding: 0; margin: 0; }
+    li { list-style: none; }
+    body { background: #29033e; }
+    img { border: none; }
+
+    .date { width: 520px; height: 520px; background: url(images/bg.png); margin: 50px auto 0; position: relative; }
+    .date h2 { text-align: center; padding: 80px 0 30px; }
+    .year { text-align: center; padding-top: 30px; }
+    .time { text-align: center; padding: 30px 0; }
+    .url { text-align: center; position: absolute; bottom: 40px; left: 100px; }
+    .date img { position: relative; }
+    .pos2 { margin-left: 10px; }
+    .num { width: 25px; }
+    .num2 { width: 38px; }
+</style>
+<script type="text/javascript" >
+window.onload=function(){
+ //拿到元素
+ var aimg=document.getElementsByTagName("img");
+ var btn1= document.getElementById("btn1");
+ var btn2= document.getElementById("btn2");
+ var iterm =0;
+ //创建一个点击事件，
+  	btn1.onclick=function(){
+  	  iterm=setInterval(show,30);
+    }
+    btn2.onclick=function(){
+      clearInterval(iterm);
+    }
+ function show(){
+    var date = new Date();
+    //取出时分秒
+    var ss= changeNum(date.getHours())+changeNum(date.getMinutes())+changeNum(date.getSeconds());
+    for(i=0;i<aimg.length;i++){
+      //修改图片的路径charAt(i)  返回给定位置的字符
+      aimg[i].src = "images/"+ss.charAt(i)+".png"
+    }
+  
+ }
+ //看一下时间是否为2位,是两位就显示，不是两位的话就将0放在前面
+ function changeNum(num){
+   if(num>=10){
+     return num+"";
+   }else{
+    return "0"+num;
+   }
+ }
+}
+
+</script>
+</head>
+
+<body style="color:#663366 ; background:#CCFF00; font-size:36px">
+<input id="btn1" type="button" value="跟新时间"/>
+<input id="btn2" type="button" value="停止时间"/>
+<img src="images/0.png" />
+<img src="images/0.png" />
+时
+<img src="images/0.png" />
+<img src="images/0.png" />
+分
+<img src="images/0.png" />
+<img src="images/0.png" />
+秒
+</body>
+</html>

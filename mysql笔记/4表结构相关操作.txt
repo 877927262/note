@@ -1,0 +1,43 @@
+1.表结构相关操作
+	1）添加字段：
+		ALTER TABLE tbl_name
+		ADD 字段名称 字段属性 [完整性约束条件] [FIRST|AFTER 字段名称]
+	2）删除字段
+		ALTER TABLE tbl_name 
+		DROP 字段名称
+	注：可以一次添加或删除多个字段，用逗号隔开即可
+
+	3）添加默认值
+		ALTER TABLE tbl_name
+		ALTER 字段名称 SET DEFAULT 默认值;
+	4）删除默认值
+		ALTER TABLE tbl_name
+		ALTER 字段名称 DROP DEFAULT
+	5)修改字段类型，字段属性（是否为空），字段位置（完整性约束条件）
+		ALTER TABLE tbl_name
+		MODIFY 字段名称 字段类型 [字段属性] [FIRST | AFTER 字段名称]
+	6）修改字段名称、字段类型、字段属性，字段位置
+		ALTER TABLE tbl_name
+		CHANGE 原字段名称 新字段名称 字段类型 字段属性 [FIRST | AFTER 字段名称]
+	7）添加主键
+		ALTER TABLE tbl_name
+		ADD PRIMARY KEY(字段名称)
+	8）删除主键
+		ALTER TABLE tbl_name
+		DROP PRIMARY KEY;
+	9）添加唯一
+		ALTER TABLE tbl_name
+		ADD UNIQUE KEY|INDEX [index_name] (字段名称)
+	10）删除唯一
+		ALTER TABLE tbl_name 
+		DROP index_name;
+	11）修改数据表名称
+		1.ALTER TABLE tbl_name 
+		  RENAME [TO|AS] new_tbl_name
+		2.RENAME TABLE tbl_name TO new_tbl_name;
+	12)修改AUTO_INCREMENT的值
+		ALTER TABLE tbl_name AUTO_INCREMENT=值
+	
+
+
+

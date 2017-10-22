@@ -1,0 +1,140 @@
+1.阅读以下程序
+		var stus = [{
+			name:"terry",
+			age:12,
+			salary:3500,
+			toString:function(){
+				return 2;
+			}
+		},{
+			name:"larry",
+			age:17,
+			salary:14500,
+			toString:function(){
+				return 21;
+			}
+		},{
+			name:"tom",
+			age:19,
+			toString:function(){
+				return 11;
+			}
+		}];
+
+		1) 如果执行stus.sort();排序结果为何？为什么？
+			使用sort();进行排序；如果不给参数，默认数组项的每一项都调用toString方法，
+			而当前这个数组的每一项都重写了toString方法，所以数组的每一项直接调用自己的toString方法即可；
+			排序的结果是：2,11,21分别对应的数组项
+		2) 获取stus数组中年龄大于18岁的对象
+		    for(var i=0;i<stus.length;i++){
+                var arr1=[];
+                if(stus[i].age>18){
+                    var j=0;
+                    arr1[j++]=stus[i];
+                }
+                console.log(arr1);
+            }
+            //stus[i].age；首先stus[i]获取第i个对象，再使用“.”访问第i个对象的某个属性
+
+		3) 判断是否所有学生都有工资
+            for(var i=0;i<stus.length;i++){
+                var arr1=[];
+                if(stus[i].salary>=0){
+                    console.log(stus[i].name,stus[i].salary);
+                    //如果符合条件，打印出对应的人名以及薪水
+                }
+            }
+		4) 获取所有学生姓名组成的数组
+            var arr1=[];
+            var j=0;
+            for(var i=0;i<stus.length;i++){
+                arr1[j++]=stus[i].name;
+            }
+            console.log(arr1);
+
+		5) 如果执行
+			var result = stus.filter(function(item){
+				return item.age>15;
+			});
+			console.log("年龄大于15岁的学生有："+result);
+			打印出来的结果为什么？为什么会出现这样的结果？
+2. 你怎么理解回调函数
+	
+3. 以下add函数的调用方式为几种？
+	function add(a,b){
+		alert(a+b);
+	}
+
+4. 阅读以下代码
+	var a = 0;
+	var obj1 = {a:1};
+	var obj2 = {a:2};
+
+	function test(){
+		var a = 3;
+		console.log(this.a+","+a);
+	}
+
+	1) 执行
+		test();		输出结果为？ 为什么？
+	2) 执行 
+		obj1.test = test;
+		obj1.test();输出结果为？ 为什么？	
+	3) 执行 
+		obj2.test = test;
+		obj2.test();输出结果为？ 为什么？
+	4) 执行 
+		var show = test;
+		show();		输出结果为？ 为什么？
+
+5. 阅读以下程序
+	function add(a,b){
+		return a+b;
+	}
+	function del(a,b){
+		return a-b;
+	}
+
+	function callMethod(method,arr){
+	
+	}
+	var result = callMethod(add,1,2);	//result = 3
+	var result = callMethod(del,1,2);	//result = -1
+
+	要想让第86行代码和87行代码执行成功，callMethod方法应该怎么完善
+
+6. 数组排序
+		var stus = [{
+			name:"terry",
+			age:12,
+			salary:3500,
+			toString:function(){
+				return 2;
+			}
+		},{
+			name:"larry",
+			age:17,
+			salary:14500,
+			toString:function(){
+				return 21;
+			}
+		},{
+			name:"tom",
+			age:19,
+			salary:5500,
+			toString:function(){
+				return 11;
+			}
+		}];
+
+		1) 根据以下代码体现完成getComparator方法
+			function getComparator(key){
+			
+			}
+			stus.sort(getComparator("name"));	//按照姓名排序
+			stus.sort(getComparator("age"));	//按照年龄排序
+			stus.sort(getComparator("salary"));	//按照薪资排序
+
+
+			
+			

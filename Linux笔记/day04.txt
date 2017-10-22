@@ -1,0 +1,117 @@
+1. 网络配置
+    windows 
+        ipconfig
+            vmnet8 
+                192.168.72.1
+
+    ubuntu
+        手动设置以太网链接方式
+            192.168.72.200
+2. 开发
+    C/S 客户端/服务器
+    客户端
+        开发
+        windows
+            poll    在线问卷系统
+        
+        1. 浏览器（访问apache上的网站）
+            http://192.168.72.200:80/poll
+
+        2. dos
+            ftp 192.168.72.200
+            进行下载上传
+            ftp> put poll
+        3. doc
+            telnet 192.168.72.200
+            user    briup
+            passwd  briup
+            briup@ubuntu:~$ cp
+
+    服务器
+        部署
+        阿里云 ubuntu
+
+        1. 服务器软件
+            apache(静态)
+                部署目录（apache2/htdocs）
+                apache2/htdocs/poll
+                    html css js
+            tomcat(动态)
+                servlet/jsp
+            IIS
+                asp
+        2. 文件传输服务 ftp(proftpd)
+            ~/poll
+            ->
+            apache/htdocs
+        3. telnet服务
+3. ubuntu系统软件安装方式
+    1) 在线安装（简单）
+        sudo apt-get install 软件名
+
+        卸载
+        sudo apt-get purge apache2
+
+        例如：
+        sudo apt-get install vim
+        sudo apt-get install mysql   
+    2) 离线安装
+        1. 二进制文件直接安装
+            解压后直接使用
+                vscode
+                    ./code
+
+        2. 源文件构建安装
+            源文件（.c）
+            解压
+            执行配置文件
+            make
+            make install
+            配置
+            启动
+        //用通俗的话来说
+            1）先把软件的压缩包放在 /opt 目录下
+            2）解压，并且删除压缩包
+            3）进入软件目录，执行配置文件
+                sudo ./configure --prefix=/usr/local/软件名    
+                        其中--prefix=   的意思是指定该软件的安装路径
+            4）然后开始构建
+                sudo make
+            5）安装
+                sudo make install
+4.启动ftp
+    进入安装目录的可执行文件夹，bin或者sbin（这里进入sbin）
+    sudo ./proftpd
+
+5.启动apache
+    (先设置一下配置文件，不然会报出一条警告，警告无所谓)
+    进入/use/local/apache2/conf/httpd.conf
+    修改#ServerName那一行，修改为
+    ServerName 172.0.0.1：80
+
+
+    启动Apache
+    进入安装目录的可执行文件夹，bin或者sbin（这里进入bin）
+    sudo ./apachectl -k start
+
+    关闭Apache
+    sudo ./apachectl -k stop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

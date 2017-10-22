@@ -1,0 +1,262 @@
+﻿1. BOM 
+	浏览器对象模型
+    BOM提供了很多对象，用于访问浏览器的功能，这些功能与任何网页内容无关。BOM的核心对象是window，它表示浏览器的一个实例，在浏览器中window对象有双重角色既是通过javascript访问浏览器窗口的一个接口，又是ECMAScript规定的Global对象。
+    1.窗口位置
+      	screenLeft和screenTop属性返回窗口相对于屏幕的X和Y坐标。(火狐浏览器不支持)
+      	screenX和screenY属性返回窗口相对于屏幕的X和Y坐标。(ie浏览器不支持)
+      	pageXOffset 设置或返回当前页面相对于窗口显示区左上角的 X 位置。
+      	pageYOffset 设置或返回当前页面相对于窗口显示区左上角的 Y 位置。
+      		IE8及更早IE版本不支持该属性,但可以使用 "document.body.scrollLeft" 和 "document.body.scrollTop" 属性 。
+
+    2.窗口大小
+      	innerWidth	页面视图区的宽度
+      	innerHeight	页面视图区的高度
+      	outerWidth	浏览器窗口的宽度
+      	outerHeight	浏览器窗口的高度	
+      		所有主流浏览器都支持innerWidth,innerHeight,outerWidth,outerHeight 属性。注意：IE8及更早IE版本不支持这些属性。
+
+4.导航和打开窗口
+      	window.open() 
+      		可以导航到一个特定的URL，也可以打开一个新的浏览器窗口,该方法会返回一个指向新窗口的引用。引用的对象与其他的window对象类似。
+      		<a href="URL" target=""></a>
+	        参数：
+				1)要加载的URL
+		 		2)窗口目标,框架名
+			     	特殊名：
+			       	_self	当前浏览器页面
+			       	_parent	当前页面父页面
+			       	_top	当前页面顶级页面
+			       	_blank	新页面
+				3) 一个特定字符串
+					是用逗号分隔的设置字符串
+					channelmode=yes|no|1|0 	是否要在影院模式显示 window。默认是没有的。仅限IE浏览器
+					directories=yes|no|1|0 	是否添加目录按钮。默认是肯定的。仅限IE浏览器
+					fullscreen=yes|no|1|0 	浏览器是否显示全屏模式。默认是没有的。在全屏模式下的 window，还必须在影院模式。仅限IE浏览器
+					width=pixels 			窗口的宽度.最小.值为100
+					height=pixels 			窗口的高度。最小.值为100
+					left=pixels 			该窗口的左侧位置
+					location=yes|no|1|0 	是否显示地址字段.默认值是yes
+					menubar=yes|no|1|0 		是否显示菜单栏.默认值是yes
+					resizable=yes|no|1|0 	是否可调整窗口大小.默认值是yes
+					scrollbars=yes|no|1|0 	是否显示滚动条.默认值是yes
+					status=yes|no|1|0 		是否要添加一个状态栏.默认值是yes
+					titlebar=yes|no|1|0 	是否显示标题栏.被忽略，除非调用HTML应用程序或一个值得信赖的对话框.默认值是yes
+					toolbar=yes|no|1|0 		是否显示浏览器工具栏.默认值是yes
+					top=pixels 				窗口顶部的位置.仅限IE浏览器
+					
+	 			4)表示新页面是否取代浏览器历史记录中当前加载页面的布尔值
+
+	 		如果传递了第二个参数，而且该参数是已有窗口或框架的名称，就会在具有该名称的窗口或框架中加载第一个参数指定的URL。
+	  		如果给window.open传递的第二个参数并不是一个已经存在的窗口或框架，那么该方法就会根据在第三个参数位置上传入的字符串创建一个新窗口或新标签页
+	  		
+	  		调整窗口大小
+	         	//调整到100*100
+		      	resizeTo(100,100);//接受浏览器窗口的新高度和新宽度
+		      	//调整到200*150
+		      	resizeBy(100,50); //接受新窗口与原窗口的宽度和高度之差
+	      	
+
+
+
+
+移动窗体
+	      		多用于新建窗体
+	      		window.moveTo(0,0); 接受的是新位置的x和y坐标值
+	      		window.moveBy(0,100);接受的是在水平和垂直方向上移动的像素值。
+	      	滚动条
+      			scrollBy(xnum,ynum) 方法可把内容滚动指定的像素数。注意： 要使此方法工作 window 滚动条的可见属性必须设置为true！
+      			scrollTo(xpos,ypos) 方法可把内容滚动到指定的坐标。
+
+
+	      例如：
+			创建新窗体
+		    
+var w = window.open("http://www.baidu.com","_blank","toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, width=400, height=400");
+		    改变窗体大小
+			w.resizeTo(400,200);
+
+
+
+
+
+
+
+    5.间歇调用和超时调用
+		javascript是单线程语言，但是可以通过超时值和间歇时间来调度代码在特定时刻执行
+		1) setTimeout();
+	  		该方法返回一个数值ID，表示超时调用，这个超时调用ID是计划执行代码的唯一标识符通过它来取消超时调用。可以通过clearTimeout(ID);
+	 		参数：
+	 		 	1.要执行的代码
+				2.以毫秒表示的时间。
+			例如: 
+				一秒后调用
+				var id = setTimeout(function(){
+					alert(1000);
+				},1000);
+				console.log(id);
+				//清除
+				clearTimeout(id);
+		2) setInterval();
+	  		按照指定的时间间隔重复执行代码，直到间歇调用被取消或页面被卸载。调用该方法也会返回一个间歇调用ID，该ID可以用户在将来某个时刻取消间歇调用
+	  		参数：
+	  			1.要执行的代码
+				2.以毫秒表示的时间。
+	  			clearInterval(ID);  //取消间歇调用
+
+		3) 使用超时调用来模拟间歇调用
+			var num = 0;
+			var max = 10;
+			function incrementNum(){
+				num ++;
+				if(num < max){
+					alert(num);
+					setTimeout(incrementNum,500);
+				}else{
+					alert("Done"+num);
+				}
+			}
+			setTimeout(incrementNum,500);
+
+		4) setTimeout，setInterval配合完成调用函数
+			function invoke(f,start,interval,end){
+				if(!start){
+					start = 0;
+				}
+				if(arguments.length<=2){
+					setTimeout(f,start);
+				}else {
+					function repeat(){
+						var h = setInterval(f,interval);
+						if(end){
+							setTimeout(function(){
+								clearInterval(h);
+							},end);
+						}
+					}
+					setTimeout(repeat,start);
+				}
+			}
+    6. 系统对话框
+      	alert(),confirm(),prompt()方法可以调用系统对话框向用户显示消息。显示这些对话框的时候代码会停止执行，关掉这些对话框后代码又会恢复执行。
+		
+		alert()
+			该方法接受一个字符串并将其显示给用户。该对话框会包含指定的文本和一个"OK"按钮。主要用来显示警告信息
+		confirm()
+			确认对话框，显示包含指定的文本和一个"OK"按钮以及"Cancel"按钮。该方法返回布尔值，true表示单击了OK，false表示单击了cancel或者X按钮
+			if(confirm("确定吗？？")){
+				alert("好！");
+			}else{
+				alert("切！");
+			}
+		prompt() 
+			会话框，提示用户输入一些文本。显示包含文本，ok按钮,cancel按钮以及一个文本输入域，以供用户在其中输入内容。传入两个参数，要显示给用户的文本提示和文本输入域的默认值。
+
+			如果用户单击OK按钮，该方法返回输入域的值，如果用户单击了Cancel或者关闭对话框该方法返回null
+
+
+
+    3. scrren对象
+    	屏幕总宽度/高度: 
+			screen.width
+			screen.height
+		可用宽度/高度: 
+			screen.availWidth
+			screen.availHeight
+		颜色深度: 
+			screen.colorDepth
+		颜色分辨率: 
+			screen.pixelDepth
+    
+
+    7. location对象
+    	是最有用的BOM对象之一，提供了与当前窗口中加载的文档有关的信息，还提供一些导航功能。location是个神奇的对象，既是window的对象也是document的对象。
+        console.log(window.location == document.location);//true
+      	属性：
+	        host		返回服务器名称和端口号
+			hostname	返回不带端口号的服务器名称
+			href		返回当前加载页面的完整URL
+			pathname	返回URL的目录和文件名
+			port		返回URL中指定的端口号
+			protocol	返回页面使用的协议
+			search		返回URL的查询字符串。这个字符串以问号开头
+
+		方法：
+		    assign()	传递一个url参数，打开新url，并在浏览记录中生成一条记录。
+		    replace() 	参数为一个url,结果会导致浏览器位置改变，但不会在历史记录中生成新记录
+      		reload()	重新加载当前显示的页面，参数可以为boolean类型，默认为false,表示以最有效方式重新加载，可能从缓存中直接加载。如果参数为true,强制从服务器中重新加载
+
+		为location.href; window.location 设置为一个URL值，
+		也会以该值调用assign()方法。以下三句话效果一样
+			window.location="http://www.baidu.com";
+			location.href="http://www.baidu.com"
+			location.assign("http://www.baidu.com");
+      	
+	8.history对象
+      	该对象保存着用户上网的历史记录。出于安全方面的考虑，开发人员无法得知用户浏览过的URL，不过借由用户访问过的页面列表，同样可以在不知道实际URL的情况下实现后退前进,注意： 没有应用于History对象的公开标准，不过所有浏览器都支持该对象。
+      	length 		返回历史列表中的网址数
+      		注意：Internet Explorer和Opera从0开始，而Firefox、Chrome和Safari从1开始。
+      	back() 		加载 history 列表中的前一个 URL
+		forward() 	加载 history 列表中的下一个 URL
+		go() 		加载 history 列表中的某个具体页面
+			负数表示向后跳转，正数表示向前跳转。
+
+2. 特殊的css
+  	1) 元素几何尺寸
+   		getBoundingClientRect()
+    	left/x	元素左上角的x坐标  
+    	top/y	元素左上角的y坐标
+    	right	元素右上角的x坐标 
+    	bottom	元素右上角的y坐标
+    	with	元素宽度
+    	height	元素高度
+  	2) 任何元素的只读属性
+    	以css像素返回它的屏幕尺寸，返回的尺寸包括元素的边框和内边距
+      		offsetWidth	
+      		offsetHeight     
+    	坐标，返回元素的X和Y坐标。
+      		offsetLeft
+      		offsetTop
+    	父元素，
+      		offsetParent 指定这些属性相对的父元素
+    	clientWidth
+    	clientHeight  
+		类似于offsetWidth,offsetHeight，但是他们不包含边框，只包含内容和内边距
+
+    	scrollWidth
+    	scrollHeight
+    	元素的内容+内边距+任何溢出内容的尺寸。
+
+
+	3) 第三个维度 ： z-index
+  		left,right,top,bottom属性是容器元素中的二维坐标中指定X,Y坐标,z-index定义了第三个维度：它允许元素的堆叠次序，并指示两个或多个重叠元素中的哪一个元素应该绘制在其他的上面。默认值为0，可以是负数也可以是正数，当两个或者多个元素重叠在一起的时候，他们是按照从低到高的z-index顺序绘制。只针对兄弟元素应用堆叠效果。
+
+	4) 元素的显示和可见性
+  		visibility:
+			hidden  元素不可见，但是在文档布局中保留了它的空间。
+			visible	元素可见
+  		display	
+			none	元素不可见，在文档布局中不给它分配空间，它的各边元素会合拢，就当它不存在过。在展开和折叠轮廓的效果时，display属性很有用。
+  
+  		不过visibility,display对绝对定位和固定定位的元素的影响是等价的。
+	5) 颜色，透明度
+  		opacity 透明度：0~1之间的数字
+  		filter: IE中表示透明度
+		常用表示透明度的方法
+		  		opacity: .75;
+		  		filter:alpha(opacity=75)
+3. 脚本化内联样式
+	style 属性，该属性的值不是字符串，而是一个CSSStyleDeclaration对象，该对象代表了HTML代码中通过style指定的css属性。javascript中的css属性大多与标签中的css属性相同，但是如果css样式属性在名字中出现了连字符，该属性名的格式应该是移除连字符，将每个连字符后面紧接着的字母大写，如 
+		background-color =>e.backgroundColor
+		e.style.fontSize = "24px";
+		e.style.fontWeight = "bold";
+		e.style.color = "blue";
+	cssText ：CSS单个字符串属性
+  	//两者都可设置e的样式属性为字符串s
+  	s.setAttribute("style",s);
+  	s.style.cssText = s;
+
+  	//两者都可以查询元素的内联样式
+  	s = e.getAttribute("style");
+  	s = e.style.cssText;
+  
+
